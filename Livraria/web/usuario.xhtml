@@ -94,7 +94,9 @@
                     Email:
                     <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
                     Senha:
-                    <p:password id="senha" value="#{usuarioBean.usuario.senha}"/>
+                    <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
+                                promptLabel="Digite..." weakLabel="Fraca"
+                    goodLabel="Boa" strongLabel="Forte"/>
 
                 </p:panelGrid>  
                 <br/>

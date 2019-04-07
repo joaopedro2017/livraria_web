@@ -105,11 +105,11 @@
                     Título:
                     <p:inputText id="name" value="#{livroBean.livro.titulo}" />    
                     ISBN:
-                    <p:inputText id="isbn" value="#{livroBean.livro.isbn}"/>
+                    <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.livro.isbn}"/>
                     Edição:
-                    <p:inputText id="edicao" value="#{livroBean.livro.edicao}"/>
+                    <p:inputMask mask="9999" id="edicao" value="#{livroBean.livro.edicao}"/>
                     Ano:
-                    <p:calendar id="ano" value="#{livroBean.livro.ano}"></p:calendar>                    
+                    <p:calendar id="ano" value="#{livroBean.livro.ano}"></p:calendar>                     
 
                 </p:panelGrid>  
                 <br/>
