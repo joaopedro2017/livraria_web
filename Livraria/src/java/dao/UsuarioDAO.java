@@ -83,4 +83,18 @@ public class UsuarioDAO implements Serializable{
        em.getTransaction().commit();
     }
     
+    public String validarUsuario(Usuario usuario){
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome AND a.senha=:senha ");
+        query.setParameter("nome", usuario.getNomeUsuario());
+        query.setParameter("senha", usuario.getSenha());
+
+        List<Usuario> us = query.getResultList();
+        if (us != null && us.size() > 0) {
+            return us.get(0).getTipo();
+        }
+
+        return null;
+    }
+    
 }

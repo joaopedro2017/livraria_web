@@ -1,0 +1,29 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    <ui:define name="content">
+        <center>
+            <h2 class="page-header">Login</h2>
+        </center>
+        <br/>
+        <h:form id="formPrincipal">
+            <div align="center">
+
+                <p:panelGrid id="panelRecord" columns="2"> 
+                    Usuario:
+                    <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" />    
+                    Senha:
+                    <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
+                                promptLabel="Digite..." weakLabel="Fraca"
+                                goodLabel="Boa" strongLabel="Forte"/>
+                    <p:commandButton value="Entrar" actionListener="#{usuarioBean.validar}" onclick="record.hide()" alt="Record"/>
+                </p:panelGrid>
+            </div>
+            <br/>         
+
+        </h:form>
+    </ui:define>
+</ui:composition>

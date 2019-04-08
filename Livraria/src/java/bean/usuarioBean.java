@@ -56,6 +56,11 @@ public class usuarioBean {
         usuarios = new UsuarioDAO().buscarTodas();
         usuario = new Usuario();
     }
+    
+    public String validar(ActionEvent actionEvent){
+        new UsuarioDAO().validarUsuario(usuario);
+        return usuario.getTipo();
+    }
 
     //getters and setters
 

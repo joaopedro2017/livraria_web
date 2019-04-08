@@ -5,7 +5,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
-        <h2 class="page-header">Gerenciar Editora</h2>
+        <h2 class="page-header">Gerenciar Usuario</h2>
         <br/>
         <h:form id="formPrincipal">
             <div align="center">
@@ -27,8 +27,8 @@
                         <h:outputText value="#{lista.email}" />
                     </p:column>
 
-                    <p:column headerText="Senha" sortBy="#{lista.senha}" filterBy="#{lista.senha}">
-                        <h:outputText value="#{lista.senha}" />
+                    <p:column headerText="Tipo" sortBy="#{lista.senha}" filterBy="#{lista.tipo}">
+                        <h:outputText value="#{lista.tipo}" />
                     </p:column>
 
                     <p:column headerText="Opções" exportable="false">
@@ -97,6 +97,8 @@
                     <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
                                 promptLabel="Digite..." weakLabel="Fraca"
                     goodLabel="Boa" strongLabel="Forte"/>
+                    Tipo:
+                    <p:inputText id="tipo" value="#{usuarioBean.usuario.tipo}"/>
 
                 </p:panelGrid>  
                 <br/>
