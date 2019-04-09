@@ -25,6 +25,7 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
+import util.TipoEnum;
 
 /**
  *
@@ -35,8 +36,12 @@ import org.apache.poi.hssf.util.HSSFColor;
 public class usuarioBean {
     
     Usuario usuario = new Usuario();
+    List usuarios = new ArrayList();   
 
-    List usuarios = new ArrayList();
+    /*
+    public TipoEnum[] getStatuses() {
+        return TipoEnum.values();
+    }*/ //Revisar depois
 
     //construtor
     public usuarioBean() {
@@ -58,8 +63,10 @@ public class usuarioBean {
     }
     
     public String validar(ActionEvent actionEvent){
-        new UsuarioDAO().validarUsuario(usuario);
-        return usuario.getTipo();
+        System.out.println("Nome do : " + usuario.getNomeUsuario());
+        String tipo = new UsuarioDAO().validarUsuario(usuario.getNomeUsuario(), usuario.getSenha());
+        System.out.println("Valor do Tipo " + tipo);
+        return tipo;
     }
 
     //getters and setters

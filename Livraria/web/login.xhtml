@@ -1,4 +1,4 @@
-<ui:composition template="/WEB-INF/templates/layout.xhtml"
+<ui:composition template="/WEB-INF/templates/layoutLogin.xhtml"
                 xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
@@ -10,17 +10,14 @@
         </center>
         <br/>
         <h:form id="formPrincipal">
-            <div align="center">
-
-                <p:panelGrid id="panelRecord" columns="2"> 
-                    Usuario:
-                    <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" />    
-                    Senha:
-                    <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
-                                promptLabel="Digite..." weakLabel="Fraca"
-                                goodLabel="Boa" strongLabel="Forte"/>
-                    <p:commandButton value="Entrar" actionListener="#{usuarioBean.validar}" onclick="record.hide()" alt="Record"/>
-                </p:panelGrid>
+            <div align="center">               
+                    <h2>Usuario: <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" /></h2>
+                    <h2>Senha:       
+                        <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
+                                    promptLabel="Digite..." weakLabel="Fraca"
+                                    goodLabel="Boa" strongLabel="Forte"/>
+                    </h2>
+                    <p:commandButton icon="ui-icon-key" value="Entrar" actionListener="#{usuarioBean.validar}" onclick="seach.hide()" alt="Record"/>
             </div>
             <br/>         
 

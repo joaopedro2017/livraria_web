@@ -96,9 +96,9 @@
                     Senha:
                     <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
                                 promptLabel="Digite..." weakLabel="Fraca"
-                    goodLabel="Boa" strongLabel="Forte"/>
+                    goodLabel="Boa" strongLabel="Forte"/>                  
                     Tipo:
-                    <p:inputText id="tipo" value="#{usuarioBean.usuario.tipo}"/>
+                    <p:inputText id="tipo" value="#{usuarioBean.usuario.tipo}"/>                  
 
                 </p:panelGrid>  
                 <br/>
@@ -109,6 +109,11 @@
                 Você tem certeza?
                 <p:commandButton value="Deletar" actionListener="#{usuarioBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
             </p:dialog>
+            <!--
+                    <h:selectOneMenu value="#{usuarioBean.usuario.tipo}" >
+                        <f:selectItems value="#{TipoEnum}" />
+                    </h:selectOneMenu> Codigo de Combobox 
+                    -->   
 
         </h:form>
     </ui:define>
