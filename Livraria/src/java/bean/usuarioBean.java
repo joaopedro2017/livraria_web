@@ -25,7 +25,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
-import util.TipoEnum;
 
 /**
  *
@@ -34,14 +33,9 @@ import util.TipoEnum;
 @ManagedBean
 @ViewScoped
 public class usuarioBean {
-    
-    Usuario usuario = new Usuario();
-    List usuarios = new ArrayList();   
 
-    /*
-    public TipoEnum[] getStatuses() {
-        return TipoEnum.values();
-    }*/ //Revisar depois
+    Usuario usuario = new Usuario();
+    List usuarios = new ArrayList();
 
     //construtor
     public usuarioBean() {
@@ -61,16 +55,19 @@ public class usuarioBean {
         usuarios = new UsuarioDAO().buscarTodas();
         usuario = new Usuario();
     }
-    
-    public String validar(ActionEvent actionEvent){
-        System.out.println("Nome do : " + usuario.getNomeUsuario());
-        String tipo = new UsuarioDAO().validarUsuario(usuario.getNomeUsuario(), usuario.getSenha());
-        System.out.println("Valor do Tipo " + tipo);
-        return tipo;
+
+    public void validar(ActionEvent actionEvent) throws IOException {
+        Usuario tipo = new UsuarioDAO().autenticacao(usuario);
+        try {
+            if ("Administrador".equals(tipo.getTipo())) {
+                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+            }
+        } catch (Exception ex) {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        }
     }
 
     //getters and setters
-
     public Usuario getUsuario() {
         return usuario;
     }
@@ -85,8 +82,8 @@ public class usuarioBean {
 
     public void setUsuarios(List usuarios) {
         this.usuarios = usuarios;
-    }      
-    
+    }
+
     public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;
         HSSFSheet sheet = wb.getSheetAt(0);
@@ -109,6 +106,6 @@ public class usuarioBean {
         pdf.setPageSize(PageSize.A4);
 
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-    }    
-    
+    }
+
 }

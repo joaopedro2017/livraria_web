@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author John Peter
  */
 public class UsuarioDAO implements Serializable{
-    
+
     public static UsuarioDAO usuarioDAO;
 
     public static UsuarioDAO getInstance() {
@@ -26,7 +26,7 @@ public class UsuarioDAO implements Serializable{
         }
         return usuarioDAO;
     }
-    
+
     public Usuario buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome ");
@@ -51,7 +51,7 @@ public class UsuarioDAO implements Serializable{
         Query query = em.createQuery("select distinct a from Usuario a group by a.usuario");
         return query.getResultList();
     }
-    
+
     public void remover(Usuario usuario) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -76,26 +76,24 @@ public class UsuarioDAO implements Serializable{
     }
 
     public void removeAll() {
-       EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Usuario ");
-       query.executeUpdate();
-       em.getTransaction().commit();
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Usuario ");
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
-    
-    public String validarUsuario(String nome, String senha){
+
+    public Usuario autenticacao(Usuario us) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome AND a.senha=:senha ");
-        query.setParameter("nome", nome);
-        query.setParameter("senha", senha);
+        query.setParameter("nome", us.getNomeUsuario());
+        query.setParameter("senha", us.getSenha());
 
-        List<Usuario> us = query.getResultList();
-        if (us != null && us.size() > 0) {
-            System.out.println("Valor do DAO: " + us.get(0).getTipo());
-            return us.get(0).getTipo();
+        List<Usuario> usuario = query.getResultList();
+        if (usuario != null && usuario.size() > 0) {
+            return usuario.get(0);
         }
-
         return null;
     }
-    
+
 }

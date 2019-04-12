@@ -13,9 +13,7 @@
             <div align="center">               
                     <h2>Usuario: <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" /></h2>
                     <h2>Senha:       
-                        <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
-                                    promptLabel="Digite..." weakLabel="Fraca"
-                                    goodLabel="Boa" strongLabel="Forte"/>
+                        <p:password  id="senha" value="#{usuarioBean.usuario.senha}"/>
                     </h2>
                     <p:commandButton icon="ui-icon-key" value="Entrar" actionListener="#{usuarioBean.validar}" onclick="seach.hide()" alt="Record"/>
             </div>
