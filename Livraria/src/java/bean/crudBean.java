@@ -42,14 +42,14 @@ public abstract class crudBean<E, D extends CrudDAO> {
     public void record(ActionEvent actionEvent) {
         getDao().persistir(entidade);
         entidades = getDao().buscarTodas();
-        adicionarMensagem(entidade.getClass().getName().replace("model.", "") + " salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
+        adicionarMensagem("Salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
         entidade = novo();
     }
 
     public void exclude(ActionEvent actionEvent) {
         getDao().remover(entidade);
         entidades = getDao().buscarTodas();
-        adicionarMensagem(entidade.getClass().getName().replace("model.", "") + " excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
+        adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
         entidade = novo();
     }
 
@@ -71,7 +71,8 @@ public abstract class crudBean<E, D extends CrudDAO> {
     }
 
     public void adicionarMensagem(String mensagem, FacesMessage.Severity tipoErro) {
-        FacesMessage fm = new FacesMessage(tipoErro, null, mensagem);
+        String cabecalho = entidade.getClass().getName().replace("model.", "");
+        FacesMessage fm = new FacesMessage(tipoErro, cabecalho, mensagem);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
 
