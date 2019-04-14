@@ -16,7 +16,7 @@ import javax.persistence.Query;
  *
  * @author John Peter
  */
-public class EditoraDAO implements Serializable{
+public class EditoraDAO implements Serializable, CrudDAO<Editora>{
     
     public static EditoraDAO editoraDAO;
 
@@ -26,6 +26,7 @@ public class EditoraDAO implements Serializable{
         }
         return editoraDAO;
     }
+    
     
     public Editora buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -40,6 +41,7 @@ public class EditoraDAO implements Serializable{
         return null;
     }
     
+    @Override
     public Editora buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Editora a where a.nomeEditora =:nome ");
@@ -53,18 +55,21 @@ public class EditoraDAO implements Serializable{
         return null;
     }
 
+    @Override
     public List<Editora> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("from Editora As a");
         return query.getResultList();
     }
 
-    public List<Editora> buscarTbEditoraInstancia() {
+    @Override
+    public List<Editora> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct a from Editora a group by a.editora");
         return query.getResultList();
     }
     
+    @Override
     public void remover(Editora editora) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -75,6 +80,7 @@ public class EditoraDAO implements Serializable{
         em.getTransaction().commit();
     }
 
+    @Override
     public Editora persistir(Editora editora) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -88,6 +94,7 @@ public class EditoraDAO implements Serializable{
         return editora;
     }
 
+    @Override
     public void removeAll() {
        EntityManager em = PersistenceUtil.getEntityManager();
        em.getTransaction().begin();

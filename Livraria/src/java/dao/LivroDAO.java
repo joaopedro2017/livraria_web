@@ -7,7 +7,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-public class LivroDAO implements Serializable {
+public class LivroDAO implements Serializable, CrudDAO<Livro> {
 
     public static LivroDAO livroDAO;
 
@@ -18,6 +18,7 @@ public class LivroDAO implements Serializable {
         return livroDAO;
     }
     
+    @Override
     public Livro buscar(String titulo) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Livro a where a.titulo =:titulo ");
@@ -31,18 +32,21 @@ public class LivroDAO implements Serializable {
         return null;
     }
 
+    @Override
     public List<Livro> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("from Livro As a");
         return query.getResultList();
     }
 
-    public List<Livro> buscarTbEditoraInstancia() {
+    @Override
+    public List<Livro> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct a from Livro a group by a.livro");
         return query.getResultList();
     }
     
+    @Override
     public void remover(Livro livro) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -53,6 +57,7 @@ public class LivroDAO implements Serializable {
         em.getTransaction().commit();
     }
 
+    @Override
     public Livro persistir(Livro livro) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -66,6 +71,7 @@ public class LivroDAO implements Serializable {
         return livro;
     }
 
+    @Override
     public void removeAll() {
        EntityManager em = PersistenceUtil.getEntityManager();
        em.getTransaction().begin();

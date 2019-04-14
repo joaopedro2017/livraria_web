@@ -7,7 +7,7 @@ import util.PersistenceUtil;
 import model.Assunto;
 import java.io.Serializable;
 
-public class AssuntoDAO implements Serializable{
+public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
 
     public static AssuntoDAO assuntoDAO;
 
@@ -18,6 +18,7 @@ public class AssuntoDAO implements Serializable{
         return assuntoDAO;
     }
     
+    @Override
     public Assunto buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Assunto a where a.nomeAssunto =:nome ");
@@ -31,18 +32,21 @@ public class AssuntoDAO implements Serializable{
         return null;
     }
 
+    @Override
     public List<Assunto> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("from Assunto As a");
         return query.getResultList();
     }
 
-    public List<Assunto> buscarTbAssuntoInstancia() {
+    @Override
+    public List<Assunto> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct a from Assunto a group by a.assunto");
         return query.getResultList();
     }
     
+    @Override
     public void remover(Assunto assunto) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -53,6 +57,7 @@ public class AssuntoDAO implements Serializable{
         em.getTransaction().commit();
     }
 
+    @Override
     public Assunto persistir(Assunto assunto) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -66,6 +71,7 @@ public class AssuntoDAO implements Serializable{
         return assunto;
     }
 
+    @Override
     public void removeAll() {
        EntityManager em = PersistenceUtil.getEntityManager();
        em.getTransaction().begin();

@@ -16,7 +16,7 @@ import javax.persistence.Query;
  *
  * @author John Peter
  */
-public class UsuarioDAO implements Serializable{
+public class UsuarioDAO implements Serializable,CrudDAO<Usuario>{
 
     public static UsuarioDAO usuarioDAO;
 
@@ -27,6 +27,7 @@ public class UsuarioDAO implements Serializable{
         return usuarioDAO;
     }
 
+    @Override
     public Usuario buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome ");
@@ -40,18 +41,21 @@ public class UsuarioDAO implements Serializable{
         return null;
     }
 
+    @Override
     public List<Usuario> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("from Usuario As a");
         return query.getResultList();
     }
 
-    public List<Usuario> buscarTbEditoraInstancia() {
+    @Override
+    public List<Usuario> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct a from Usuario a group by a.usuario");
         return query.getResultList();
     }
 
+    @Override
     public void remover(Usuario usuario) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -62,6 +66,7 @@ public class UsuarioDAO implements Serializable{
         em.getTransaction().commit();
     }
 
+    @Override
     public Usuario persistir(Usuario usuario) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -75,6 +80,7 @@ public class UsuarioDAO implements Serializable{
         return usuario;
     }
 
+    @Override
     public void removeAll() {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();

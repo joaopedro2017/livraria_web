@@ -16,7 +16,7 @@ import javax.persistence.Query;
  *
  * @author John Peter
  */
-public class AutorDAO implements Serializable{
+public class AutorDAO implements Serializable, CrudDAO<Autor>{
     
     public static AutorDAO autoresDAO;
 
@@ -27,6 +27,7 @@ public class AutorDAO implements Serializable{
         return autoresDAO;
     }
     
+    @Override
     public Autor buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Autor a where a.nomeAutor =:nome ");
@@ -39,18 +40,21 @@ public class AutorDAO implements Serializable{
         return null;
     }
 
+    @Override
     public List<Autor> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("from Autor As a");
         return query.getResultList();
     }
 
-    public List<Autor> buscarTbAutoresInstancia() {
+    @Override
+    public List<Autor> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select distinct a from Autor a group by a.autores");
         return query.getResultList();
     }
     
+    @Override
     public void remover(Autor autores) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -61,6 +65,7 @@ public class AutorDAO implements Serializable{
         em.getTransaction().commit();
     }
 
+    @Override
     public Autor persistir(Autor autores) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
@@ -74,6 +79,7 @@ public class AutorDAO implements Serializable{
         return autores;
     }
 
+    @Override
     public void removeAll() {
        EntityManager em = PersistenceUtil.getEntityManager();
        em.getTransaction().begin();
