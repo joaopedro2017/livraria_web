@@ -10,15 +10,16 @@
         </center>
         <br/>
         <h:form id="formPrincipal">
-            <div align="center">               
-                    <h2>Usuario: <p:inputText id="name" value="#{usuarioBean.entidade.nomeUsuario}" /></h2>
-                    <h2>Senha:       
-                        <p:password  id="senha" value="#{usuarioBean.entidade.senha}"/>
-                    </h2>
-                    <p:commandButton icon="ui-icon-key" value="Entrar" actionListener="#{usuarioBean.validar}" onclick="seach.hide()" alt="Record"/>
-            </div>
-            <br/>         
-
+            <center>
+                <h2>Usuario: 
+                    <p:inputText id="name" value="#{usuarioBean.entidade.nomeUsuario}" />
+                </h2>
+                <h2>. Senha: 
+                    <p:password  id="senha" value="#{usuarioBean.entidade.senha}"/>
+                </h2>
+                <p:commandButton style="width: 200px; height: 50px; font-size: x-large; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{usuarioBean.validar}" onclick="search.hide()" alt="Record"/>
+            </center>
+            <br/>
         </h:form>
     </ui:define>
 </ui:composition>
