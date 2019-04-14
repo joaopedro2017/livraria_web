@@ -12,6 +12,7 @@ import com.lowagie.text.PageSize;
 import dao.CrudDAO;
 import java.io.IOException;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.servlet.ServletContext;
@@ -28,30 +29,31 @@ import org.apache.poi.hssf.util.HSSFColor;
  * @param <E>
  * @param <D>
  */
-public abstract class crudBean <E, D extends CrudDAO>{
-    
+public abstract class crudBean<E, D extends CrudDAO> {
+
     public abstract D getDao();
+
     public abstract E novo();
-    
+
     private E entidade = novo();
     private List<E> entidades = getDao().buscarTodas();
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
         getDao().persistir(entidade);
-        //System.out.println(entidade);
         entidades = getDao().buscarTodas();
+        adicionarMensagem(entidade.getClass().getName().replace("model.", "") + " salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
         entidade = novo();
     }
 
     public void exclude(ActionEvent actionEvent) {
         getDao().remover(entidade);
         entidades = getDao().buscarTodas();
+        adicionarMensagem(entidade.getClass().getName().replace("model.", "") + " excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
         entidade = novo();
     }
 
     //getters and setters
-
     public E getEntidade() {
         return entidade;
     }
@@ -66,7 +68,12 @@ public abstract class crudBean <E, D extends CrudDAO>{
 
     public void setEntidades(List entidades) {
         this.entidades = entidades;
-    }    
+    }
+
+    public void adicionarMensagem(String mensagem, FacesMessage.Severity tipoErro) {
+        FacesMessage fm = new FacesMessage(tipoErro, null, mensagem);
+        FacesContext.getCurrentInstance().addMessage(null, fm);
+    }
 
     public void postProcessXLS(Object document) {
         HSSFWorkbook wb = (HSSFWorkbook) document;
@@ -91,5 +98,5 @@ public abstract class crudBean <E, D extends CrudDAO>{
 
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
     }
-    
+
 }

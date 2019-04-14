@@ -6,6 +6,7 @@
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Usuario</h2>
+        <p:messages showDetail="true" closable="true"></p:messages>
         <br/>
         <h:form id="formPrincipal">
             <div align="center">
@@ -96,7 +97,7 @@
                     Senha:
                     <p:password feedback="true" id="senha" value="#{usuarioBean.entidade.senha}"
                                 promptLabel="Digite..." weakLabel="Fraca"
-                    goodLabel="Boa" strongLabel="Forte"/>                  
+                                goodLabel="Boa" strongLabel="Forte"/>                  
                     Tipo:
                     <p:inputText id="tipo" value="#{usuarioBean.entidade.tipo}"/>                  
 
@@ -113,7 +114,7 @@
                     <h:selectOneMenu value="#{usuarioBean.entidade.tipo}" >
                         <f:selectItems value="#{TipoEnum}" />
                     </h:selectOneMenu> Codigo de Combobox 
-                    -->   
+            -->   
 
         </h:form>
     </ui:define>
