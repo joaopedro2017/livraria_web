@@ -25,8 +25,7 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
             editoraDAO = new EditoraDAO();
         }
         return editoraDAO;
-    }
-    
+    }    
     
     public Editora buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -37,7 +36,6 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
         if (editora != null && editora.size() > 0) {
             return editora.get(0);
         }
-
         return null;
     }
     
@@ -51,7 +49,6 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
         if (editora != null && editora.size() > 0) {
             return editora.get(0);
         }
-
         return null;
     }
 

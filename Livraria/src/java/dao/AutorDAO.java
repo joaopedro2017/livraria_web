@@ -18,13 +18,13 @@ import javax.persistence.Query;
  */
 public class AutorDAO implements Serializable, CrudDAO<Autor>{
     
-    public static AutorDAO autoresDAO;
+    public static AutorDAO autorDAO;
 
     public static AutorDAO getInstance() {
-        if (autoresDAO == null) {
-            autoresDAO = new AutorDAO();
+        if (autorDAO == null) {
+            autorDAO = new AutorDAO();
         }
-        return autoresDAO;
+        return autorDAO;
     }
     
     @Override

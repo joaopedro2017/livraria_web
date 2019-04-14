@@ -10,7 +10,7 @@
         <h:form id="formPrincipal">
             <div align="center">
 
-                <p:dataTable var="lista" value="#{livroBean.livros}"
+                <p:dataTable var="lista" value="#{livroBean.entidades}"
                              id="tabelaLivro" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
@@ -48,11 +48,11 @@
                         <center>
 
                             <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{livroBean.livro}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton>
 
                             <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
-                                <f:setPropertyActionListener target="#{livroBean.livro}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
 
                         </center>
@@ -101,15 +101,15 @@
             <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
-                    <p:inputText id="cod" value="#{livroBean.livro.id}" /-->
+                    <p:inputText id="cod" value="#{livroBean.entidade.id}" /-->
                     Título:
-                    <p:inputText id="name" value="#{livroBean.livro.titulo}" />    
+                    <p:inputText id="name" value="#{livroBean.entidade.titulo}" />    
                     ISBN:
-                    <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.livro.isbn}"/>
+                    <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.entidade.isbn}"/>
                     Edição:
-                    <p:inputMask mask="9999" id="edicao" value="#{livroBean.livro.edicao}"/>
+                    <p:inputMask mask="9999" id="edicao" value="#{livroBean.entidade.edicao}"/>
                     Ano:
-                    <p:calendar id="ano" value="#{livroBean.livro.ano}"></p:calendar>                     
+                    <p:calendar id="ano" value="#{livroBean.entidade.ano}"></p:calendar>                     
 
                 </p:panelGrid>  
                 <br/>

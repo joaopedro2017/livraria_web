@@ -10,8 +10,8 @@
         <h:form id="formPrincipal">
             <div align="center">
                 
-                <p:dataTable var="lista" value="#{assuntoBean.assuntos}"
-                             id="tabelaEditora" emptyMessage="Nenhum registro encontrado"
+                <p:dataTable var="lista" value="#{assuntoBean.entidades}"
+                             id="assunto" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
 
@@ -35,11 +35,11 @@
                         <center>
                             
                             <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{assuntoBean.assunto}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{assuntoBean.entidade}" value="#{lista}" />
                             </p:commandButton>
                             
                             <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
-                                <f:setPropertyActionListener target="#{assuntoBean.assunto}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{assuntoBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
                         
                         </center>
@@ -88,13 +88,13 @@
             <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
-                    <p:inputText id="cod" value="#{assuntoBean.assunto.id}" /-->
+                    <p:inputText id="cod" value="#{assuntoBean.entidade.id}" /-->
                     Nome:
-                    <p:inputText id="name" value="#{assuntoBean.assunto.nomeAssunto}" />
+                    <p:inputText id="name" value="#{assuntoBean.entidade.nomeAssunto}" />
                     Descrição:
-                    <p:inputText id="descricaoAssunto" value="#{assuntoBean.assunto.descricaoAssunto}" />
+                    <p:inputText id="descricaoAssunto" value="#{assuntoBean.entidade.descricaoAssunto}" />
                     Assunto:
-                    <p:inputText id="Assunto" value="#{assuntoBean.assunto.assunto}" />
+                    <p:inputText id="Assunto" value="#{assuntoBean.entidade.assunto}" />
                 </p:panelGrid>  
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{assuntoBean.record}" onclick="record.hide()" alt="Record"/> 

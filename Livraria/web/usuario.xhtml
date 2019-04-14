@@ -10,7 +10,7 @@
         <h:form id="formPrincipal">
             <div align="center">
 
-                <p:dataTable var="lista" value="#{usuarioBean.usuarios}"
+                <p:dataTable var="lista" value="#{usuarioBean.entidades}"
                              id="tabelaUsuario" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
@@ -35,11 +35,11 @@
                         <center>
 
                             <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{usuarioBean.entidade}" value="#{lista}" />
                             </p:commandButton>
 
                             <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
-                                <f:setPropertyActionListener target="#{usuarioBean.usuario}" value="#{lista}" />
+                                <f:setPropertyActionListener target="#{usuarioBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
 
                         </center>
@@ -88,17 +88,17 @@
             <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
-                    <p:inputText id="cod" value="#{usuarioBean.usuario.id}" /-->
+                    <p:inputText id="cod" value="#{usuarioBean.entidade.id}" /-->
                     Nome:
-                    <p:inputText id="name" value="#{usuarioBean.usuario.nomeUsuario}" />    
+                    <p:inputText id="name" value="#{usuarioBean.entidade.nomeUsuario}" />    
                     Email:
-                    <p:inputText id="email" value="#{usuarioBean.usuario.email}"/>
+                    <p:inputText id="email" value="#{usuarioBean.entidade.email}"/>
                     Senha:
-                    <p:password feedback="true" id="senha" value="#{usuarioBean.usuario.senha}"
+                    <p:password feedback="true" id="senha" value="#{usuarioBean.entidade.senha}"
                                 promptLabel="Digite..." weakLabel="Fraca"
                     goodLabel="Boa" strongLabel="Forte"/>                  
                     Tipo:
-                    <p:inputText id="tipo" value="#{usuarioBean.usuario.tipo}"/>                  
+                    <p:inputText id="tipo" value="#{usuarioBean.entidade.tipo}"/>                  
 
                 </p:panelGrid>  
                 <br/>
@@ -110,7 +110,7 @@
                 <p:commandButton value="Deletar" actionListener="#{usuarioBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
             </p:dialog>
             <!--
-                    <h:selectOneMenu value="#{usuarioBean.usuario.tipo}" >
+                    <h:selectOneMenu value="#{usuarioBean.entidade.tipo}" >
                         <f:selectItems value="#{TipoEnum}" />
                     </h:selectOneMenu> Codigo de Combobox 
                     -->   

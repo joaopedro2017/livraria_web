@@ -10,6 +10,7 @@ import java.util.List;
 /**
  *
  * @author John Peter
+ * @param <E>
  */
 public interface CrudDAO<E> {
     

@@ -10,6 +10,7 @@ import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.PageSize;
+import dao.CrudDAO;
 import dao.EditoraDAO;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,75 +33,27 @@ import org.apache.poi.hssf.util.HSSFColor;
  */
 @ManagedBean
 @ViewScoped
-public class editoraBean {
+public class editoraBean extends crudBean<Editora, EditoraDAO>{
     
-    Editora editora = new Editora();
-
-    List editoras = new ArrayList();
-
-    //construtor
-    public editoraBean() {
-        editoras = new EditoraDAO().buscarTodas();
-        editora = new Editora();
-    }
-
-    //Métodos dos botões 
-    public void record(ActionEvent actionEvent) {
-        new EditoraDAO().persistir(editora);
-        editoras = new EditoraDAO().buscarTodas();
-        editora = new Editora();
-    }
-
-    public void exclude(ActionEvent actionEvent) {
-        new EditoraDAO().remover(editora);
-        editoras = new EditoraDAO().buscarTodas();
-        editora = new Editora();
-    }
+    private EditoraDAO editoraDAO;
+    
     
     public Editora buscarId(int id){
-        return editora = new EditoraDAO().buscarId(id);
+        return new EditoraDAO().buscarId(id);
     }
 
-    //getters and setters
-
-    public Editora getEditora() {
-        return editora;
-    }
-
-    public void setEditora(Editora editora) {
-        this.editora = editora;
-    }
-
-    public List getEditoras() {
-        return editoras;
-    }
-
-    public void setEditoras(List editoras) {
-        this.editoras = editoras;
-    }    
-    
-    public void postProcessXLS(Object document) {
-        HSSFWorkbook wb = (HSSFWorkbook) document;
-        HSSFSheet sheet = wb.getSheetAt(0);
-        HSSFRow header = sheet.getRow(0);
-
-        HSSFCellStyle cellStyle = wb.createCellStyle();
-        cellStyle.setFillForegroundColor(HSSFColor.GREEN.index);
-        cellStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
-
-        for (int i = 0; i < header.getPhysicalNumberOfCells(); i++) {
-            HSSFCell cell = header.getCell(i);
-
-            cell.setCellStyle(cellStyle);
+    @Override
+    public EditoraDAO getDao() {
+        if (editoraDAO == null) {
+            editoraDAO = new EditoraDAO();
         }
+        return editoraDAO;
     }
 
-    public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
-        Document pdf = (Document) document;
-        pdf.open();
-        pdf.setPageSize(PageSize.A4);
+    @Override
+    public Editora novo() {
+        return new Editora();
+    }
 
-        ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-    }    
     
 }

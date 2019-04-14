@@ -8,7 +8,7 @@ import model.Assunto;
 import java.io.Serializable;
 
 public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
-
+    
     public static AssuntoDAO assuntoDAO;
 
     public static AssuntoDAO getInstance() {
@@ -17,7 +17,7 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         }
         return assuntoDAO;
     }
-    
+
     @Override
     public Assunto buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -28,7 +28,6 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         if (assunto != null && assunto.size() > 0) {
             return assunto.get(0);
         }
-
         return null;
     }
 
@@ -45,7 +44,7 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         Query query = em.createQuery("select distinct a from Assunto a group by a.assunto");
         return query.getResultList();
     }
-    
+
     @Override
     public void remover(Assunto assunto) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -73,11 +72,10 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
 
     @Override
     public void removeAll() {
-       EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Assunto ");
-       query.executeUpdate();
-       em.getTransaction().commit();
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Assunto ");
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
-
 }
