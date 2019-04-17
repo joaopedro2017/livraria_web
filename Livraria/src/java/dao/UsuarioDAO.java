@@ -89,11 +89,11 @@ public class UsuarioDAO implements Serializable,CrudDAO<Usuario>{
         em.getTransaction().commit();
     }
 
-    public Usuario autenticacao(Usuario us) {
+    public Usuario autenticacao(String nome, String senha) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome AND a.senha=:senha ");
-        query.setParameter("nome", us.getNomeUsuario());
-        query.setParameter("senha", us.getSenha());
+        query.setParameter("nome", nome);
+        query.setParameter("senha", senha);
 
         List<Usuario> usuario = query.getResultList();
         if (usuario != null && usuario.size() > 0) {

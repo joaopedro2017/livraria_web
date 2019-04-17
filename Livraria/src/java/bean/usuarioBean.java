@@ -7,11 +7,8 @@ package bean;
 
 import model.Usuario;
 import dao.UsuarioDAO;
-import java.io.IOException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 /**
  *
@@ -21,19 +18,8 @@ import javax.faces.event.ActionEvent;
 @ViewScoped
 public class usuarioBean extends crudBean<Usuario, UsuarioDAO> {
 
-    private UsuarioDAO usuarioDAO;
+    private UsuarioDAO usuarioDAO;    
     
-    public void validar(ActionEvent actionEvent) throws IOException {
-        Usuario tipo = usuarioDAO.autenticacao(super.getEntidade());
-        try {
-            if ("Administrador".equals(tipo.getTipo())) {
-                FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-            }
-        } catch (Exception ex) {
-            FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-        }
-    }
-
     @Override
     public UsuarioDAO getDao() {
         if (usuarioDAO == null) {

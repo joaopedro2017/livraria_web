@@ -3,21 +3,23 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
         <center>
             <h2 class="page-header">Login</h2>
+            <ms:mensagem/>
         </center>
         <br/>
         <h:form id="formPrincipal">
             <center>
                 <h2>Usuario: 
-                    <p:inputText id="name" value="#{usuarioBean.entidade.nomeUsuario}" />
+                    <p:inputText id="name" value="#{loginBean.nomeUsuario}" />
                 </h2>
                 <h2>. Senha: 
-                    <p:password  id="senha" value="#{usuarioBean.entidade.senha}"/>
+                    <p:password  id="senha" value="#{loginBean.senha}"/>
                 </h2>
-                <p:commandButton style="width: 200px; height: 50px; font-size: x-large; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{usuarioBean.validar}" onclick="search.hide()" alt="Record"/>
+                <p:commandButton style="width: 200px; height: 50px; font-size: x-large; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{loginBean.login}" onclick="search.hide()" alt="Record"/>
             </center>
             <br/>
         </h:form>
