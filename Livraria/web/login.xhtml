@@ -11,15 +11,37 @@
             <ms:mensagem/>
         </center>
         <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
         <h:form id="formPrincipal">
             <center>
-                <h2>Usuario: 
-                    <p:inputText id="name" value="#{loginBean.nomeUsuario}" />
-                </h2>
-                <h2>. Senha: 
-                    <p:password  id="senha" value="#{loginBean.senha}"/>
-                </h2>
-                <p:commandButton style="width: 200px; height: 50px; font-size: x-large; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{loginBean.login}" onclick="search.hide()" alt="Record"/>
+                <div>
+                    <p:inputText id="name" 
+                                 value="#{loginBean.nomeUsuario}"
+                                 maxlength="255"
+                                 size="50"
+                                 style="text-align: center; height: 40px"
+                                 required="true"
+                                 placeholder="Usuario"
+                                 tabindex="1"
+                                 requiredMessage="Usuário em branco"/>
+                </div>
+                <br/>
+                <div>
+                    <p:password  id="senha" 
+                                 value="#{loginBean.senha}"
+                                 maxlength="255"
+                                 size="50"
+                                 style="text-align: center; height: 40px"
+                                 required="true"
+                                 placeholder="Senha"
+                                 tabindex="2"
+                                 requiredMessage="Digite sua senha"/>
+                </div>
+                <br/>
+                <p:commandButton tabindex="3" style="width: 200px; height: 40px; font-size: larger; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{loginBean.login}" onclick="search.hide()" alt="Record"/>
             </center>
             <br/>
         </h:form>
