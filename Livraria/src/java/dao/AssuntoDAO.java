@@ -30,6 +30,18 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         }
         return null;
     }
+    
+    public Assunto buscarId(int id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Assunto a where a.id =:id ");
+        query.setParameter("id", id);
+
+        List<Assunto> assunto = query.getResultList();
+        if (assunto != null && assunto.size() > 0) {
+            return assunto.get(0);
+        }
+        return null;
+    }
 
     @Override
     public List<Assunto> buscarTodas() {

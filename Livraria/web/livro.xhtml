@@ -36,23 +36,22 @@
                         <h:outputText value="#{lista.ano}" />
                     </p:column>                 
 
-                    <p:column headerText="Editora" sortBy="#{lista.editoraid}" filterBy="#{lista.editoraid}">
-                        <h:outputText value="#{lista.editoraid}" />
-                    </p:column>
-                    <!-- 
-                    <p:column headerText="Assunto" sortBy="#{lista.tbAssunto_idtbAssunto}" filterBy="#{lista.tbAssunto_idtbAssunto}">
-                        <h:outputText value="#{lista.tbAssunto_idtbAssunto}" />
+                    <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
+                        <h:outputText value="#{lista.editoraid.nomeEditora}" />
                     </p:column>
                     
-                    -->
+                    <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
+                        <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+                    </p:column>                    
+                   
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
-                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
+                            <p:commandButton icon="ui-icon-pencil" value="E" onclick="PF('record').show();"> 
                                 <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton>
 
-                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                            <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
 
@@ -114,6 +113,10 @@
                     Editora:
                     <p:selectOneMenu value="#{livroBean.entidade.editoraid}" style="width: 180px">
                         <f:selectItems value="#{editoraBean.itens}"/>
+                    </p:selectOneMenu>
+                    Assunto:
+                    <p:selectOneMenu value="#{livroBean.entidade.assuntoid}" style="width: 180px">
+                        <f:selectItems value="#{assuntoBean.itens}"/>
                     </p:selectOneMenu>
 
                 </p:panelGrid>  
