@@ -18,7 +18,6 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         return assuntoDAO;
     }
 
-    @Override
     public Assunto buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Assunto a where a.nomeAssunto =:nome ");
@@ -31,6 +30,7 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         return null;
     }
     
+    @Override
     public Assunto buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Assunto a where a.id =:id ");

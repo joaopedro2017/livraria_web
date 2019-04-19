@@ -27,7 +27,6 @@ public class UsuarioDAO implements Serializable,CrudDAO<Usuario>{
         return usuarioDAO;
     }
 
-    @Override
     public Usuario buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:nome ");
@@ -37,7 +36,19 @@ public class UsuarioDAO implements Serializable,CrudDAO<Usuario>{
         if (usuario != null && usuario.size() > 0) {
             return usuario.get(0);
         }
+        return null;
+    }
+    
+    @Override
+    public Usuario buscarId(int id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:id ");
+        query.setParameter("nome", id);
 
+        List<Usuario> usuario = query.getResultList();
+        if (usuario != null && usuario.size() > 0) {
+            return usuario.get(0);
+        }
         return null;
     }
 

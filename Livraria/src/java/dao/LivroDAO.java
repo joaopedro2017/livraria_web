@@ -18,7 +18,6 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
         return livroDAO;
     }
     
-    @Override
     public Livro buscar(String titulo) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Livro a where a.titulo =:titulo ");
@@ -28,7 +27,19 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
         if (livro != null && livro.size() > 0) {
             return livro.get(0);
         }
+        return null;
+    }
+    
+    @Override
+    public Livro buscarId(int id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Livro a where a.id =:id ");
+        query.setParameter("titulo", id);
 
+        List<Livro> livro = query.getResultList();
+        if (livro != null && livro.size() > 0) {
+            return livro.get(0);
+        }
         return null;
     }
 
