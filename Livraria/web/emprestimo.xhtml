@@ -29,7 +29,9 @@
                     </p:column>
 
                     <p:column headerText="Data" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
-                        <h:outputText value="#{lista.dataEmprestimo}" />
+                        <h:outputText value="#{lista.dataEmprestimo}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
                     </p:column>                                    
 
                     <p:column headerText="Opções" exportable="false">
@@ -99,8 +101,7 @@
                         <f:selectItems value="#{usuarioBean.itens}"/>
                     </p:selectOneMenu>
                     Data:
-                    <p:calendar id="data" value="#{emprestimoBean.entidade.dataEmprestimo}"></p:calendar> 
-
+                    <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="data" value="#{emprestimoBean.entidade.dataEmprestimo}"></p:calendar>
                 </p:panelGrid>  
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{emprestimoBean.record}" onclick="record.hide()" alt="Record"/> 

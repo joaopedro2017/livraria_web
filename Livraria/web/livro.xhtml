@@ -33,17 +33,19 @@
                     </p:column>
 
                     <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
-                        <h:outputText value="#{lista.ano}" />
+                        <h:outputText value="#{lista.ano}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
                     </p:column>                 
 
                     <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
                         <h:outputText value="#{lista.editoraid.nomeEditora}" />
                     </p:column>
-                    
+
                     <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
                         <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
                     </p:column>                    
-                   
+
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
@@ -109,7 +111,7 @@
                     Edição:
                     <p:inputMask mask="9999" id="edicao" value="#{livroBean.entidade.edicao}"/>
                     Ano:
-                    <p:calendar id="ano" value="#{livroBean.entidade.ano}"></p:calendar> 
+                    <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="ano" value="#{livroBean.entidade.ano}"></p:calendar> 
                     Editora:
                     <p:selectOneMenu value="#{livroBean.entidade.editoraid}" style="width: 180px">
                         <f:selectItems value="#{editoraBean.itens}"/>
