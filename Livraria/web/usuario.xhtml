@@ -86,7 +86,7 @@
             </p:confirmDialog>  
 
 
-            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
+            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name" resizable="false">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
                     <p:inputText id="cod" value="#{usuarioBean.entidade.id}" /-->
@@ -106,15 +106,10 @@
                 <p:commandButton value="Salvar" actionListener="#{usuarioBean.record}" onclick="record.hide()" alt="Record"/> 
             </p:dialog>
 
-            <p:dialog header="Deletar" widgetVar="remove" modal="false"> 
+            <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
                 <p:commandButton value="Deletar" actionListener="#{usuarioBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
-            </p:dialog>
-            <!--
-                    <h:selectOneMenu value="#{usuarioBean.entidade.tipo}" >
-                        <f:selectItems value="#{TipoEnum}" />
-                    </h:selectOneMenu> Codigo de Combobox 
-            -->   
+            </p:dialog>            
 
         </h:form>
     </ui:define>

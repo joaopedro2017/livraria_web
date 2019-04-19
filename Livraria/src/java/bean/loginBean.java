@@ -47,16 +47,17 @@ public class loginBean {
     public void login(ActionEvent actionEvent) throws IOException {
         try {
             Usuario user = new UsuarioDAO().autenticacao(nomeUsuario, senha);
-            FacesContext context = FacesContext.getCurrentInstance();
             HttpServletRequest request = SessionUtil.getRequest();
             request.getSession().setAttribute("user", user);
             request.getSession().setAttribute("nome", user.getNomeUsuario());
-            context.getExternalContext().redirect("index.xhtml");
+            request.getSession().setAttribute("tipo", user.getTipo());
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.getExternalContext().redirect("index.xhtml");            
         } catch (Exception ex) {
             setNomeUsuario("");
             setSenha("");
             adicionarMensagem();
-        }
+        }        
     }
 
     public void logoff() throws IOException {
@@ -72,5 +73,16 @@ public class loginBean {
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, cabecalho, mensagem);
         FacesContext.getCurrentInstance().addMessage(null, fm);
     }
-
+    
+    public boolean isAdmin(){
+        return "Administrador".equals(SessionUtil.getUserTipo());
+    }
+    
+    public String getPerfil(){
+        String perfil = SessionUtil.getUserName();
+        if(perfil == null){
+            return null;
+        }
+        return perfil;
+    }
 }

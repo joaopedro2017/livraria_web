@@ -78,7 +78,7 @@
             </p:confirmDialog>  
 
 
-            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name">
+            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name" resizable="false">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
                     <p:inputText id="cod" value="#{editoraBean.entidade.id}" /-->
@@ -90,7 +90,7 @@
                 <p:commandButton value="Salvar" actionListener="#{editoraBean.record}" onclick="record.hide()" alt="Record"/> 
             </p:dialog>
 
-            <p:dialog header="Deletar" widgetVar="remove" modal="false"> 
+            <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
                 <p:commandButton value="Deletar" actionListener="#{editoraBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
             </p:dialog>
