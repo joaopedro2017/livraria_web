@@ -42,47 +42,47 @@ public class ExemplarDAO implements CrudDAO<Exemplar>{
     @Override
     public List<Exemplar> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Editora As a");
+        Query query = em.createQuery("from Exemplar As a");
         return query.getResultList();
     }
 
     @Override
     public List<Exemplar> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Editora a group by a.editora");
+        Query query = em.createQuery("select distinct a from Exemplar a group by a.exemplar");
         return query.getResultList();
     }
     
     @Override
-    public void remover(Exemplar editora) {
+    public void remover(Exemplar exemplar) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
-        if (!em.contains(editora)) {
-            editora = em.merge(editora);
+        if (!em.contains(exemplar)) {
+            exemplar = em.merge(exemplar);
         }
-        em.remove(editora);
+        em.remove(exemplar);
         em.getTransaction().commit();
     }
 
     @Override
-    public Exemplar persistir(Exemplar editora) {
+    public Exemplar persistir(Exemplar exemplar) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         try {
-            editora = em.merge(editora);
+            exemplar = em.merge(exemplar);
             em.getTransaction().commit();
-            System.out.println("Registro Editora gravado com sucesso");
+            System.out.println("Registro Exemplar gravado com sucesso");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return editora;
+        return exemplar;
     }
 
     @Override
     public void removeAll() {
        EntityManager em = PersistenceUtil.getEntityManager();
        em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Editora");
+       Query query = em.createQuery(" delete from Exemplar");
        query.executeUpdate();
        em.getTransaction().commit();
     }

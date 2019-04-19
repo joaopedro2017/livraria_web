@@ -43,7 +43,7 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
     public Autor buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Autor a where a.id =:id ");
-        query.setParameter("nome", id);
+        query.setParameter("id", id);
 
         List<Autor> autores = query.getResultList();
         if (autores != null && autores.size() > 0) {

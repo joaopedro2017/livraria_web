@@ -48,19 +48,18 @@ public class AutenticacaoFilter implements Filter {
             throws IOException, ServletException {
         if (debug) {
             log("AutenticacaoFilter:DoAfterProcessing");
-        }
+        }        
     }
 
     /**
      *
      * @param sr The servlet request we are processing
-     * @param sr1 The servlet response we are creating
+     * @param sr2 The servlet response we are creating
      * @param fc The filter chain we are processing
      *
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
-    @Override
     public void doFilter(ServletRequest sr, ServletResponse sr1, FilterChain fc) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) sr;
         HttpServletResponse response = (HttpServletResponse) sr1;
@@ -81,7 +80,6 @@ public class AutenticacaoFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
-     * @return 
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -119,7 +117,6 @@ public class AutenticacaoFilter implements Filter {
 
     /**
      * Return a String representation of this object.
-     * @return 
      */
     @Override
     public String toString() {

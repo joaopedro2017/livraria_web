@@ -34,7 +34,7 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
     public Livro buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Livro a where a.id =:id ");
-        query.setParameter("titulo", id);
+        query.setParameter("id", id);
 
         List<Livro> livro = query.getResultList();
         if (livro != null && livro.size() > 0) {
