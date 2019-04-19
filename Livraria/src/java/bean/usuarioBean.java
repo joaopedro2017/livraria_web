@@ -5,10 +5,15 @@
  */
 package bean;
 
+import dao.EditoraDAO;
 import model.Usuario;
 import dao.UsuarioDAO;
+import java.util.ArrayList;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.model.SelectItem;
+import model.Editora;
 
 /**
  *
@@ -18,7 +23,22 @@ import javax.faces.bean.ViewScoped;
 @ViewScoped
 public class usuarioBean extends crudBean<Usuario, UsuarioDAO> {
 
-    private UsuarioDAO usuarioDAO;    
+    private UsuarioDAO usuarioDAO;
+    public List<SelectItem> itens;
+
+    public List<SelectItem> getItens() {
+        List<SelectItem> list = new ArrayList<SelectItem>();
+        List<Usuario> editoras = usuarioDAO.buscarTodas();
+
+        for (Usuario usuario : editoras) {
+            list.add(new SelectItem(usuario, usuario.getNomeUsuario())); //nome Usuario ira aparecer no combo
+        }
+        return list;
+    }
+
+    public Usuario buscarId(int id) {
+        return new UsuarioDAO().buscarId(id);
+    }
     
     @Override
     public UsuarioDAO getDao() {

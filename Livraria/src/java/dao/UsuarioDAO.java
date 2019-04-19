@@ -42,8 +42,8 @@ public class UsuarioDAO implements Serializable,CrudDAO<Usuario>{
     @Override
     public Usuario buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Usuario a where a.nomeUsuario =:id ");
-        query.setParameter("nome", id);
+        Query query = em.createQuery("select a from Usuario a where a.id =:id ");
+        query.setParameter("id", id);
 
         List<Usuario> usuario = query.getResultList();
         if (usuario != null && usuario.size() > 0) {

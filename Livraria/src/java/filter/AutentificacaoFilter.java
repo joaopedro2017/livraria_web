@@ -25,54 +25,52 @@ import model.Usuario;
  *
  * @author John Peter
  */
-public class AutenticacaoFilter implements Filter {
-    
+public class AutentificacaoFilter implements Filter {
+
     private static final boolean debug = true;
 
-    // The filter configuration object we are associated with.  If
-    // this value is null, this filter instance is not currently
-    // configured. 
     private FilterConfig filterConfig = null;
-    
-    public AutenticacaoFilter() {
-    }    
-    
+
+    public AutentificacaoFilter() {
+    }
+
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AutenticacaoFilter:DoBeforeProcessing");
-        }        
-    }    
-    
+            log("AutentificacaoFilter:DoBeforeProcessing");
+        }
+    }
+
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("AutenticacaoFilter:DoAfterProcessing");
-        }        
+            log("AutentificacaoFilter:DoAfterProcessing");
+        }
     }
 
     /**
      *
      * @param sr The servlet request we are processing
-     * @param sr2 The servlet response we are creating
+     * @param sr1 The servlet response we are creating
      * @param fc The filter chain we are processing
      *
      * @exception IOException if an input/output error occurs
      * @exception ServletException if a servlet error occurs
      */
+    @Override
     public void doFilter(ServletRequest sr, ServletResponse sr1, FilterChain fc) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) sr;
         HttpServletResponse response = (HttpServletResponse) sr1;
-        
+
         HttpSession session = request.getSession();
         Usuario user = (Usuario) session.getAttribute("user");
         if (session.isNew() || user == null) {
             doLogin(sr, sr1, request);
-        }else{
-             fc.doFilter(sr, sr1); 
-        }        
+        } else {
+            fc.doFilter(sr, sr1);
+        }
     }
-    
+
     public void doLogin(ServletRequest request, ServletResponse response, HttpServletRequest req) throws ServletException, IOException {
         RequestDispatcher dispatcher = req.getRequestDispatcher("login.xhtml");
         dispatcher.forward(request, response);
@@ -80,6 +78,8 @@ public class AutenticacaoFilter implements Filter {
 
     /**
      * Return the filter configuration object for this filter.
+     *
+     * @return
      */
     public FilterConfig getFilterConfig() {
         return (this.filterConfig);
@@ -98,50 +98,53 @@ public class AutenticacaoFilter implements Filter {
      * Destroy method for this filter
      */
     @Override
-    public void destroy() {        
+    public void destroy() {
     }
 
     /**
      * Init method for this filter
+     *
      * @param filterConfig
      */
     @Override
-    public void init(FilterConfig filterConfig) {        
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
-            if (debug) {                
-                log("AutenticacaoFilter:Initializing filter");
+            if (debug) {
+                log("AutentificacaoFilter:Initializing filter");
             }
         }
     }
 
     /**
      * Return a String representation of this object.
+     *
+     * @return
      */
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("AutenticacaoFilter()");
+            return ("AutentificacaoFilter()");
         }
-        StringBuffer sb = new StringBuffer("AutenticacaoFilter(");
+        StringBuffer sb = new StringBuffer("AutentificacaoFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
     }
-    
+
     private void sendProcessingError(Throwable t, ServletResponse response) {
-        String stackTrace = getStackTrace(t);        
-        
+        String stackTrace = getStackTrace(t);
+
         if (stackTrace != null && !stackTrace.equals("")) {
             try {
                 response.setContentType("text/html");
                 PrintStream ps = new PrintStream(response.getOutputStream());
-                PrintWriter pw = new PrintWriter(ps);                
+                PrintWriter pw = new PrintWriter(ps);
                 pw.print("<html>\n<head>\n<title>Error</title>\n</head>\n<body>\n"); //NOI18N
 
                 // PENDING! Localize this for next official release
-                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");                
-                pw.print(stackTrace);                
+                pw.print("<h1>The resource did not process correctly</h1>\n<pre>\n");
+                pw.print(stackTrace);
                 pw.print("</pre></body>\n</html>"); //NOI18N
                 pw.close();
                 ps.close();
@@ -158,7 +161,7 @@ public class AutenticacaoFilter implements Filter {
             }
         }
     }
-    
+
     public static String getStackTrace(Throwable t) {
         String stackTrace = null;
         try {
@@ -172,9 +175,8 @@ public class AutenticacaoFilter implements Filter {
         }
         return stackTrace;
     }
-    
+
     public void log(String msg) {
-        filterConfig.getServletContext().log(msg);        
+        filterConfig.getServletContext().log(msg);
     }
-    
 }

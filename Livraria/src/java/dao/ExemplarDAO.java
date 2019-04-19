@@ -15,8 +15,8 @@ import util.PersistenceUtil;
  *
  * @author John Peter
  */
-public class ExemplarDAO implements CrudDAO<Exemplar>{
-    
+public class ExemplarDAO implements CrudDAO<Exemplar> {
+
     public static ExemplarDAO exemplarDAO;
 
     public static ExemplarDAO getInstance() {
@@ -24,10 +24,10 @@ public class ExemplarDAO implements CrudDAO<Exemplar>{
             exemplarDAO = new ExemplarDAO();
         }
         return exemplarDAO;
-    }    
-    
+    }
+
     @Override
-    public Exemplar buscarId(int id) {
+    public Exemplar buscarId(int id) { 
         EntityManager em = PersistenceUtil.getEntityManager();
         Query query = em.createQuery("select a from Exemplar a where a.id =:id ");
         query.setParameter("id", id);
@@ -37,7 +37,7 @@ public class ExemplarDAO implements CrudDAO<Exemplar>{
             return exemplar.get(0);
         }
         return null;
-    }   
+    }
 
     @Override
     public List<Exemplar> buscarTodas() {
@@ -52,7 +52,7 @@ public class ExemplarDAO implements CrudDAO<Exemplar>{
         Query query = em.createQuery("select distinct a from Exemplar a group by a.exemplar");
         return query.getResultList();
     }
-    
+
     @Override
     public void remover(Exemplar exemplar) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -80,11 +80,11 @@ public class ExemplarDAO implements CrudDAO<Exemplar>{
 
     @Override
     public void removeAll() {
-       EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Exemplar");
-       query.executeUpdate();
-       em.getTransaction().commit();
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Exemplar");
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
-    
+
 }

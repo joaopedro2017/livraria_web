@@ -5,11 +5,11 @@
         <param-value>bootstrap</param-value>
     </context-param>
     <filter>
-        <filter-name>AutenticacaoFilter</filter-name>
-        <filter-class>filter.AutenticacaoFilter</filter-class>
+        <filter-name>AutentificacaoFilter</filter-name>
+        <filter-class>filter.AutentificacaoFilter</filter-class>
     </filter>
     <filter-mapping>
-        <filter-name>AutenticacaoFilter</filter-name>
+        <filter-name>AutentificacaoFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
     <servlet>
