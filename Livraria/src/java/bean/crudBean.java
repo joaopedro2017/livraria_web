@@ -15,6 +15,7 @@ import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.persistence.RollbackException;
 import javax.servlet.ServletContext;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
@@ -45,7 +46,7 @@ public abstract class crudBean<E, D extends CrudDAO> {
             entidades = getDao().buscarTodas();
             adicionarMensagem("Salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
             entidade = novo();
-        } catch (Exception ex) {
+        } catch (RollbackException ex) {
             adicionarMensagem("Erro ao salvar!" + ex, FacesMessage.SEVERITY_ERROR);
         }
     }
@@ -56,7 +57,8 @@ public abstract class crudBean<E, D extends CrudDAO> {
             entidades = getDao().buscarTodas();
             adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
             entidade = novo();
-        } catch (Exception ex) {
+        } catch (RollbackException ex) {
+            System.out.println("Mensagem de Erro " + ex);
             adicionarMensagem("Erro ao excluir!" + ex, FacesMessage.SEVERITY_ERROR);
         }
     }
