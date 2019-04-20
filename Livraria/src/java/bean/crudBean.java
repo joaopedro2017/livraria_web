@@ -40,17 +40,25 @@ public abstract class crudBean<E, D extends CrudDAO> {
 
     //Métodos dos botões 
     public void record(ActionEvent actionEvent) {
-        getDao().persistir(entidade);
-        entidades = getDao().buscarTodas();
-        adicionarMensagem("Salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
-        entidade = novo();
+        try {
+            getDao().persistir(entidade);
+            entidades = getDao().buscarTodas();
+            adicionarMensagem("Salvo(a) com sucesso!", FacesMessage.SEVERITY_INFO);
+            entidade = novo();
+        } catch (Exception ex) {
+            adicionarMensagem("Erro ao salvar!" + ex, FacesMessage.SEVERITY_ERROR);
+        }
     }
 
     public void exclude(ActionEvent actionEvent) {
-        getDao().remover(entidade);
-        entidades = getDao().buscarTodas();
-        adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
-        entidade = novo();
+        try {
+            getDao().remover(entidade);
+            entidades = getDao().buscarTodas();
+            adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
+            entidade = novo();
+        } catch (Exception ex) {
+            adicionarMensagem("Erro ao excluir!" + ex, FacesMessage.SEVERITY_ERROR);
+        }
     }
 
     //getters and setters
