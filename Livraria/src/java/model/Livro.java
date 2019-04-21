@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -58,7 +60,12 @@ public class Livro implements Serializable {
     private String isbn;
     @Column(name = "titulo")
     private String titulo;
-    @ManyToMany(mappedBy = "livroList")
+    @ManyToMany(cascade = {
+        CascadeType.ALL})
+    @JoinTable(name = "AutorLivro",
+            joinColumns = @JoinColumn(name = "Livro_id"),
+            inverseJoinColumns = @JoinColumn(name = "Autor_id")
+    )
     private List<Autor> autorList = new ArrayList<Autor>();
     @JoinColumn(name = "Assunto_id", referencedColumnName = "id")
     @ManyToOne

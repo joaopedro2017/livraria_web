@@ -2,13 +2,13 @@
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
   <persistence-unit name="LivrariaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <class>model.Livro</class>
-    <class>model.Usuario</class>
     <class>model.Assunto</class>
-    <class>model.Emprestimo</class>
+    <class>model.Usuario</class>
+    <class>model.Livro</class>
     <class>model.Autor</class>
-    <class>model.Editora</class>
     <class>model.Exemplar</class>
+    <class>model.Emprestimo</class>
+    <class>model.Editora</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/livraria?zeroDateTimeBehavior=convertToNull"/>

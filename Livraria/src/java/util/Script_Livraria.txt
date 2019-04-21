@@ -80,8 +80,7 @@ CREATE TABLE autorLivro(
 	Autor_id int NOT null,
     
     CONSTRAINT FK_AutorLivro_Autor FOREIGN KEY(Autor_id)
-    	REFERENCES autor(id),
+    	REFERENCES autor(id) ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT FK_AutorLivro_Livro FOREIGN KEY(Livro_id)
-    	REFERENCES livro(id)
-
+    	REFERENCES livro(id) ON DELETE CASCADE ON UPDATE CASCADE
 );

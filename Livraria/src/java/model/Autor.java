@@ -14,8 +14,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -44,10 +42,7 @@ public class Autor implements Serializable {
     private Integer id;
     @Column(name = "nomeAutor")
     private String nomeAutor;
-    @JoinTable(name = "autorlivro", joinColumns = {
-        @JoinColumn(name = "Autor_id", referencedColumnName = "id")}, inverseJoinColumns = {
-        @JoinColumn(name = "Livro_id", referencedColumnName = "id")})
-    @ManyToMany
+    @ManyToMany(mappedBy = "autorList")
     private List<Livro> livroList = new ArrayList<Livro>();
 
     public Autor() {
