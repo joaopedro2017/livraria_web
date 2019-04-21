@@ -8,14 +8,14 @@ CREATE TABLE assunto(
     nomeAssunto varchar(30),
     
     CONSTRAINT PK_Assunto PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE autor(
 	id int not null AUTO_INCREMENT,
     nomeAutor varchar(30),
     
     CONSTRAINT PK_Autor PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE editora(
 	id int not null AUTO_INCREMENT,
@@ -23,16 +23,17 @@ CREATE TABLE editora(
     
     CONSTRAINT PK_Editora PRIMARY KEY(id)   
     
-)
+);
 
 CREATE TABLE usuario(
 	id int not null AUTO_INCREMENT,
     email varchar(45),
     nomeUsuario varchar(30),
     senha varchar(45),
+    tipo varchar(30),
     
     CONSTRAINT PK_Usuario PRIMARY KEY(id)
-)
+);
 
 CREATE TABLE livro(
 	id int not null AUTO_INCREMENT,
@@ -48,7 +49,7 @@ CREATE TABLE livro(
     	REFERENCES assunto(id),
     CONSTRAINT FK_Livro_Editora FOREIGN KEY(Editora_id)
     	REFERENCES editora(id)
-)
+);
 
 CREATE TABLE exemplar(
 	id int not null AUTO_INCREMENT,
@@ -58,7 +59,7 @@ CREATE TABLE exemplar(
     CONSTRAINT PK_Exemplar PRIMARY KEY(id),
     CONSTRAINT FK_Exemplar_Livro FOREIGN KEY(Livro_id)
     	REFERENCES livro(id)
-)
+);
 
 CREATE TABLE emprestimo(
 	id int not null AUTO_INCREMENT,
@@ -71,17 +72,16 @@ CREATE TABLE emprestimo(
     	REFERENCES exemplar(id),
     CONSTRAINT FK_Emprestimo_Usuario FOREIGN KEY(Usuario_id)
     	REFERENCES usuario(id)
-)
+);
 
 
 CREATE TABLE autorLivro(
+        Livro_id int NOT null,
 	Autor_id int NOT null,
-    Livro_id int NOT null,
     
-    CONSTRAINT PK_AutorLivro PRIMARY KEY(Autor_id, Livro_id),
-    CONSTRAINT FK_AutorLivro_Livro FOREIGN KEY(Livro_id)
-    	REFERENCES livro(id),
     CONSTRAINT FK_AutorLivro_Autor FOREIGN KEY(Autor_id)
-    	REFERENCES autor(id)
+    	REFERENCES autor(id),
+    CONSTRAINT FK_AutorLivro_Livro FOREIGN KEY(Livro_id)
+    	REFERENCES livro(id)
 
-)
+);

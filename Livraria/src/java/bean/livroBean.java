@@ -5,13 +5,15 @@
  */
 package bean;
 
-import model.Livro;
+import dao.AutorDAO;
 import dao.LivroDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
+import model.Autor;
+import model.Livro;
 
 /**
  *
@@ -19,11 +21,14 @@ import javax.faces.model.SelectItem;
  */
 @ManagedBean
 @ViewScoped
-public class livroBean extends crudBean<Livro, LivroDAO>{
-    
-    private LivroDAO livroDAO;
-    public List<SelectItem> itens;
+public class livroBean extends crudBean<Livro, LivroDAO> {
 
+    private LivroDAO livroDAO;
+    public List<SelectItem> itens; //Combobox 1 x n
+    private boolean tabela = true; //Controle de troca de tabela
+    private Integer autorId; //Relacionamento n x n
+
+    //Metodo para aparecer no combo box
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
         List<Livro> livros = livroDAO.buscarTodas();
@@ -33,9 +38,40 @@ public class livroBean extends crudBean<Livro, LivroDAO>{
         }
         return list;
     }
-    
-    public Livro buscarId(int id) {
-        return new LivroDAO().buscarId(id);
+
+    //Relacionamento n x n
+    public List<Autor> getAutores() {
+        return new AutorDAO().buscarTodas();
+    }
+
+    public Integer getAutorId() {
+        return autorId;
+    }
+
+    public void setAutorId(Integer autorId) {
+        this.autorId = autorId;
+    }
+
+    public void adicionarAutor() {
+        Autor autor = new AutorDAO().buscarId(this.autorId);
+        getEntidade().getAutorList().add(autor);
+    }
+
+    public List<Autor> getAutoresDoLivro() {
+        return getEntidade().getAutorList();
+    }
+
+    //Alterar tabela 
+    public void editar(Livro livro) {
+        setEntidade(livro);
+    }
+
+    public boolean isTabela() {
+        return tabela;
+    }
+
+    public void setTabela(boolean tabela) {
+        this.tabela = tabela;
     }
 
     @Override
@@ -49,5 +85,5 @@ public class livroBean extends crudBean<Livro, LivroDAO>{
     @Override
     public Livro novo() {
         return new Livro();
-    }    
+    }
 }

@@ -3,11 +3,11 @@
   <persistence-unit name="LivrariaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
     <class>model.Livro</class>
-    <class>model.Autor</class>
-    <class>model.Emprestimo</class>
     <class>model.Usuario</class>
-    <class>model.Editora</class>
     <class>model.Assunto</class>
+    <class>model.Emprestimo</class>
+    <class>model.Autor</class>
+    <class>model.Editora</class>
     <class>model.Exemplar</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
@@ -17,8 +17,6 @@
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
       <property name="hibernate.hbm2ddl.auto" value="validate"/>
-      <property name="hibernate.show_sql" value="true"/>
-      <property name="hibernate.format_sql" value="true"/>
     </properties>
   </persistence-unit>
 </persistence>

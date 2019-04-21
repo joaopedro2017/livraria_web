@@ -11,7 +11,7 @@
         <h:form id="formPrincipal">
             <div align="center">
 
-                <p:dataTable var="lista" value="#{livroBean.entidades}"
+                <p:dataTable rendered="#{livroBean.tabela}" var="lista" value="#{livroBean.entidades}"
                              id="tabelaLivro" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
@@ -49,10 +49,7 @@
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
-                            <p:commandButton icon="ui-icon-pencil" value="E" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
-                            </p:commandButton>
-
+                            <p:commandButton icon="ui-icon-pencil" value="E" action="#{livroBean.setTabela(false)}" actionListener="#{livroBean.editar(lista)}" update="@form"></p:commandButton>
                             <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
@@ -64,35 +61,38 @@
             </div>
             <br/>
 
-            <p:column>
-                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
+            <p:column rendered="#{livroBean.tabela}">
+                <p:commandButton icon="ui-icon-plus" update="@form" value="Novo" action="#{livroBean.setTabela(false)}">  
                 </p:commandButton> 
             </p:column>
 
-            <div align="center">
-                <h3>Exportar dados da página</h3>
+            <p:panel rendered="#{livroBean.tabela}">
+                <center>                
+                    <h3>Exportar dados da página</h3>
 
-                <h:commandLink id="excel">
-                    <p:graphicImage name="./images/exports/excel.png" />
-                    <p:dataExporter type="xls" target="tabelaLivro" fileName="livros" postProcessor="#{livroBean.postProcessXLS}" />
-                </h:commandLink>
+                    <h:commandLink id="excel">
+                        <p:graphicImage name="./images/exports/excel.png" />
+                        <p:dataExporter type="xls" target="tabelaLivro" fileName="livros" postProcessor="#{livroBean.postProcessXLS}" />
+                    </h:commandLink>
 
-                <h:commandLink id="pdf">
-                    <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabelaLivro" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
-                </h:commandLink>
+                    <h:commandLink id="pdf">
+                        <p:graphicImage name="./images/exports/pdf.png" />
+                        <p:dataExporter type="pdf" target="tabelaLivro" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
+                    </h:commandLink>
 
 
-                <h:commandLink>
-                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                    <p:dataExporter type="csv" target="tabelaLivro" fileName="livro" />
-                </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                        <p:dataExporter type="csv" target="tabelaLivro" fileName="livro" />
+                    </h:commandLink>
 
-                <h:commandLink>
-                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                    <p:dataExporter type="xml" target="tabelaLivro" fileName="livro" />
-                </h:commandLink>
-            </div>
+                    <h:commandLink>
+                        <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="tabelaLivro" fileName="livro" />
+                    </h:commandLink>
+                </center>
+            </p:panel>
+
 
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
@@ -100,31 +100,57 @@
             </p:confirmDialog>  
 
 
-            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name" resizable="false">
-                <p:panelGrid id="panelRecord" columns="2"> 
-                    <!--Código:
-                    <p:inputText id="cod" value="#{livroBean.entidade.id}" /-->
-                    Título:
-                    <p:inputText id="name" value="#{livroBean.entidade.titulo}" />    
-                    ISBN:
-                    <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.entidade.isbn}"/>
-                    Edição:
-                    <p:inputMask mask="9999" id="edicao" value="#{livroBean.entidade.edicao}"/>
-                    Ano:
-                    <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="ano" value="#{livroBean.entidade.ano}"></p:calendar> 
-                    Editora:
-                    <p:selectOneMenu value="#{livroBean.entidade.editoraid}" style="width: 180px">
-                        <f:selectItems value="#{editoraBean.itens}"/>
-                    </p:selectOneMenu>
-                    Assunto:
-                    <p:selectOneMenu value="#{livroBean.entidade.assuntoid}" style="width: 180px">
-                        <f:selectItems value="#{assuntoBean.itens}"/>
-                    </p:selectOneMenu>
+            <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro">
+                <center>                    
+                    <p:panelGrid id="panelRecord" columns="6">                    
+                        Título:
+                        <p:inputText id="name" value="#{livroBean.entidade.titulo}" />    
+                        ISBN:
+                        <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.entidade.isbn}"/>
+                        Edição:
+                        <p:inputMask mask="9999" id="edicao" value="#{livroBean.entidade.edicao}"/>
+                        Ano:
+                        <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="ano" value="#{livroBean.entidade.ano}"></p:calendar> 
+                        Editora:
+                        <p:selectOneMenu value="#{livroBean.entidade.editoraid}" style="width: 180px">
+                            <f:selectItems value="#{editoraBean.itens}"/>
+                        </p:selectOneMenu>
+                        Assunto:
+                        <p:selectOneMenu value="#{livroBean.entidade.assuntoid}" style="width: 180px">
+                            <f:selectItems value="#{assuntoBean.itens}"/>
+                        </p:selectOneMenu>
 
-                </p:panelGrid>  
-                <br/>
-                <p:commandButton value="Salvar" actionListener="#{livroBean.record}" onclick="record.hide()" alt="Record"/> 
-            </p:dialog>
+                        <h:outputLabel value="Secionar Autor: " for="autor"/>
+                        <h:selectOneMenu value="#{livroBean.autorId}">
+                            <f:selectItems value="#{livroBean.autores}" 
+                                           var="autor"
+                                           itemLabel="#{autor.nomeAutor}"
+                                           itemValue="#{autor.id}"/>
+                        </h:selectOneMenu>
+                        <p:commandButton icon="ui-icon-plus" value="Adicionar autor" action="#{livroBean.adicionarAutor()}" update="@form"/>
+                    </p:panelGrid>
+
+                    <h:dataTable value="#{livroBean.autoresDoLivro}" 
+                                 var="autor">
+                        <h:column>
+                            <h:outputText value="#{autor.nomeAutor}"/>
+                        </h:column>
+                    </h:dataTable>
+                    <br/>
+                    <p:commandButton icon="ui-icon-disk" 
+                                     value="Salvar" 
+                                     update="@form" 
+                                     action="#{livroBean.setTabela(true)}" 
+                                     actionListener="#{livroBean.record}" 
+                                     onclick="record.hide()" 
+                                     alt="Record"/> 
+                    <p:commandButton icon="ui-icon-refresh" 
+                                     value="Voltar" 
+                                     update="@form" 
+                                     action="#{livroBean.setTabela(true)}"/> 
+                </center>
+            </p:panel>
+
 
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?

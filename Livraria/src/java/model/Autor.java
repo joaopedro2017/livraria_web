@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -47,7 +48,7 @@ public class Autor implements Serializable {
         @JoinColumn(name = "Autor_id", referencedColumnName = "id")}, inverseJoinColumns = {
         @JoinColumn(name = "Livro_id", referencedColumnName = "id")})
     @ManyToMany
-    private List<Livro> livroList;
+    private List<Livro> livroList = new ArrayList<Livro>();
 
     public Autor() {
     }

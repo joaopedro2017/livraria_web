@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
@@ -58,7 +59,7 @@ public class Livro implements Serializable {
     @Column(name = "titulo")
     private String titulo;
     @ManyToMany(mappedBy = "livroList")
-    private List<Autor> autorList;
+    private List<Autor> autorList = new ArrayList<Autor>();
     @JoinColumn(name = "Assunto_id", referencedColumnName = "id")
     @ManyToOne
     private Assunto assuntoid;
@@ -173,5 +174,5 @@ public class Livro implements Serializable {
     public String toString() {
         return "model.Livro[ id=" + id + " ]";
     }
-    
+
 }
