@@ -56,6 +56,10 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         Autor autor = new AutorDAO().buscarId(this.autorId);
         getEntidade().getAutorList().add(autor);
     }
+    
+    public void removerAutor(Autor autor) {        
+        getEntidade().getAutorList().remove(autor);
+    }
 
     public List<Autor> getAutoresDoLivro() {
         return getEntidade().getAutorList();

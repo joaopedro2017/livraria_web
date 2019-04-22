@@ -91,16 +91,35 @@
                     <!--Código:
                     <p:inputText id="cod" value="#{usuarioBean.entidade.id}" /-->
                     Nome:
-                    <p:inputText id="name" value="#{usuarioBean.entidade.nomeUsuario}" />    
+                    <p:inputText id="name"
+                                 value="#{usuarioBean.entidade.nomeUsuario}"
+                                 required="true"
+                                 requiredMessage="Nome em branco"/>    
                     Email:
-                    <p:inputText id="email" value="#{usuarioBean.entidade.email}"/>
+                    <p:inputText id="email" 
+                                 value="#{usuarioBean.entidade.email}"
+                                 required="true"
+                                 requiredMessage="Email em branco"/>
                     Senha:
-                    <p:password feedback="true" id="senha" value="#{usuarioBean.entidade.senha}"
-                                promptLabel="Digite..." weakLabel="Fraca"
-                                goodLabel="Boa" strongLabel="Forte"/>                  
+                    <p:password feedback="true" id="senha" 
+                                value="#{usuarioBean.entidade.senha}"
+                                promptLabel="Digite..." 
+                                weakLabel="Fraca"
+                                goodLabel="Boa" 
+                                strongLabel="Forte"
+                                required="true"
+                                requiredMessage="Senha em branco"/>                  
                     Tipo:
-                    <p:inputText id="tipo" value="#{usuarioBean.entidade.tipo}"/>                  
-
+                    <p:selectOneMenu value="#{usuarioBean.entidade.tipo}" 
+                                     style="width: 180px" 
+                                     required="true"
+                                     requiredMessage="Selecione o tipo">
+                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                        <f:selectItem itemLabel="Atendente" itemValue="Atendente"/>
+                        <f:selectItem itemLabel="Bibliotecário" itemValue="Bibliotecário"/>
+                        <f:selectItem itemLabel="Gerente" itemValue="Gerente"  />
+                        <f:selectItem itemLabel="Usuário" itemValue="Usuario"/>
+                    </p:selectOneMenu>
                 </p:panelGrid>  
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{usuarioBean.record}" onclick="record.hide()" alt="Record"/> 

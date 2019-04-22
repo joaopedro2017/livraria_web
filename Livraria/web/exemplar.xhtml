@@ -8,7 +8,7 @@
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Exemplares</h2>
         <ms:mensagem/>
-        
+
         <h:form id="formPrincipal">
             <div align="center">
                 <p:dataTable var="lista" value="#{exemplarBean.entidades}"
@@ -38,7 +38,7 @@
                         </center>
                     </p:column>                   
                 </p:dataTable>
-                
+
             </div>
             <br/>
 
@@ -46,7 +46,7 @@
                 <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
                 </p:commandButton> 
             </p:column>
-            
+
             <div align="center">
                 <h3>Exportar dados da página</h3>
 
@@ -71,20 +71,26 @@
                     <p:dataExporter type="xml" target="tabelaExemplar" fileName="exemplares" />
                 </h:commandLink>
             </div>
-            
+
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
             </p:confirmDialog>
-            
+
             <p:dialog header="Novo" widgetVar="record" modal="true" resizable="false">
                 <p:panelGrid id="panelRecord" columns="2"> 
                     <!--Código:
                     <p:inputText id="cod" value="#{exemplarBean.entidade.id}" /-->
                     Selecione:
-                    <p:selectBooleanCheckbox style="width: 180px; height: 25px" value="#{exemplarBean.entidade.circular}" itemLabel=" Circular"/>  
+                    <p:selectBooleanCheckbox style="width: 180px; height: 25px" 
+                                             value="#{exemplarBean.entidade.circular}" 
+                                             itemLabel=" Circular"/>  
                     Livro:
-                    <p:selectOneMenu value="#{exemplarBean.entidade.livroid}" style="width: 180px">
+                    <p:selectOneMenu value="#{exemplarBean.entidade.livroid}" 
+                                     style="width: 180px" 
+                                     required="true"
+                                     requiredMessage="Selecione um livro">
+                        <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{livroBean.itens}"/>
                     </p:selectOneMenu>
 
@@ -92,7 +98,7 @@
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{exemplarBean.record}" onclick="record.hide()" alt="Record"/> 
             </p:dialog>
-            
+
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
                 <p:commandButton value="Deletar" actionListener="#{exemplarBean.exclude}" onclick="remove.hide()" alt="Delete" /> 

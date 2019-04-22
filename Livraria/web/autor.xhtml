@@ -83,8 +83,10 @@
                     <!--Código:
                     <p:inputText id="cod" value="#{autorBean.entidade.id}" /-->
                     Nome:
-                    <p:inputText id="name" value="#{autorBean.entidade.nomeAutor}" />     
-
+                    <p:inputText id="name" 
+                                 value="#{autorBean.entidade.nomeAutor}"
+                                 required="true"
+                                 requiredMessage="Nome em branco"/>
                 </p:panelGrid>  
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{autorBean.record}" onclick="record.hide()" alt="Record"/> 

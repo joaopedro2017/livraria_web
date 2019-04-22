@@ -83,7 +83,10 @@
                     <!--Código:
                     <p:inputText id="cod" value="#{editoraBean.entidade.id}" /-->
                     Nome:
-                    <p:inputText id="name" value="#{editoraBean.entidade.nomeEditora}" />     
+                    <p:inputText id="name" 
+                                 value="#{editoraBean.entidade.nomeEditora}"
+                                 required="true"
+                                 requiredMessage="Nome em branco"/>     
 
                 </p:panelGrid>  
                 <br/>

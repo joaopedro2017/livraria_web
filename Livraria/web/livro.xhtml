@@ -44,7 +44,7 @@
 
                     <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
                         <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
-                    </p:column>                    
+                    </p:column>
 
                     <p:column headerText="Opções" exportable="false">
                         <center>
@@ -62,7 +62,10 @@
             <br/>
 
             <p:column rendered="#{livroBean.tabela}">
-                <p:commandButton icon="ui-icon-plus" update="@form" value="Novo" action="#{livroBean.setTabela(false)}">  
+                <p:commandButton icon="ui-icon-plus" 
+                                 update="@form" 
+                                 value="Novo" 
+                                 action="#{livroBean.setTabela(false)}">  
                 </p:commandButton> 
             </p:column>
 
@@ -93,52 +96,92 @@
                 </center>
             </p:panel>
 
-
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
-            </p:confirmDialog>  
+            </p:confirmDialog>
 
-
-            <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro">
-                <center>                    
+            <center>                    
+                <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
                     <p:panelGrid id="panelRecord" columns="6">                    
                         Título:
-                        <p:inputText id="name" value="#{livroBean.entidade.titulo}" />    
+                        <p:inputText id="name" 
+                                     value="#{livroBean.entidade.titulo}"
+                                     required="true"
+                                     requiredMessage="Título em branco"/>    
                         ISBN:
-                        <p:inputMask mask="999-99-999-9999-9" id="isbn" value="#{livroBean.entidade.isbn}"/>
+                        <p:inputMask mask="999-99-999-9999-9" 
+                                     id="isbn"
+                                     value="#{livroBean.entidade.isbn}"
+                                     required="true"
+                                     requiredMessage="ISBN em branco"/>
                         Edição:
-                        <p:inputMask mask="9999" id="edicao" value="#{livroBean.entidade.edicao}"/>
+                        <p:inputMask mask="9999"
+                                     id="edicao" 
+                                     value="#{livroBean.entidade.edicao}"
+                                     required="true"
+                                     requiredMessage="Edição em branco"/>
                         Ano:
-                        <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="ano" value="#{livroBean.entidade.ano}"></p:calendar> 
+                        <p:calendar locale="pt" 
+                                    navigator="true" 
+                                    pattern="dd/MM/yyyy" 
+                                    id="ano" 
+                                    value="#{livroBean.entidade.ano}"
+                                    required="true"
+                                    requiredMessage="Forneça uma data"/> 
                         Editora:
-                        <p:selectOneMenu value="#{livroBean.entidade.editoraid}" style="width: 180px">
+                        <p:selectOneMenu value="#{livroBean.entidade.editoraid}"
+                                         style="width: 205px" required="true"
+                                         requiredMessage="Selecione a editora">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{editoraBean.itens}"/>
                         </p:selectOneMenu>
                         Assunto:
-                        <p:selectOneMenu value="#{livroBean.entidade.assuntoid}" style="width: 180px">
+                        <p:selectOneMenu value="#{livroBean.entidade.assuntoid}"
+                                         style="width: 205px" 
+                                         required="true"
+                                         requiredMessage="Selecione o assunto">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{assuntoBean.itens}"/>
                         </p:selectOneMenu>
 
                         <h:outputLabel value="Secionar Autor: " for="autor"/>
-                        <h:selectOneMenu value="#{livroBean.autorId}">
+                        <p:selectOneMenu value="#{livroBean.autorId}" 
+                                         style="width: 205px">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{livroBean.autores}" 
                                            var="autor"
                                            itemLabel="#{autor.nomeAutor}"
                                            itemValue="#{autor.id}"/>
-                        </h:selectOneMenu>
-                        <p:commandButton icon="ui-icon-plus" value="Adicionar autor" action="#{livroBean.adicionarAutor()}" update="@form"/>
-                    </p:panelGrid>
+                        </p:selectOneMenu>
+                        <p:commandButton icon="ui-icon-plus" 
+                                         value="Adicionar autor" 
+                                         action="#{livroBean.adicionarAutor()}" 
+                                         update="@form"/>
+                    </p:panelGrid>                    
 
-                    <h:dataTable value="#{livroBean.autoresDoLivro}" 
-                                 var="autor">
-                        <h:column>
+                    <h4>Autores do Livro:</h4>
+                    <p:dataTable emptyMessage="Nenhum autor" 
+                                 value="#{livroBean.autoresDoLivro}" 
+                                 var="autor" 
+                                 style="width:15%">
+                        <p:column headerText="Autor">                            
                             <h:outputText value="#{autor.nomeAutor}"/>
-                        </h:column>
-                    </h:dataTable>
+                        </p:column>
+                        <p:column headerText="Excluir">
+                            <center>
+                                <p:commandButton style="width: 34px; height: 20px; align-items: center" 
+                                                 icon="ui-icon-trash" 
+                                                 value="" 
+                                                 action="#{livroBean.removerAutor(autor)}" 
+                                                 update="@form"
+                                                 alt="Excluir"/>
+                            </center>
+                        </p:column>
+                    </p:dataTable>
                     <br/>
-                    <p:commandButton icon="ui-icon-disk" 
-                                     value="Salvar" 
+                    <p:commandButton icon="ui-icon-disk"                                     
+                                     value="Salvar"                                     
                                      update="@form" 
                                      action="#{livroBean.setTabela(true)}" 
                                      actionListener="#{livroBean.record}" 
@@ -148,14 +191,13 @@
                                      value="Voltar" 
                                      update="@form" 
                                      action="#{livroBean.setTabela(true)}"/> 
-                </center>
-            </p:panel>
-
+                </p:panel>
+            </center>
 
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
                 <p:commandButton value="Deletar" actionListener="#{livroBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
-            </p:dialog>
+            </p:dialog>  
 
         </h:form>
     </ui:define>

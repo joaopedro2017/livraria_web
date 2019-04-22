@@ -93,15 +93,29 @@
                     <!--Código:
                     <p:inputText id="cod" value="#{emprestimoBean.entidade.id}" /-->
                     Livro:
-                    <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}" style="width: 180px">
+                    <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
+                                     style="width: 180px" 
+                                     required="true"
+                                     requiredMessage="Selecione um livro">
+                        <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{exemplarBean.itens}"/>
                     </p:selectOneMenu>
                     Usuário:
-                    <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}" style="width: 180px">
+                    <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
+                                     style="width: 180px" 
+                                     required="true"
+                                     requiredMessage="Selecione um usuário">
+                        <f:selectItem itemLabel="Selecione" itemValue=""/>
                         <f:selectItems value="#{usuarioBean.itens}"/>
                     </p:selectOneMenu>
                     Data:
-                    <p:calendar locale="pt" navigator="true" pattern="dd/MM/yyyy" id="data" value="#{emprestimoBean.entidade.dataEmprestimo}"></p:calendar>
+                    <p:calendar locale="pt" 
+                                navigator="true" 
+                                pattern="dd/MM/yyyy" 
+                                id="data" 
+                                value="#{emprestimoBean.entidade.dataEmprestimo}"
+                                required="true"
+                                requiredMessage="Forneça uma data"/>
                 </p:panelGrid>  
                 <br/>
                 <p:commandButton value="Salvar" actionListener="#{emprestimoBean.record}" onclick="record.hide()" alt="Record"/> 
