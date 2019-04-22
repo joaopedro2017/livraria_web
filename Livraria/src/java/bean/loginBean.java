@@ -72,10 +72,10 @@ public class loginBean {
         String mensagem = "Usuário e/ou senha estão incorretos";
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, cabecalho, mensagem);
         FacesContext.getCurrentInstance().addMessage(null, fm);
-    }
-    
-    public boolean isAdmin(){
-        return "Administrador".equals(SessionUtil.getUserTipo());
+    }    
+     
+    public String getTipo(){
+        return SessionUtil.getUserTipo();
     }
     
     public String getPerfil(){

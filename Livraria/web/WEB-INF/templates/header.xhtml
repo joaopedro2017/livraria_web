@@ -9,16 +9,19 @@
         <h:form>  
             <p:menubar>
                 <p:menuitem value="Início" icon="ui-icon-home" url="/faces/index.xhtml" />
-                <p:submenu label="Gerenciar" icon="ui-icon-gear" rendered="#{loginBean.admin}"> 
-                    <p:menuitem value="Assunto" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
+                <p:submenu label="Gerenciar" icon="ui-icon-gear" rendered="#{loginBean.tipo == 'Atendimento'}"> 
                     <p:menuitem value="Autor" icon="ui-icon-person" url="/faces/autor.xhtml"/>
+                    <p:menuitem value="Emprestimo" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
+                    <p:menuitem value="Editora" icon="ui-icon-tag" url="/faces/editora.xhtml"/>                    
                     <p:menuitem value="Usuario" icon="ui-icon-contact" url="/faces/usuario.xhtml"/>
                 </p:submenu>
-                <p:submenu label="Pesquisar" icon="ui-icon-search">
-                    <p:menuitem value="Editora" icon="ui-icon-tag" url="/faces/editora.xhtml"/>                    
+                <p:submenu label="Cadastro" icon="ui-icon-search" rendered="#{loginBean.tipo == 'Bibliotecário'}">
+                    <p:menuitem value="Assunto" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Livro" icon="ui-icon-bookmark" url="/faces/livro.xhtml"/>
                     <p:menuitem value="Exemplar" icon="ui-icon-note" url="/faces/exemplar.xhtml"/>
-                    <p:menuitem value="Emprestimo" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
+                </p:submenu>
+                <p:submenu label="Acervo" icon="ui-icon-search" rendered="#{loginBean.tipo == 'Usuario'}">
+                    <p:menuitem value="Livro" icon="ui-icon-bookmark" url="/faces/livro.xhtml"/>
                 </p:submenu>
                 <p:submenu label="#{loginBean.perfil}" icon="ui-icon-person">
                     <p:menuitem value="Logoff" icon="ui-icon-power" action="#{loginBean.logoff}"/>
