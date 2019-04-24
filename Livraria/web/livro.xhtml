@@ -105,7 +105,7 @@
                 <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
                     <p:panelGrid id="panelRecord" columns="6">                    
                         Título:
-                        <p:inputText id="name" 
+                        <p:inputText id="titulo" 
                                      value="#{livroBean.entidade.titulo}"
                                      required="true"
                                      requiredMessage="Título em branco"/>    
@@ -161,14 +161,13 @@
                     </p:panelGrid>                    
 
                     <h4>Autores do Livro:</h4>
-                    <p:dataTable emptyMessage="Nenhum autor" 
-                                 value="#{livroBean.autoresDoLivro}" 
+                    <h:dataTable value="#{livroBean.autoresDoLivro}" 
                                  var="autor" 
                                  style="width:15%">
-                        <p:column headerText="Autor">                            
+                        <h:column>                            
                             <h:outputText value="#{autor.nomeAutor}"/>
-                        </p:column>
-                        <p:column headerText="Excluir">
+                        </h:column>
+                        <h:column>
                             <center>
                                 <p:commandButton style="width: 34px; height: 20px; align-items: center" 
                                                  icon="ui-icon-trash" 
@@ -177,11 +176,12 @@
                                                  update="@form"
                                                  alt="Excluir"/>
                             </center>
-                        </p:column>
-                    </p:dataTable>
+                        </h:column>
+                    </h:dataTable>
                     <br/>
                     <p:commandButton icon="ui-icon-disk"                                     
-                                     value="Salvar"                                     
+                                     value="Salvar"
+                                     rendered="#{livroBean.entidade.autorList.size() > 0}"                                     
                                      update="@form" 
                                      action="#{livroBean.setTabela(true)}" 
                                      actionListener="#{livroBean.record}" 
