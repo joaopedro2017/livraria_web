@@ -102,23 +102,29 @@
 
             <center>
                 <p:panel rendered="#{!emprestimoBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="2">
-                        Livro:
-                        <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
-                                         style="width: 180px" 
-                                         required="true"
-                                         requiredMessage="Selecione um livro">
-                            <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{exemplarBean.itens}"/>
-                        </p:selectOneMenu>
-                        Usuário:
+                    <p:panelGrid id="panelRecord" columns="3">
+                        <p:outputLabel value="Usuário: " />
                         <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
                                          style="width: 180px" 
                                          required="true"
                                          requiredMessage="Selecione um usuário">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{usuarioBean.itens}" actionListener="#{emprestimoBean.calcularDevolucao()}"/>
-                        </p:selectOneMenu>                                        
+                        </p:selectOneMenu>
+                        
+                        <p:commandButton value="Verificar"
+                                         update="@form"
+                                         action="#{emprestimoBean.emprestimoAtraso}"/>
+                        
+                        <p:outputLabel value="Livro: " rendered="#{5 > emprestimoBean.qnt}"/>
+                        <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
+                                         style="width: 180px" 
+                                         required="true"
+                                         rendered="#{5 > emprestimoBean.qnt}"
+                                         requiredMessage="Selecione um livro">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
+                            <f:selectItems value="#{exemplarBean.itens}"/>
+                        </p:selectOneMenu>
                     </p:panelGrid>  
                     <br/>
                     <p:commandButton value="Salvar" 

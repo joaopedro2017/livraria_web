@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -15,7 +16,20 @@ import util.PersistenceUtil;
  *
  * @author John Peter
  */
-public class EmprestimoDAO implements CrudDAO<Emprestimo>{
+public class EmprestimoDAO implements CrudDAO<Emprestimo> {
+
+    public Integer verificarDebito(int id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Emprestimo a where a.usuarioid.id =:id and a.dataDevolucao <= :hoje ");
+        query.setParameter("id", id);
+        query.setParameter("hoje", new Date());
+
+        List<Emprestimo> emprestimo = query.getResultList();
+        if (emprestimo != null && emprestimo.size() > 0) {
+            return emprestimo.size();
+        }
+        return 0;
+    }
 
     @Override
     public Emprestimo buscarId(int id) {
@@ -72,10 +86,10 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo>{
     @Override
     public void removeAll() {
         EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Emprestimo");
-       query.executeUpdate();
-       em.getTransaction().commit();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Emprestimo");
+        query.executeUpdate();
+        em.getTransaction().commit();
     }
-    
+
 }

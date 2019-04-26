@@ -4,6 +4,7 @@ import dao.EmprestimoDAO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -18,6 +19,21 @@ import model.Emprestimo;
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     private EmprestimoDAO emprestimoDAO;
+    private Integer qnt;
+    
+    public void emprestimoAtraso(){
+        qnt = getDao().verificarDebito(getEntidade().getUsuarioid().getId());
+        System.out.println("Quantidade de debitos " + qnt);
+        adicionarMensagem("Possui " + qnt + " de débito(s)", FacesMessage.SEVERITY_INFO);       
+    }
+
+    public Integer getQnt() {
+        return qnt;
+    }
+
+    public void setQnt(Integer qnt) {
+        this.qnt = qnt;
+    }   
 
     public void calcularDevolucao(ActionEvent actionEvent) {
         getEntidade().setDataEmprestimo(new Date());
