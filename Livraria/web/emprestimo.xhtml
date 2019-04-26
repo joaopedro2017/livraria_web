@@ -106,19 +106,11 @@
                                      required="true"
                                      requiredMessage="Selecione um usuário">
                         <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{usuarioBean.itens}"/>
-                    </p:selectOneMenu>
-                    Data:
-                    <p:calendar locale="pt" 
-                                navigator="true" 
-                                pattern="dd/MM/yyyy" 
-                                id="data" 
-                                value="#{emprestimoBean.entidade.dataEmprestimo}"
-                                required="true"
-                                requiredMessage="Forneça uma data"/>
+                        <f:selectItems value="#{usuarioBean.itens}" actionListener="#{emprestimoBean.calcularDevolucao()}"/>
+                    </p:selectOneMenu>                                        
                 </p:panelGrid>  
                 <br/>
-                <p:commandButton value="Salvar" actionListener="#{emprestimoBean.record}" onclick="record.hide()" alt="Record"/> 
+                <p:commandButton value="Salvar" actionListener="#{emprestimoBean.calcularDevolucao}" onclick="record.hide()" alt="Record"/> 
             </p:dialog>
 
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 

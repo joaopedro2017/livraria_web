@@ -24,8 +24,7 @@ import model.Livro;
 public class livroBean extends crudBean<Livro, LivroDAO> {
 
     private LivroDAO livroDAO;
-    public List<SelectItem> itens; //Combobox 1 x n
-    private boolean tabela = true; //Controle de troca de tabela
+    public List<SelectItem> itens; //Combobox 1 x n    
     private Integer autorId; //Relacionamento n x n
 
     //Metodo para aparecer no combo box
@@ -63,20 +62,7 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public List<Autor> getAutoresDoLivro() {
         return getEntidade().getAutorList();
-    }
-
-    //Alterar tabela 
-    public void editar(Livro livro) {
-        setEntidade(livro);
-    }
-
-    public boolean isTabela() {
-        return tabela;
-    }
-
-    public void setTabela(boolean tabela) {
-        this.tabela = tabela;
-    }
+    }  
 
     @Override
     public LivroDAO getDao() {

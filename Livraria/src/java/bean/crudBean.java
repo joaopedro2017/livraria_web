@@ -35,6 +35,7 @@ public abstract class crudBean<E, D extends CrudDAO> {
     public abstract D getDao();
 
     public abstract E novo();
+    private boolean tabela = true; //Controle de troca de tabela
 
     private E entidade = novo();
     private List<E> entidades = getDao().buscarTodas();
@@ -78,6 +79,18 @@ public abstract class crudBean<E, D extends CrudDAO> {
 
     public void setEntidades(List entidades) {
         this.entidades = entidades;
+    }
+    
+    public void editar(E entidade) {
+        this.entidade = entidade;        
+    }
+    
+    public boolean isTabela() {
+        return tabela;
+    }
+
+    public void setTabela(boolean tabela) {
+        this.tabela = tabela;
     }
 
     public void adicionarMensagem(String mensagem, FacesMessage.Severity tipoErro) {

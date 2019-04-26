@@ -44,6 +44,9 @@ public class Emprestimo implements Serializable {
     @Column(name = "dataEmprestimo")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataEmprestimo;
+    @Column(name = "dataDevolucao")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataDevolucao;
     @JoinColumn(name = "Exemplar_id", referencedColumnName = "id")
     @ManyToOne
     private Exemplar exemplarid;
@@ -73,6 +76,14 @@ public class Emprestimo implements Serializable {
     public void setDataEmprestimo(Date dataEmprestimo) {
         this.dataEmprestimo = dataEmprestimo;
     }
+
+    public Date getDataDevolucao() {
+        return dataDevolucao;
+    }
+
+    public void setDataDevolucao(Date dataDevolucao) {
+        this.dataDevolucao = dataDevolucao;
+    }   
 
     public Exemplar getExemplarid() {
         return exemplarid;

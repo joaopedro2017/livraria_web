@@ -49,7 +49,7 @@
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
-                            <p:commandButton icon="ui-icon-pencil" value="E" action="#{livroBean.setTabela(false)}" actionListener="#{livroBean.editar(lista)}" update="@form"></p:commandButton>
+                            <p:commandButton icon="ui-icon-pencil" value="E" action="#{livroBean.setTabela(false)}" actionListener="#{livroBean.editar(lista)}" update="@form" />
                             <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
@@ -82,7 +82,6 @@
                         <p:graphicImage name="./images/exports/pdf.png" />
                         <p:dataExporter type="pdf" target="tabelaLivro" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
                     </h:commandLink>
-
 
                     <h:commandLink>
                         <p:graphicImage name="./images/exports/csv.png" width="24"/>
