@@ -11,7 +11,7 @@
         <h:form id="formPrincipal">
             <div align="center">
 
-                <p:dataTable var="lista" value="#{emprestimoBean.entidades}"
+                <p:dataTable rendered="#{emprestimoBean.tabela}" var="lista" value="#{emprestimoBean.entidades}"
                              id="tabelaEmprestimo" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
@@ -28,8 +28,14 @@
                         <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
                     </p:column>
 
-                    <p:column headerText="Data" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
+                    <p:column headerText="Feito" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
                         <h:outputText value="#{lista.dataEmprestimo}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column> 
+                    
+                    <p:column headerText="Devolução" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}">
+                        <h:outputText value="#{lista.dataDevolucao}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>                                    
@@ -37,9 +43,11 @@
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
-                            <p:commandButton icon="ui-icon-pencil" value="E" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{emprestimoBean.entidade}" value="#{lista}" />
-                            </p:commandButton>
+                            <p:commandButton icon="ui-icon-pencil" 
+                                             value="Editar" 
+                                             action="#{emprestimoBean.setTabela(false)}" 
+                                             actionListener="#{emprestimoBean.editar(lista)}" 
+                                             update="@form" />
 
                             <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{emprestimoBean.entidade}" value="#{lista}" />
@@ -52,35 +60,39 @@
             </div>
             <br/>
 
-            <p:column>
-                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
-                </p:commandButton> 
+            <p:column rendered="#{emprestimoBean.tabela}">
+                <p:commandButton icon="ui-icon-plus" 
+                                 update="@form" 
+                                 value="Novo" 
+                                 action="#{emprestimoBean.setTabela(false)}" />
             </p:column>
 
-            <div align="center">
-                <h3>Exportar dados da página</h3>
+            <p:panel rendered="#{emprestimoBean.tabela}">
+                <div align="center">
+                    <h3>Exportar dados da página</h3>
 
-                <h:commandLink id="excel">
-                    <p:graphicImage name="./images/exports/excel.png" />
-                    <p:dataExporter type="xls" target="tabelaEmprestimo" fileName="emprestimos" postProcessor="#{emprestimoBean.postProcessXLS}" />
-                </h:commandLink>
+                    <h:commandLink id="excel">
+                        <p:graphicImage name="./images/exports/excel.png" />
+                        <p:dataExporter type="xls" target="tabelaEmprestimo" fileName="emprestimos" postProcessor="#{emprestimoBean.postProcessXLS}" />
+                    </h:commandLink>
 
-                <h:commandLink id="pdf">
-                    <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabelaEmprestimo" fileName="emprestimos" preProcessor="#{emprestimoBean.preProcessPDF}" />
-                </h:commandLink>
+                    <h:commandLink id="pdf">
+                        <p:graphicImage name="./images/exports/pdf.png" />
+                        <p:dataExporter type="pdf" target="tabelaEmprestimo" fileName="emprestimos" preProcessor="#{emprestimoBean.preProcessPDF}" />
+                    </h:commandLink>
 
 
-                <h:commandLink>
-                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                    <p:dataExporter type="csv" target="tabelaEmprestimo" fileName="emprestimo" />
-                </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                        <p:dataExporter type="csv" target="tabelaEmprestimo" fileName="emprestimo" />
+                    </h:commandLink>
 
-                <h:commandLink>
-                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                    <p:dataExporter type="xml" target="tabelaEmprestimo" fileName="emprestimo" />
-                </h:commandLink>
-            </div>
+                    <h:commandLink>
+                        <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="tabelaEmprestimo" fileName="emprestimo" />
+                    </h:commandLink>
+                </div>
+            </p:panel>
 
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
@@ -88,30 +100,39 @@
             </p:confirmDialog>  
 
 
-            <p:dialog header="Novo" widgetVar="record" modal="true" resizable="false">
-                <p:panelGrid id="panelRecord" columns="2"> 
-                    <!--Código:
-                    <p:inputText id="cod" value="#{emprestimoBean.entidade.id}" /-->
-                    Livro:
-                    <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
-                                     style="width: 180px" 
-                                     required="true"
-                                     requiredMessage="Selecione um livro">
-                        <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{exemplarBean.itens}"/>
-                    </p:selectOneMenu>
-                    Usuário:
-                    <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
-                                     style="width: 180px" 
-                                     required="true"
-                                     requiredMessage="Selecione um usuário">
-                        <f:selectItem itemLabel="Selecione" itemValue=""/>
-                        <f:selectItems value="#{usuarioBean.itens}" actionListener="#{emprestimoBean.calcularDevolucao()}"/>
-                    </p:selectOneMenu>                                        
-                </p:panelGrid>  
-                <br/>
-                <p:commandButton value="Salvar" actionListener="#{emprestimoBean.calcularDevolucao}" onclick="record.hide()" alt="Record"/> 
-            </p:dialog>
+            <center>
+                <p:panel rendered="#{!emprestimoBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
+                    <p:panelGrid id="panelRecord" columns="2">
+                        Livro:
+                        <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
+                                         style="width: 180px" 
+                                         required="true"
+                                         requiredMessage="Selecione um livro">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
+                            <f:selectItems value="#{exemplarBean.itens}"/>
+                        </p:selectOneMenu>
+                        Usuário:
+                        <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
+                                         style="width: 180px" 
+                                         required="true"
+                                         requiredMessage="Selecione um usuário">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
+                            <f:selectItems value="#{usuarioBean.itens}" actionListener="#{emprestimoBean.calcularDevolucao()}"/>
+                        </p:selectOneMenu>                                        
+                    </p:panelGrid>  
+                    <br/>
+                    <p:commandButton value="Salvar" 
+                                     update="@form" 
+                                     action="#{emprestimoBean.setTabela(true)}" 
+                                     actionListener="#{emprestimoBean.calcularDevolucao}" 
+                                     onclick="record.hide()" alt="Record"/>
+                    <p:commandButton icon="ui-icon-refresh" 
+                                     value="Voltar" 
+                                     immediate="true"
+                                     update="@form" 
+                                     action="#{emprestimoBean.setTabela(true)}"/> 
+                </p:panel>
+            </center>
 
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
