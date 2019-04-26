@@ -101,7 +101,8 @@
                                      actionListener="#{editoraBean.record}" 
                                      onclick="record.hide()" alt="Record"/>
                     <p:commandButton icon="ui-icon-refresh" 
-                                     value="Voltar" 
+                                     value="Voltar"
+                                     immediate="true"
                                      update="@form" 
                                      action="#{editoraBean.setTabela(true)}"/>
                 </p:panel>
