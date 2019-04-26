@@ -11,7 +11,7 @@
         <h:form id="formPrincipal">
             <div align="center">
 
-                <p:dataTable var="lista" value="#{editoraBean.entidades}"
+                <p:dataTable rendered="#{editoraBean.tabela}" var="lista" value="#{editoraBean.entidades}"
                              id="tabelaEditora" emptyMessage="Nenhum registro encontrado"
                              paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                              paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
@@ -27,9 +27,11 @@
                     <p:column headerText="Opções" exportable="false">
                         <center>
 
-                            <p:commandButton icon="ui-icon-pencil" value="Editar" onclick="PF('record').show();"> 
-                                <f:setPropertyActionListener target="#{editoraBean.entidade}" value="#{lista}" />
-                            </p:commandButton>
+                            <p:commandButton icon="ui-icon-pencil" 
+                                             value="Editar" 
+                                             action="#{editoraBean.setTabela(false)}" 
+                                             actionListener="#{editoraBean.editar(lista)}" 
+                                             update="@form" />
 
                             <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{editoraBean.entidade}" value="#{lista}" />
@@ -42,35 +44,39 @@
             </div>
             <br/>
 
-            <p:column>
-                <p:commandButton icon="ui-icon-plus" value="Novo" onclick="PF('record').show();">  
-                </p:commandButton> 
+            <p:column rendered="#{editoraBean.tabela}">
+                <p:commandButton icon="ui-icon-plus" 
+                                 update="@form" 
+                                 value="Novo" 
+                                 action="#{editoraBean.setTabela(false)}" />
             </p:column>
 
-            <div align="center">
-                <h3>Exportar dados da página</h3>
+            <p:panel rendered="#{editoraBean.tabela}">
+                <div align="center">
+                    <h3>Exportar dados da página</h3>
 
-                <h:commandLink id="excel">
-                    <p:graphicImage name="./images/exports/excel.png" />
-                    <p:dataExporter type="xls" target="tabelaEditora" fileName="editoras" postProcessor="#{editoraBean.postProcessXLS}" />
-                </h:commandLink>
+                    <h:commandLink id="excel">
+                        <p:graphicImage name="./images/exports/excel.png" />
+                        <p:dataExporter type="xls" target="tabelaEditora" fileName="editoras" postProcessor="#{editoraBean.postProcessXLS}" />
+                    </h:commandLink>
 
-                <h:commandLink id="pdf">
-                    <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabelaEditora" fileName="editoras" preProcessor="#{editoraBean.preProcessPDF}" />
-                </h:commandLink>
+                    <h:commandLink id="pdf">
+                        <p:graphicImage name="./images/exports/pdf.png" />
+                        <p:dataExporter type="pdf" target="tabelaEditora" fileName="editoras" preProcessor="#{editoraBean.preProcessPDF}" />
+                    </h:commandLink>
 
 
-                <h:commandLink>
-                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                    <p:dataExporter type="csv" target="tabelaEditora" fileName="editoras" />
-                </h:commandLink>
+                    <h:commandLink>
+                        <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                        <p:dataExporter type="csv" target="tabelaEditora" fileName="editoras" />
+                    </h:commandLink>
 
-                <h:commandLink>
-                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                    <p:dataExporter type="xml" target="tabelaEditora" fileName="editoras" />
-                </h:commandLink>
-            </div>
+                    <h:commandLink>
+                        <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="tabelaEditora" fileName="editoras" />
+                    </h:commandLink>
+                </div>
+            </p:panel>
 
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
@@ -78,20 +84,28 @@
             </p:confirmDialog>  
 
 
-            <p:dialog header="Novo" widgetVar="record" modal="true" focus="name" resizable="false">
-                <p:panelGrid id="panelRecord" columns="2"> 
-                    <!--Código:
-                    <p:inputText id="cod" value="#{editoraBean.entidade.id}" /-->
-                    Nome:
-                    <p:inputText id="name" 
-                                 value="#{editoraBean.entidade.nomeEditora}"
-                                 required="true"
-                                 requiredMessage="Nome em branco"/>     
+            <center>
+                <p:panel rendered="#{!editoraBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
+                    <p:panelGrid id="panelRecord" columns="6">
+                        Nome:
+                        <p:inputText id="name" 
+                                     value="#{editoraBean.entidade.nomeEditora}"
+                                     required="true"
+                                     requiredMessage="Nome em branco"/>     
 
-                </p:panelGrid>  
-                <br/>
-                <p:commandButton value="Salvar" actionListener="#{editoraBean.record}" onclick="record.hide()" alt="Record"/> 
-            </p:dialog>
+                    </p:panelGrid>  
+                    <br/>
+                    <p:commandButton value="Salvar" 
+                                     update="@form" 
+                                     action="#{editoraBean.setTabela(true)}" 
+                                     actionListener="#{editoraBean.record}" 
+                                     onclick="record.hide()" alt="Record"/>
+                    <p:commandButton icon="ui-icon-refresh" 
+                                     value="Voltar" 
+                                     update="@form" 
+                                     action="#{editoraBean.setTabela(true)}"/>
+                </p:panel>
+            </center>
 
             <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
                 Você tem certeza?
