@@ -9,6 +9,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
+import org.primefaces.event.FlowEvent;
 
 /**
  *
@@ -82,6 +83,15 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
             default:
                 c.add(Calendar.DATE, 1);
                 break;
+        }
+    }
+    
+    public String proximaAba(FlowEvent event) {
+        if(qnt == 0) {            
+            return event.getOldStep();
+        }
+        else {
+            return event.getNewStep();
         }
     }
 

@@ -33,7 +33,7 @@
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column> 
-                    
+
                     <p:column headerText="Devolução" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}">
                         <h:outputText value="#{lista.dataDevolucao}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
@@ -49,7 +49,7 @@
                                              actionListener="#{emprestimoBean.editar(lista)}" 
                                              update="@form" />
 
-                            <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
+                            <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
                                 <f:setPropertyActionListener target="#{emprestimoBean.entidade}" value="#{lista}" />
                             </p:commandButton> 
 
@@ -63,7 +63,7 @@
             <p:column rendered="#{emprestimoBean.tabela}">
                 <p:commandButton icon="ui-icon-plus" 
                                  update="@form" 
-                                 value="Novo" 
+                                 value="Novo"
                                  action="#{emprestimoBean.setTabela(false)}" />
             </p:column>
 
@@ -97,46 +97,73 @@
             <p:confirmDialog global="true">  
                 <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
                 <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
-            </p:confirmDialog>  
-
+            </p:confirmDialog>            
 
             <center>
-                <p:panel rendered="#{!emprestimoBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="3">
-                        <p:outputLabel value="Usuário: " />
-                        <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
-                                         style="width: 180px" 
-                                         required="true"
-                                         requiredMessage="Selecione um usuário">
-                            <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{usuarioBean.itens}" actionListener="#{emprestimoBean.calcularDevolucao()}"/>
-                        </p:selectOneMenu>
-                        
-                        <p:commandButton value="Verificar"
-                                         update="@form"
-                                         action="#{emprestimoBean.emprestimoAtraso}"/>
-                        
-                        <p:outputLabel value="Livro: " rendered="#{5 > emprestimoBean.qnt}"/>
-                        <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
-                                         style="width: 180px" 
-                                         required="true"
-                                         rendered="#{5 > emprestimoBean.qnt}"
-                                         requiredMessage="Selecione um livro">
-                            <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{exemplarBean.itens}"/>
-                        </p:selectOneMenu>
-                    </p:panelGrid>  
-                    <br/>
-                    <p:commandButton value="Salvar" 
-                                     update="@form" 
-                                     action="#{emprestimoBean.setTabela(true)}" 
-                                     actionListener="#{emprestimoBean.calcularDevolucao}" 
-                                     onclick="record.hide()" alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
-                                     value="Voltar" 
-                                     immediate="true"
-                                     update="@form" 
-                                     action="#{emprestimoBean.setTabela(true)}"/> 
+                <p:panel rendered="#{!emprestimoBean.tabela}">
+                    <p:wizard flowListener="#{emprestimoBean.proximaAba}" style="width:85%" backLabel="anterior" nextLabel="próximo" >
+                        <p:tab id="usuario" title="Usuário"> 
+                            <p:panel header="Detalhes Usuário: ">
+                                <h:panelGrid columns="3" columnClasses="label, value, grid">
+                                    <p:outputLabel value="Usuário: " />
+                                    <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
+                                                     style="width: 180px" 
+                                                     required="true">
+                                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                        <f:selectItems value="#{usuarioBean.itens}" />
+                                    </p:selectOneMenu>
+
+                                    <p:commandButton value="Verificar"
+                                                     update="@form"
+                                                     icon="ui-icon-search"
+                                                     action="#{emprestimoBean.emprestimoAtraso}"/>                                    
+                                    <h:outputText value="Nome:" />
+                                    <p:inputText readonly="true"                                                 
+                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.nomeUsuario : null}"/>
+                                    <br/>
+                                    <h:outputText value="Email: " />
+                                    <p:inputText readonly="true" 
+                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.email : null}"/>
+                                    <br/>
+                                    <h:outputText value="Tipo: " />
+                                    <p:inputText readonly="true" 
+                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>              
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="livro" title="Livro"> 
+                            <p:panel header="Detalhes Livro">
+                                <h:panelGrid columns="3" columnClasses="label, value, grid">
+                                    <p:outputLabel value="Livro: " rendered="#{5 > emprestimoBean.qnt}"/>
+                                    <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
+                                                     style="width: 180px" 
+                                                     required="true"
+                                                     rendered="#{5 > emprestimoBean.qnt}"
+                                                     requiredMessage="Selecione um livro">
+                                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                        <f:selectItems value="#{exemplarBean.itens}"/>
+                                    </p:selectOneMenu>
+                                    <br/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                        <p:tab id="confirmar" title="Confirmar">
+                            <p:panel header="Corfirmar: ">
+                                <h:panelGrid columns="3" columnClasses="label, value, grid">
+                                    <p:commandButton value="Salvar" 
+                                                     update="@form" 
+                                                     action="#{emprestimoBean.setTabela(true)}" 
+                                                     actionListener="#{emprestimoBean.calcularDevolucao}" 
+                                                     onclick="record.hide()" alt="Record"/>
+                                    <p:commandButton icon="ui-icon-refresh" 
+                                                     value="Voltar" 
+                                                     immediate="true"
+                                                     update="@form" 
+                                                     action="#{emprestimoBean.setTabela(true)}"/>
+                                </h:panelGrid>
+                            </p:panel>
+                        </p:tab>
+                    </p:wizard>
                 </p:panel>
             </center>
 
