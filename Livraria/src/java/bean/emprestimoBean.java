@@ -4,7 +4,6 @@ import dao.EmprestimoDAO;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -20,23 +19,17 @@ import org.primefaces.event.FlowEvent;
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     private EmprestimoDAO emprestimoDAO;
-    private Integer qnt;
-    
-    public void emprestimoAtraso(){
-        qnt = getDao().verificarDebito(getEntidade().getUsuarioid().getId());
-        System.out.println("Quantidade de debitos " + qnt);
-        adicionarMensagem("Possui " + qnt + " de débito(s)", FacesMessage.SEVERITY_INFO);       
+    private boolean debito = false;
+
+    public void emprestimoAtraso() {
+        if (getDao().verificarDebito(getEntidade().getUsuarioid().getId()) > 0) {
+            setDebito(true);
+        } else {
+            setDebito(false);
+        }
     }
 
-    public Integer getQnt() {
-        return qnt;
-    }
-
-    public void setQnt(Integer qnt) {
-        this.qnt = qnt;
-    }   
-
-    public void calcularDevolucao(ActionEvent actionEvent) {
+    public void gravar(ActionEvent actionEvent) {
         getEntidade().setDataEmprestimo(new Date());
         if (getEntidade().getExemplarid().getCircular()) {
             if ("Professor".equals(getEntidade().getUsuarioid().getTipo())) {
@@ -85,14 +78,21 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
                 break;
         }
     }
-    
+
     public String proximaAba(FlowEvent event) {
-        if(qnt == 0) {            
+        if (debito) {
             return event.getOldStep();
-        }
-        else {
+        } else {
             return event.getNewStep();
         }
+    }
+
+    public boolean isDebito() {
+        return debito;
+    }
+
+    public void setDebito(boolean debito) {
+        this.debito = debito;
     }
 
     @Override

@@ -113,32 +113,35 @@
                                         <f:selectItems value="#{usuarioBean.itens}" />
                                     </p:selectOneMenu>
 
-                                    <p:commandButton value="Verificar"
+                                    <p:commandButton value="Verificar"                                                     
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.emprestimoAtraso}"/>                                    
                                     <h:outputText value="Nome:" />
                                     <p:inputText readonly="true"                                                 
-                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.nomeUsuario : null}"/>
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.nomeUsuario : null}"/>
                                     <br/>
                                     <h:outputText value="Email: " />
                                     <p:inputText readonly="true" 
-                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.email : null}"/>
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.email : null}"/>
                                     <br/>
                                     <h:outputText value="Tipo: " />
                                     <p:inputText readonly="true" 
-                                                 value="#{(5 > emprestimoBean.qnt) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>              
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>              
                                 </h:panelGrid>
+                                <br/>
+                                <p:outputLabel value="* Usuário possui débito ou atingiu o limite de empréstimo!" 
+                                               rendered="#{emprestimoBean.debito}" 
+                                               style="color: #ff0100; font-style: oblique" />
                             </p:panel>
                         </p:tab>
                         <p:tab id="livro" title="Livro"> 
                             <p:panel header="Detalhes Livro">
                                 <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:outputLabel value="Livro: " rendered="#{5 > emprestimoBean.qnt}"/>
+                                    <p:outputLabel value="Livro: " />
                                     <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
                                                      style="width: 180px" 
                                                      required="true"
-                                                     rendered="#{5 > emprestimoBean.qnt}"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{exemplarBean.itens}"/>
@@ -150,10 +153,10 @@
                         <p:tab id="confirmar" title="Confirmar">
                             <p:panel header="Corfirmar: ">
                                 <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:commandButton value="Salvar" 
-                                                     update="@form" 
+                                    <p:commandButton value="Salvar"                                                     
+                                                     icon="ui-icon-disk"
                                                      action="#{emprestimoBean.setTabela(true)}" 
-                                                     actionListener="#{emprestimoBean.calcularDevolucao}" 
+                                                     actionListener="#{emprestimoBean.gravar}" 
                                                      onclick="record.hide()" alt="Record"/>
                                     <p:commandButton icon="ui-icon-refresh" 
                                                      value="Voltar" 
