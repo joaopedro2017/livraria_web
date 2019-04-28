@@ -22,10 +22,19 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     private boolean debito = false;
 
     public void emprestimoAtraso() {
-        if (getDao().verificarDebito(getEntidade().getUsuarioid().getId()) > 0) {
+        int id = getEntidade().getUsuarioid().getId();
+        int atraso = getDao().verificarDebito(id);
+        if (atraso > 0) {
             setDebito(true);
         } else {
-            setDebito(false);
+            int aberto = getDao().verificarEmAberto(id);
+            String tipo = getEntidade().getUsuarioid().getTipo();
+            if (("Professor".equals(tipo) && aberto > 5)
+                    || (!"Professor".equals(tipo) && aberto > 3)) {
+                setDebito(true);
+            } else {                
+                setDebito(false);
+            }
         }
     }
 
