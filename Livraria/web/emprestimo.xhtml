@@ -133,6 +133,12 @@
                                 <p:outputLabel value="* Usuário possui débito ou atingiu o limite de empréstimo!" 
                                                rendered="#{emprestimoBean.debito}" 
                                                style="color: #ff0100; font-style: oblique" />
+                                <br/>
+                                <p:commandButton icon="ui-icon-refresh" 
+                                                 value="Cancelar" 
+                                                 immediate="true"
+                                                 update="@form" 
+                                                 action="#{emprestimoBean.setTabela(true)}"/>
                             </p:panel>
                         </p:tab>
                         <p:tab id="livro" title="Livro"> 
@@ -146,8 +152,38 @@
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{exemplarBean.itens}"/>
                                     </p:selectOneMenu>
+                                    <p:commandButton value="Consultar"                                                     
+                                                     update="@form"
+                                                     icon="ui-icon-search"
+                                                     action="#{emprestimoBean.verificarExemplar}"/>
+
+                                    <h:outputText value="Título:" />
+                                    <p:inputText readonly="true"                                                 
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.titulo : null}"/>
                                     <br/>
+                                    <h:outputText value="ISBN:" />
+                                    <p:inputText readonly="true"                                                 
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.isbn : null}"/>
+                                    <br/>
+                                    <h:outputText value="Edição:" />
+                                    <p:inputText readonly="true"                                                 
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.edicao : null}"/>
+                                    <br/>
+                                    <h:outputText value="Ano:" />
+                                    <p:inputText readonly="true"                                                 
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.ano : null}"/>
+                                    <br/>                                    
                                 </h:panelGrid>
+                                <br/>
+                                <p:outputLabel value="* Exemplar não está disponível ou está emprestado a esse usuário!" 
+                                               rendered="#{emprestimoBean.debito}" 
+                                               style="color: #ff0100; font-style: oblique" />
+                                <br/>
+                                <p:commandButton icon="ui-icon-refresh" 
+                                                 value="Cancelar" 
+                                                 immediate="true"
+                                                 update="@form" 
+                                                 action="#{emprestimoBean.setTabela(true)}"/>
                             </p:panel>
                         </p:tab>
                         <p:tab id="confirmar" title="Confirmar">
@@ -159,7 +195,7 @@
                                                      actionListener="#{emprestimoBean.gravar}" 
                                                      onclick="record.hide()" alt="Record"/>
                                     <p:commandButton icon="ui-icon-refresh" 
-                                                     value="Voltar" 
+                                                     value="Cancelar" 
                                                      immediate="true"
                                                      update="@form" 
                                                      action="#{emprestimoBean.setTabela(true)}"/>

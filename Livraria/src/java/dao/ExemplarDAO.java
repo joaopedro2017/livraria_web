@@ -8,6 +8,7 @@ package dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import model.Emprestimo;
 import model.Exemplar;
 import util.PersistenceUtil;
 
@@ -24,7 +25,7 @@ public class ExemplarDAO implements CrudDAO<Exemplar> {
             exemplarDAO = new ExemplarDAO();
         }
         return exemplarDAO;
-    }
+    }    
 
     @Override
     public Exemplar buscarId(int id) { 

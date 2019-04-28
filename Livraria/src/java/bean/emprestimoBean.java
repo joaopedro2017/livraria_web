@@ -32,9 +32,20 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
             if (("Professor".equals(tipo) && aberto > 5)
                     || (!"Professor".equals(tipo) && aberto > 3)) {
                 setDebito(true);
-            } else {                
+            } else {
                 setDebito(false);
             }
+        }
+    }
+
+    public void verificarExemplar() {
+        int idExemplar = getEntidade().getExemplarid().getId();
+        Integer disponivel = getDao().exemplarDisponivel(idExemplar);
+        if (disponivel != null) {
+            System.out.println("Verificar Quantidade se pode " + disponivel);
+            setDebito(true);
+        } else {
+            setDebito(false);
         }
     }
 

@@ -43,6 +43,18 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         }
         return 0;
     }
+    
+    public Integer exemplarDisponivel(int id) {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        Query query = em.createQuery("select a from Emprestimo a where a.exemplarid.id =:id ");
+        query.setParameter("id", id);        
+
+        List<Emprestimo> emprestimo = query.getResultList();
+        if (emprestimo != null && emprestimo.size() > 0) {
+            return emprestimo.size();
+        }
+        return null;
+    }   
 
     @Override
     public Emprestimo buscarId(int id) {
