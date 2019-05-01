@@ -9,9 +9,9 @@ import dao.UsuarioDAO;
 import java.io.IOException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.bean.ViewScoped;
 import javax.servlet.http.HttpServletRequest;
 import model.Usuario;
 import util.SessionUtil;
@@ -22,7 +22,7 @@ import static util.SessionUtil.getRequest;
  * @author John Peter
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class loginBean {
 
     private String nomeUsuario;
@@ -52,12 +52,12 @@ public class loginBean {
             request.getSession().setAttribute("nome", user.getNomeUsuario());
             request.getSession().setAttribute("tipo", user.getTipo());
             FacesContext context = FacesContext.getCurrentInstance();
-            context.getExternalContext().redirect("index.xhtml");            
+            context.getExternalContext().redirect("index.xhtml");
         } catch (Exception ex) {
             setNomeUsuario("");
             setSenha("");
             adicionarMensagem();
-        }        
+        }
     }
 
     public void logoff() throws IOException {
@@ -72,15 +72,19 @@ public class loginBean {
         String mensagem = "Usuário e/ou senha estão incorretos";
         FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, cabecalho, mensagem);
         FacesContext.getCurrentInstance().addMessage(null, fm);
-    }    
-     
-    public String getTipo(){
+    }
+
+    public Usuario getUser() {
+        return SessionUtil.getUser();
+    }
+
+    public String getTipo() {
         return SessionUtil.getUserTipo();
     }
-    
-    public String getPerfil(){
+
+    public String getPerfil() {
         String perfil = SessionUtil.getUserName();
-        if(perfil == null){
+        if (perfil == null) {
             return null;
         }
         return perfil;

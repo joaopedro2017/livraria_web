@@ -4,16 +4,16 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
-    <header>
+    <header style="height: 127.22px;">
         <h1>Projeto - Sistema de Livraria</h1>
         <h:form>  
-            <p:menubar>
+            <p:menubar rendered="#{loginBean.user != null}">
                 <p:menuitem value="Início" icon="ui-icon-home" url="/faces/index.xhtml" />
                 <p:submenu label="Gerenciar" icon="ui-icon-gear" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Funcionário'}">  
                     <p:menuitem value="Autor" icon="ui-icon-person" url="/faces/autor.xhtml"/>
-                    <p:menuitem value="Emprestimo" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
+                    <p:menuitem value="Empréstimo" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
                     <p:menuitem value="Editora" icon="ui-icon-tag" url="/faces/editora.xhtml"/>                    
-                    <p:menuitem value="Usuario" icon="ui-icon-contact" url="/faces/usuario.xhtml"/>
+                    <p:menuitem value="Usuário" icon="ui-icon-contact" url="/faces/usuario.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Cadastro" icon="ui-icon-search" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Bibliotecário'}">
                     <p:menuitem value="Assunto" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    

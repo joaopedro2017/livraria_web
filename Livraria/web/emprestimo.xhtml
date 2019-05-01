@@ -104,10 +104,10 @@
                     <p:wizard flowListener="#{emprestimoBean.proximaAba}" style="width:85%" backLabel="anterior" nextLabel="próximo" >
                         <p:tab id="usuario" title="Usuário"> 
                             <p:panel header="Detalhes Usuário: ">
-                                <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:outputLabel value="Usuário: " />
+                                <h:panelGrid columns="3" columnClasses="grid, grid, grid">
+                                    <p:outputLabel value="Usuário: " style="float: right;"/>
                                     <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
-                                                     style="width: 180px" 
+                                                     style="width: 202px" 
                                                      required="true">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{usuarioBean.itens}" />
@@ -117,15 +117,15 @@
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.emprestimoAtraso}"/>                                    
-                                    <h:outputText value="Nome:" />
+                                    <h:outputText value="Nome:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.nomeUsuario : null}"/>
                                     <br/>
-                                    <h:outputText value="Email: " />
+                                    <h:outputText value="Email: " style="float: right;"/>
                                     <p:inputText readonly="true" 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.email : null}"/>
                                     <br/>
-                                    <h:outputText value="Tipo: " />
+                                    <h:outputText value="Tipo: " style="float: right;"/>
                                     <p:inputText readonly="true" 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>              
                                 </h:panelGrid>
@@ -143,10 +143,10 @@
                         </p:tab>
                         <p:tab id="livro" title="Livro"> 
                             <p:panel header="Detalhes Livro">
-                                <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:outputLabel value="Livro: " />
+                                <h:panelGrid columns="3" columnClasses="grid, grid, grid">
+                                    <p:outputLabel value="Livro: " style="float: right;"/>
                                     <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
-                                                     style="width: 180px" 
+                                                     style="width: 202px" 
                                                      required="true"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
@@ -157,19 +157,19 @@
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.verificarExemplar}"/>
 
-                                    <h:outputText value="Título:" />
+                                    <h:outputText value="Título:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.titulo : null}"/>
                                     <br/>
-                                    <h:outputText value="ISBN:" />
+                                    <h:outputText value="ISBN:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.isbn : null}"/>
                                     <br/>
-                                    <h:outputText value="Edição:" />
+                                    <h:outputText value="Edição:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.edicao : null}"/>
                                     <br/>
-                                    <h:outputText value="Ano:" />
+                                    <h:outputText value="Ano:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.ano : null}"/>
                                     <br/>                                    

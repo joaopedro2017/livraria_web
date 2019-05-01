@@ -63,7 +63,13 @@ public class AutentificacaoFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) sr1;
 
         HttpSession session = request.getSession();
+        String req = request.getRequestURI();
         Usuario user = (Usuario) session.getAttribute("user");
+        
+        if(req.matches(".*(css|jpg|png|gif|js)")){
+            fc.doFilter(sr, response);
+        }
+        
         if (session.isNew() || user == null) {
             doLogin(sr, sr1, request);
         } else {

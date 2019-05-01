@@ -5,7 +5,6 @@
  */
 package bean;
 
-import dao.EditoraDAO;
 import model.Usuario;
 import dao.UsuarioDAO;
 import java.util.ArrayList;
@@ -13,7 +12,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
-import model.Editora;
 
 /**
  *

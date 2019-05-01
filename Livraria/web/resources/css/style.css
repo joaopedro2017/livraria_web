@@ -1,17 +1,8 @@
 @import url(http://fonts.googleapis.com/css?family=Jockey+One);
 
-.label {
-    width:20%;
-    padding:4px;
-}
-
 .value {
     width:80%;
     padding:4px;
-}
-
-.grid {
-    width:100%;
 }
 
 .error {
@@ -24,7 +15,7 @@
 
 .grid {
     width:33%;
-    padding:4px;
+    padding:1px;
 }
 * {
     -webkit-box-sizing: border-box;
@@ -45,7 +36,7 @@ body {
 }
 
 header {
-    background-image: url(images/shattered.png);
+    background-image: url(images/header/head.png);
 }
 
 header h1 {
