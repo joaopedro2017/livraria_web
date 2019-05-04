@@ -36,16 +36,16 @@ body {
 }
 
 header {
-    background-image: url(images/header/head.png);
+    background-image: url(images/header/head.jpg);
 }
 
 header h1 {
     padding: 15px 10px;
     font-family: "Jockey One", sans-serif;
     margin: 0;
-    color: #FFFFFF;
+    color: #29487D;
     font-size: 40px;
-    text-shadow: 1px 1px 0 #333333;
+    text-shadow: 1px 1px 0 #000000;
 }
 
 .page-header {

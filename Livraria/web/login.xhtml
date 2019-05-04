@@ -7,21 +7,17 @@
                 xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
         <center>
-            <h2 class="page-header">Login</h2>
+            <h2 class="page-header">Livraria - Login</h2>
             <ms:mensagem/>
         </center>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-        <h:form id="formPrincipal">
-            <center>
-                <div>
+        <center>
+            <p:graphicImage value="/resources/images/livro_aberto.png"/>
+            <h:form id="formPrincipal">
+                <div style="position: relative">
                     <p:inputText id="name" 
                                  value="#{loginBean.nomeUsuario}"
-                                 maxlength="255"
-                                 size="50"
+                                 maxlength="200"
+                                 size="44"
                                  style="text-align: center; height: 40px"
                                  required="true"
                                  placeholder="Usuario"
@@ -32,8 +28,8 @@
                 <div>
                     <p:password  id="senha" 
                                  value="#{loginBean.senha}"
-                                 maxlength="255"
-                                 size="50"
+                                 maxlength="200"
+                                 size="44"
                                  style="text-align: center; height: 40px"
                                  required="true"
                                  placeholder="Senha"
@@ -41,9 +37,10 @@
                                  requiredMessage="Digite sua senha"/>
                 </div>
                 <br/>
-                <p:commandButton tabindex="3" style="width: 200px; height: 40px; font-size: larger; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{loginBean.login}" onclick="search.hide()" alt="Record"/>
-            </center>
-            <br/>
-        </h:form>
+                <div>
+                    <p:commandButton tabindex="3" style="width: 390px; height: 40px; font-size: larger; color: green" icon="ui-icon-key" value="Entrar" actionListener="#{loginBean.login}" onclick="search.hide()" alt="Record"/>
+                </div>                
+            </h:form>
+        </center>
     </ui:define>
 </ui:composition>
