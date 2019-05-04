@@ -1,0 +1,94 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="crudBean" required="true" shortDescription="Uma classe qualquer que extenda o crudBean"/>
+        <cc:attribute name="arquivo" required="true" shortDescription="Nome de saída de arquivos de exportação"/>
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div align="center">
+
+            <p:dataTable rendered="#{cc.attrs.crudBean.tabela}" 
+                         var="lista" 
+                         value="#{cc.attrs.crudBean.entidades}"
+                         id="tabela" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" 
+                         rowsPerPageTemplate="5,10,25,50,100,9999" 
+                         style="width:100%">
+
+                <cc:insertChildren>                    
+                </cc:insertChildren>
+                <p:column headerText="Opções" exportable="false">
+                    <center>
+
+                        <p:commandButton icon="ui-icon-pencil" 
+                                         value="Editar" 
+                                         action="#{cc.attrs.crudBean.setTabela(false)}" 
+                                         actionListener="#{cc.attrs.crudBean.editar(lista)}" 
+                                         update="@form" />
+
+                        <p:commandButton icon="ui-icon-trash" value="Deletar" onclick="PF('remove').show();"> 
+                            <f:setPropertyActionListener target="#{cc.attrs.crudBean.entidade}" value="#{lista}" />
+                        </p:commandButton> 
+
+                    </center>
+                </p:column>
+
+            </p:dataTable>
+        </div>
+        <br/>
+
+        <p:column rendered="#{cc.attrs.crudBean.tabela}">
+            <p:commandButton icon="ui-icon-plus" 
+                             update="@form" 
+                             value="Novo" 
+                             action="#{cc.attrs.crudBean.setTabela(false)}" /> 
+        </p:column>
+
+        <p:panel rendered="#{cc.attrs.crudBean.tabela}">
+            <div align="center">
+                <h3>Exportar dados da página</h3>
+
+                <h:commandLink id="excel">
+                    <p:graphicImage name="./images/exports/excel.png" />
+                    <p:dataExporter type="xls" target="tabela" fileName="#{cc.attrs.arquivo}" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
+                </h:commandLink>
+
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabela" fileName="#{cc.attrs.arquivo}" preProcessor="#{cc.attrs.crudBean.preProcessPDF}" />
+                </h:commandLink>
+
+
+                <h:commandLink>
+                    <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                    <p:dataExporter type="csv" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                </h:commandLink>
+
+                <h:commandLink>
+                    <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                    <p:dataExporter type="xml" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                </h:commandLink>
+            </div>
+        </p:panel>
+
+        <p:confirmDialog global="true">  
+            <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+            <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+        </p:confirmDialog>
+
+        <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
+            Você tem certeza?
+            <p:commandButton value="Deletar" actionListener="#{cc.attrs.crudBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+        </p:dialog>
+    </cc:implementation>
+</html>
