@@ -2,6 +2,7 @@ package converter;
 
 import dao.LivroDAO;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -13,6 +14,7 @@ import model.Livro;
  * @author John Peter
  */
 @FacesConverter(forClass = Livro.class)
+@ManagedBean
 public class LivroConverter implements Converter, Serializable {
     
     private static final long serialVersionUID = 1L;

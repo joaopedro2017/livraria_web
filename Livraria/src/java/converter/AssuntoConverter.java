@@ -2,6 +2,7 @@ package converter;
 
 import dao.AssuntoDAO;
 import java.io.Serializable;
+import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -13,6 +14,7 @@ import model.Assunto;
  * @author John Peter
  */
 @FacesConverter(forClass = Assunto.class)
+@ManagedBean
 public class AssuntoConverter implements Converter, Serializable {
     
     private static final long serialVersionUID = 1L;
