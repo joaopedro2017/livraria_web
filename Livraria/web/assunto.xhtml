@@ -10,12 +10,8 @@
         <h2 class="page-header">Gerenciar Assuntos</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal">
-            
-            <pn:dataTableCrud crudBean="#{assuntoBean}" arquivo="assuntos">                
-                <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}">
-                    <h:outputText value="#{lista.id}" />
-                </p:column>
 
+            <pn:dataTableCrud crudBean="#{assuntoBean}" arquivo="assuntos">                
                 <p:column headerText="Nome" sortBy="#{lista.nomeAssunto}" filterBy="#{lista.nomeAssunto}">
                     <h:outputText value="#{lista.nomeAssunto}" />
                 </p:column>
@@ -28,7 +24,7 @@
                     <h:outputText value="#{lista.assunto}" />
                 </p:column>               
             </pn:dataTableCrud>
-            
+
             <center>
                 <p:panel rendered="#{!assuntoBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
                     <p:panelGrid id="panelRecord" columns="6">

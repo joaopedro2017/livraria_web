@@ -4,101 +4,39 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp">
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Livro</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal">
-            <div align="center">
+            <pn:dataTableCrud crudBean="#{livroBean}" arquivo="livros">
+                <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
+                    <h:outputText value="#{lista.titulo}" />
+                </p:column>
 
-                <p:dataTable rendered="#{livroBean.tabela}" var="lista" value="#{livroBean.entidades}"
-                             id="tabelaLivro" emptyMessage="Nenhum registro encontrado"
-                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                             paginator="true" rows="10" rowsPerPageTemplate="5,10,25,50,100,9999" style="width:100%">
+                <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
+                    <h:outputText value="#{lista.isbn}" />
+                </p:column>
 
-                    <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}">
-                        <h:outputText value="#{lista.id}" />
-                    </p:column>
+                <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
+                    <h:outputText value="#{lista.edicao}" />
+                </p:column>
 
-                    <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
-                        <h:outputText value="#{lista.titulo}" />
-                    </p:column>
+                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
+                    <h:outputText value="#{lista.ano}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>                 
 
-                    <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
-                        <h:outputText value="#{lista.isbn}" />
-                    </p:column>
+                <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
+                    <h:outputText value="#{lista.editoraid.nomeEditora}" />
+                </p:column>
 
-                    <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
-                        <h:outputText value="#{lista.edicao}" />
-                    </p:column>
-
-                    <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
-                        <h:outputText value="#{lista.ano}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>                 
-
-                    <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
-                        <h:outputText value="#{lista.editoraid.nomeEditora}" />
-                    </p:column>
-
-                    <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                        <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
-                    </p:column>
-
-                    <p:column headerText="Opções" exportable="false">
-                        <center>
-
-                            <p:commandButton icon="ui-icon-pencil" value="E" action="#{livroBean.setTabela(false)}" actionListener="#{livroBean.editar(lista)}" update="@form" />
-                            <p:commandButton icon="ui-icon-trash" value="D" onclick="PF('remove').show();"> 
-                                <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
-                            </p:commandButton> 
-
-                        </center>
-                    </p:column>
-
-                </p:dataTable>
-            </div>
-            <br/>
-
-            <p:column rendered="#{livroBean.tabela}">
-                <p:commandButton icon="ui-icon-plus" 
-                                 update="@form" 
-                                 value="Novo" 
-                                 action="#{livroBean.setTabela(false)}">  
-                </p:commandButton> 
-            </p:column>
-
-            <p:panel rendered="#{livroBean.tabela}">
-                <center>                
-                    <h3>Exportar dados da página</h3>
-
-                    <h:commandLink id="excel">
-                        <p:graphicImage name="./images/exports/excel.png" />
-                        <p:dataExporter type="xls" target="tabelaLivro" fileName="livros" postProcessor="#{livroBean.postProcessXLS}" />
-                    </h:commandLink>
-
-                    <h:commandLink id="pdf">
-                        <p:graphicImage name="./images/exports/pdf.png" />
-                        <p:dataExporter type="pdf" target="tabelaLivro" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
-                    </h:commandLink>
-
-                    <h:commandLink>
-                        <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                        <p:dataExporter type="csv" target="tabelaLivro" fileName="livro" />
-                    </h:commandLink>
-
-                    <h:commandLink>
-                        <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                        <p:dataExporter type="xml" target="tabelaLivro" fileName="livro" />
-                    </h:commandLink>
-                </center>
-            </p:panel>
-
-            <p:confirmDialog global="true">  
-                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
-                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
-            </p:confirmDialog>
+                <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
+                    <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+                </p:column>
+            </pn:dataTableCrud>
 
             <center>                    
                 <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
@@ -193,11 +131,6 @@
                                      action="#{livroBean.setTabela(true)}"/> 
                 </p:panel>
             </center>
-
-            <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
-                Você tem certeza?
-                <p:commandButton value="Deletar" actionListener="#{livroBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
-            </p:dialog>  
 
         </h:form>
     </ui:define>
