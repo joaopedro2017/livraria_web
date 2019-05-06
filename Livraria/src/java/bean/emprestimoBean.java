@@ -24,24 +24,26 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     public void emprestimoAtraso() {
         int id = getEntidade().getUsuarioid().getId();
         int atraso = getDao().verificarDebito(id);
+        int aberto = getDao().verificarEmAberto(id);
+        String tipo = getEntidade().getUsuarioid().getTipo();
+
+        System.out.println("id: " + id + " Atraso: " + atraso + " aberto: " + aberto + " tipo: " + tipo + "\n");
+
         if (atraso > 0) {
             setDebito(true);
+        } else if (("Professor".equals(tipo) && aberto >= 5)) {
+            setDebito(true);
+        } else if ((!"Professor".equals(tipo) && aberto >= 3)) {
+            setDebito(true);
         } else {
-            int aberto = getDao().verificarEmAberto(id);
-            String tipo = getEntidade().getUsuarioid().getTipo();
-            if (("Professor".equals(tipo) && aberto > 5)
-                    || (!"Professor".equals(tipo) && aberto > 3)) {
-                setDebito(true);
-            } else {
-                setDebito(false);
-            }
-        }
+            setDebito(false);
+        }        
     }
 
     public void verificarExemplar() {
         int idExemplar = getEntidade().getExemplarid().getId();
-        Integer disponivel = getDao().exemplarDisponivel(idExemplar);
-        if (disponivel != null) {
+        int disponivel = getDao().exemplarDisponivel(idExemplar);
+        if (disponivel != 0) {
             System.out.println("Verificar Quantidade se pode " + disponivel);
             setDebito(true);
         } else {

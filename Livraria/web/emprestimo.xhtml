@@ -40,13 +40,14 @@
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
                                     <p:outputLabel value="Usuário: " style="float: right;"/>
                                     <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
-                                                     style="width: 202px" 
+                                                     style="width: 202px"
                                                      required="true">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{usuarioBean.itens}" />
                                     </p:selectOneMenu>
 
-                                    <p:commandButton value="Verificar"                                                     
+                                    <p:commandButton value="Verificar"
+                                                     ajax="true"
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.emprestimoAtraso}"/>                                    
@@ -79,13 +80,14 @@
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
                                     <p:outputLabel value="Livro: " style="float: right;"/>
                                     <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
-                                                     style="width: 202px" 
+                                                     style="width: 202px"                                                     
                                                      required="true"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{exemplarBean.itens}"/>
                                     </p:selectOneMenu>
-                                    <p:commandButton value="Consultar"                                                     
+                                    <p:commandButton value="Consultar"
+                                                     ajax="true"
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.verificarExemplar}"/>
@@ -112,7 +114,7 @@
                                                rendered="#{emprestimoBean.debito}" 
                                                style="color: #ff0100; font-style: oblique" />
                                 <br/>
-                                <p:commandButton icon="ui-icon-refresh" 
+                                <p:commandButton icon="ui-icon-cancel" 
                                                  value="Cancelar" 
                                                  immediate="true"
                                                  update="@form" 
@@ -127,7 +129,7 @@
                                                      action="#{emprestimoBean.setTabela(true)}" 
                                                      actionListener="#{emprestimoBean.gravar}" 
                                                      onclick="record.hide()" alt="Record"/>
-                                    <p:commandButton icon="ui-icon-refresh" 
+                                    <p:commandButton icon="ui-icon-cancel" 
                                                      value="Cancelar" 
                                                      immediate="true"
                                                      update="@form" 

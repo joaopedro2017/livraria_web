@@ -1,0 +1,52 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+    <ui:define name="content">
+        <h2 class="page-header">Pesquisar Acervo</h2>
+        <ms:mensagem/>
+        <h:form id="formPrincipal">
+
+            <p:dataTable var="lista" 
+                         value="#{livroBean.entidades}"
+                         id="tabela" emptyMessage="Nenhum registro encontrado"
+                         paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                         paginator="true" rows="5" 
+                         rowsPerPageTemplate="5,10,25,50,100,9999" 
+                         style="width:100%">
+
+                <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
+                    <h:outputText value="#{lista.titulo}" />
+                </p:column>
+
+                <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
+                    <h:outputText value="#{lista.isbn}" />
+                </p:column>
+
+                <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
+                    <h:outputText value="#{lista.edicao}" />
+                </p:column>
+
+                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
+                    <h:outputText value="#{lista.ano}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>                 
+
+                <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
+                    <h:outputText value="#{lista.editoraid.nomeEditora}" />
+                </p:column>
+
+                <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
+                    <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+                </p:column>
+                
+            </p:dataTable>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

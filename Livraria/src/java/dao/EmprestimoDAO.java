@@ -24,11 +24,7 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
-        List<Emprestimo> emprestimo = query.getResultList();
-        if (emprestimo != null && emprestimo.size() > 0) {
-            return emprestimo.size();
-        }
-        return 0;
+        return query.getResultList().size();      
     }
     
     public Integer verificarEmAberto(int id) {
@@ -37,11 +33,7 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
-        List<Emprestimo> emprestimo = query.getResultList();
-        if (emprestimo != null && emprestimo.size() > 0) {
-            return emprestimo.size();
-        }
-        return 0;
+        return query.getResultList().size();        
     }
     
     public Integer exemplarDisponivel(int id) {
@@ -49,11 +41,7 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         Query query = em.createQuery("select a from Emprestimo a where a.exemplarid.id =:id ");
         query.setParameter("id", id);        
 
-        List<Emprestimo> emprestimo = query.getResultList();
-        if (emprestimo != null && emprestimo.size() > 0) {
-            return emprestimo.size();
-        }
-        return null;
+        return query.getResultList().size();        
     }   
 
     @Override
