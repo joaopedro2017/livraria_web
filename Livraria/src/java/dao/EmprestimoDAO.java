@@ -20,34 +20,34 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
 
     public Integer verificarDebito(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Emprestimo a where a.usuarioid.id =:id and a.dataDevolucao <= :hoje ");
+        Query query = em.createQuery("select COUNT(e) from Emprestimo e where e.usuarioid.id =:id and e.dataDevolucao <= :hoje ");
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
-        return query.getResultList().size();      
+        return Integer.parseInt(query.getSingleResult().toString());      
     }
     
     public Integer verificarEmAberto(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Emprestimo a where a.usuarioid.id =:id and a.dataDevolucao >= :hoje ");
+        Query query = em.createQuery("select COUNT(e) from Emprestimo e where e.usuarioid.id =:id and e.dataDevolucao >= :hoje ");
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
-        return query.getResultList().size();        
+        return Integer.parseInt(query.getSingleResult().toString());        
     }
     
     public Integer exemplarDisponivel(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Emprestimo a where a.exemplarid.id =:id ");
+        Query query = em.createQuery("select COUNT(e) from Emprestimo e where e.exemplarid.id =:id ");
         query.setParameter("id", id);        
 
-        return query.getResultList().size();        
+        return Integer.parseInt(query.getSingleResult().toString());        
     }   
 
     @Override
     public Emprestimo buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Emprestimo a where a.id =:id ");
+        Query query = em.createQuery("select e from Emprestimo e where e.id =:id ");
         query.setParameter("id", id);
 
         List<Emprestimo> emprestimo = query.getResultList();
@@ -60,14 +60,14 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
     @Override
     public List<Emprestimo> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Emprestimo As a");
+        Query query = em.createQuery("from Emprestimo As e");
         return query.getResultList();
     }
 
     @Override
     public List<Emprestimo> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Emprestimo a group by a.emprestimo");
+        Query query = em.createQuery("select distinct e from Emprestimo e group by e.dataEmprestimo");
         return query.getResultList();
     }
 
