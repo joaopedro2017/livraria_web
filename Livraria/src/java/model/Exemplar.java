@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -48,8 +49,11 @@ public class Exemplar implements Serializable {
     @JoinColumn(name = "Livro_id", referencedColumnName = "id")
     @ManyToOne
     private Livro livroid;
+    @OneToMany(mappedBy = "exemplarid")
+    private List<Reserva> reservaList;
 
     public Exemplar() {
+        reservaList = new ArrayList<Reserva>();
     }
 
     public Exemplar(Integer id) {
@@ -87,6 +91,15 @@ public class Exemplar implements Serializable {
 
     public void setLivroid(Livro livroid) {
         this.livroid = livroid;
+    }
+
+    @XmlTransient
+    public List<Reserva> getReservaList() {
+        return reservaList;
+    }
+
+    public void setReservaList(List<Reserva> reservaList) {
+        this.reservaList = reservaList;
     }
 
     @Override

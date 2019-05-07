@@ -1,0 +1,55 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Reservas</h2>
+        <ms:mensagem/>        
+        <h:form id="formPrincipal">
+
+            <pn:dataTableCrud crudBean="#{reservaBean}" arquivo="autores">
+
+                <p:column headerText="Exemplar" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">
+                    <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
+                </p:column>
+                <p:column headerText="Emprestimo" sortBy="#{lista.emprestimoid.id}" filterBy="#{lista.emprestimoid.id}">
+                    <h:outputText value="#{lista.emprestimoid.id}" />
+                </p:column>
+                <p:column headerText="Usuario" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
+                    <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
+                </p:column>
+                <p:column headerText="Cancelada" sortBy="#{lista.cancelar}" filterBy="#{lista.cancelar}">
+                    <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
+                </p:column>
+
+            </pn:dataTableCrud>
+
+            <center>
+                <p:panel rendered="#{!reservaBean.tabela}" header="Novo/Editar Autor" style="width:85%">
+                    <p:panelGrid id="panelRecord" columns="6">                       
+                        
+
+                    </p:panelGrid>  
+                    <br/>
+                    <p:commandButton value="Salvar" 
+                                     update="@form" 
+                                     icon="ui-icon-disk"
+                                     action="#{reservaBean.setTabela(true)}" 
+                                     actionListener="#{reservaBean.record}" 
+                                     onclick="record.hide()"
+                                     alt="Record"/>
+                    <p:commandButton icon="ui-icon-refresh" 
+                                     value="Voltar" 
+                                     immediate="true"
+                                     update="@form" 
+                                     action="#{reservaBean.setTabela(true)}"/> 
+                </p:panel>
+            </center>      
+
+        </h:form>
+    </ui:define>
+</ui:composition>

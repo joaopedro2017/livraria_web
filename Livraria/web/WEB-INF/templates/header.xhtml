@@ -21,7 +21,7 @@
                 </p:submenu>
                 <p:submenu label="Gerenciar" icon="ui-icon-gear" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Funcionário'}">  
                     <p:menuitem value="Empréstimo" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
-                    <p:menuitem value="Reserva" icon="ui-icon-calendar" url="/faces/emprestimo.xhtml"/>
+                    <p:menuitem value="Reserva" icon="ui-icon-calendar" url="/faces/reserva.xhtml"/>
                     <p:menuitem value="Usuário" icon="ui-icon-contact" url="/faces/usuario.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Relatório" icon="ui-icon-clipboard" rendered="#{loginBean.tipo == 'Administrador'}">

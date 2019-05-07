@@ -43,9 +43,10 @@ public class Autor implements Serializable {
     @Column(name = "nomeAutor")
     private String nomeAutor;
     @ManyToMany(mappedBy = "autorList")
-    private List<Livro> livroList = new ArrayList<Livro>();
+    private List<Livro> livroList;
 
     public Autor() {
+        livroList = new ArrayList<Livro>();
     }
 
     public Autor(Integer id) {

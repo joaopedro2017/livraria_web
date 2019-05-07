@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -45,6 +46,7 @@ public class Editora implements Serializable {
     private List<Livro> livroList;
 
     public Editora() {
+        livroList = new ArrayList<Livro>();
     }
 
     public Editora(Integer id) {

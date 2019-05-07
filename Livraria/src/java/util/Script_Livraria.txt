@@ -85,3 +85,20 @@ CREATE TABLE autorLivro(
     CONSTRAINT FK_AutorLivro_Livro FOREIGN KEY(Livro_id)
     	REFERENCES livro(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE TABLE reserva(
+	id int not null AUTO_INCREMENT,
+    dataEmprestimo datetime,    
+    cancelar varchar(7),
+    Exemplar_id int,
+    Usuario_id int,
+    Emprestimo_id int,
+    
+    CONSTRAINT PK_Reserva PRIMARY KEY(id),
+    CONSTRAINT FK_Reserva_Exemplar FOREIGN KEY(Exemplar_id)
+    	REFERENCES exemplar(id),
+    CONSTRAINT FK_Reserva_Usuario FOREIGN KEY(Usuario_id)
+    	REFERENCES usuario(id),
+    CONSTRAINT FK_Reserva_Emprestimo FOREIGN KEY(Emprestimo_id)
+    	REFERENCES emprestimo(id)
+);

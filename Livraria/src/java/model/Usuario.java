@@ -52,6 +52,8 @@ public class Usuario implements Serializable {
     private String tipo;
     @OneToMany(mappedBy = "usuarioid")
     private List<Emprestimo> emprestimoList;
+    @OneToMany(mappedBy = "usuarioid")
+    private List<Reserva> reservaList;
 
     public Usuario() {
     }
@@ -107,6 +109,15 @@ public class Usuario implements Serializable {
 
     public void setEmprestimoList(List<Emprestimo> emprestimoList) {
         this.emprestimoList = emprestimoList;
+    }
+
+    @XmlTransient
+    public List<Reserva> getReservaList() {
+        return reservaList;
+    }
+
+    public void setReservaList(List<Reserva> reservaList) {
+        this.reservaList = reservaList;
     }
 
     @Override

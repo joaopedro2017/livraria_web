@@ -6,9 +6,7 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,26 +17,24 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author John Peter
  */
 @Entity
-@Table(name = "emprestimo")
+@Table(name = "reserva")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Emprestimo.findAll", query = "SELECT e FROM Emprestimo e"),
-    @NamedQuery(name = "Emprestimo.findById", query = "SELECT e FROM Emprestimo e WHERE e.id = :id"),
-    @NamedQuery(name = "Emprestimo.findByDataEmprestimo", query = "SELECT e FROM Emprestimo e WHERE e.dataEmprestimo = :dataEmprestimo"),
-    @NamedQuery(name = "Emprestimo.findByDataDevolucao", query = "SELECT e FROM Emprestimo e WHERE e.dataDevolucao = :dataDevolucao")})
-public class Emprestimo implements Serializable {
+    @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
+    @NamedQuery(name = "Reserva.findById", query = "SELECT r FROM Reserva r WHERE r.id = :id"),
+    @NamedQuery(name = "Reserva.findByDataEmprestimo", query = "SELECT r FROM Reserva r WHERE r.dataEmprestimo = :dataEmprestimo"),
+    @NamedQuery(name = "Reserva.findByCancelar", query = "SELECT r FROM Reserva r WHERE r.cancelar = :cancelar")})
+public class Reserva implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -49,23 +45,22 @@ public class Emprestimo implements Serializable {
     @Column(name = "dataEmprestimo")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataEmprestimo;
-    @Column(name = "dataDevolucao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dataDevolucao;
+    @Column(name = "cancelar")
+    private String cancelar;
+    @JoinColumn(name = "Emprestimo_id", referencedColumnName = "id")
+    @ManyToOne
+    private Emprestimo emprestimoid;
     @JoinColumn(name = "Exemplar_id", referencedColumnName = "id")
     @ManyToOne
     private Exemplar exemplarid;
     @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
     @ManyToOne
     private Usuario usuarioid;
-    @OneToMany(mappedBy = "emprestimoid")
-    private List<Reserva> reservaList;
 
-    public Emprestimo() {
-        reservaList = new ArrayList<Reserva>();
+    public Reserva() {
     }
 
-    public Emprestimo(Integer id) {
+    public Reserva(Integer id) {
         this.id = id;
     }
 
@@ -85,12 +80,20 @@ public class Emprestimo implements Serializable {
         this.dataEmprestimo = dataEmprestimo;
     }
 
-    public Date getDataDevolucao() {
-        return dataDevolucao;
+    public String getCancelar() {
+        return cancelar;
     }
 
-    public void setDataDevolucao(Date dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
+    public void setCancelar(String cancelar) {
+        this.cancelar = cancelar;
+    }
+
+    public Emprestimo getEmprestimoid() {
+        return emprestimoid;
+    }
+
+    public void setEmprestimoid(Emprestimo emprestimoid) {
+        this.emprestimoid = emprestimoid;
     }
 
     public Exemplar getExemplarid() {
@@ -109,15 +112,6 @@ public class Emprestimo implements Serializable {
         this.usuarioid = usuarioid;
     }
 
-    @XmlTransient
-    public List<Reserva> getReservaList() {
-        return reservaList;
-    }
-
-    public void setReservaList(List<Reserva> reservaList) {
-        this.reservaList = reservaList;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -128,10 +122,10 @@ public class Emprestimo implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Emprestimo)) {
+        if (!(object instanceof Reserva)) {
             return false;
         }
-        Emprestimo other = (Emprestimo) object;
+        Reserva other = (Reserva) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -140,7 +134,7 @@ public class Emprestimo implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Emprestimo[ id=" + id + " ]";
+        return "model.Reserva[ id=" + id + " ]";
     }
     
 }

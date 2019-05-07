@@ -66,7 +66,7 @@ public class Livro implements Serializable {
             joinColumns = @JoinColumn(name = "Livro_id"),
             inverseJoinColumns = @JoinColumn(name = "Autor_id")
     )
-    private List<Autor> autorList = new ArrayList<Autor>();
+    private List<Autor> autorList;
     @JoinColumn(name = "Assunto_id", referencedColumnName = "id")
     @ManyToOne
     private Assunto assuntoid;
@@ -77,6 +77,8 @@ public class Livro implements Serializable {
     private List<Exemplar> exemplarList;
 
     public Livro() {
+        autorList = new ArrayList<Autor>();
+        exemplarList = new ArrayList<Exemplar>();
     }
 
     public Livro(Integer id) {
