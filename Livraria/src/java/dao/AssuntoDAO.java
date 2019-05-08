@@ -6,6 +6,7 @@ import javax.persistence.Query;
 import util.PersistenceUtil;
 import model.Assunto;
 import java.io.Serializable;
+import javax.persistence.TypedQuery;
 
 public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
     
@@ -20,12 +21,12 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
 
     public Assunto buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Assunto a where a.nomeAssunto =:nome ");
+        TypedQuery<Assunto> query = em.createQuery("select a from Assunto a where a.nomeAssunto =:nome ", Assunto.class);
         query.setParameter("nome", nome);
 
-        List<Assunto> assunto = query.getResultList();
-        if (assunto != null && assunto.size() > 0) {
-            return assunto.get(0);
+        Assunto assunto = query.getSingleResult();
+        if (assunto != null) {
+            return assunto;
         }
         return null;
     }
@@ -33,12 +34,12 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
     @Override
     public Assunto buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Assunto a where a.id =:id ");
+        TypedQuery<Assunto> query = em.createQuery("select a from Assunto a where a.id =:id ", Assunto.class);
         query.setParameter("id", id);
 
-        List<Assunto> assunto = query.getResultList();
-        if (assunto != null && assunto.size() > 0) {
-            return assunto.get(0);
+        Assunto assunto = query.getSingleResult();
+        if (assunto != null) {
+            return assunto;
         }
         return null;
     }
@@ -46,14 +47,14 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
     @Override
     public List<Assunto> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Assunto As a");
+        TypedQuery<Assunto> query = em.createQuery("from Assunto As a", Assunto.class);
         return query.getResultList();
     }
 
     @Override
     public List<Assunto> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Assunto a group by a.assunto");
+        TypedQuery<Assunto> query = em.createQuery("select distinct a from Assunto a group by a.assunto", Assunto.class);
         return query.getResultList();
     }
 

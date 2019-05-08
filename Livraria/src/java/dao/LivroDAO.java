@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 public class LivroDAO implements Serializable, CrudDAO<Livro> {
 
@@ -17,28 +18,28 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
         }
         return livroDAO;
     }
-    
+
     public Livro buscar(String titulo) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Livro a where a.titulo =:titulo ");
+        TypedQuery<Livro> query = em.createQuery("select l from Livro l where l.titulo =:titulo ", Livro.class);
         query.setParameter("titulo", titulo);
 
-        List<Livro> livro = query.getResultList();
-        if (livro != null && livro.size() > 0) {
-            return livro.get(0);
+        Livro livro = query.getSingleResult();
+        if (livro != null) {
+            return livro;
         }
         return null;
     }
-    
+
     @Override
     public Livro buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Livro a where a.id =:id ");
+        TypedQuery<Livro> query = em.createQuery("select l from Livro l where l.id =:id ", Livro.class);
         query.setParameter("id", id);
 
-        List<Livro> livro = query.getResultList();
-        if (livro != null && livro.size() > 0) {
-            return livro.get(0);
+        Livro livro = query.getSingleResult();
+        if (livro != null) {
+            return livro;
         }
         return null;
     }
@@ -46,17 +47,17 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
     @Override
     public List<Livro> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Livro As a");
+        TypedQuery<Livro> query = em.createQuery("from Livro As l", Livro.class);
         return query.getResultList();
     }
 
     @Override
     public List<Livro> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Livro a group by a.livro");
+        TypedQuery<Livro> query = em.createQuery("select distinct l from Livro l group by l.editoraid.nomeEditora", Livro.class);
         return query.getResultList();
     }
-    
+
     @Override
     public void remover(Livro livro) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -84,11 +85,11 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
 
     @Override
     public void removeAll() {
-       EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Livro");
-       query.executeUpdate();
-       em.getTransaction().commit();
-    }   
-    
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Livro");
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
+
 }

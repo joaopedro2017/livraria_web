@@ -8,25 +8,25 @@ package dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import model.Reserva;
-import model.Usuario;
 import util.PersistenceUtil;
 
 /**
  *
  * @author alunoces
  */
-public class ReservaDAO implements CrudDAO<Reserva>{
+public class ReservaDAO implements CrudDAO<Reserva> {
 
     @Override
     public Reserva buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Reserva a where a.id =:id ");
+        TypedQuery<Reserva> query = em.createQuery("select r from Reserva r where r.id =:id ", Reserva.class);
         query.setParameter("id", id);
 
-        List<Reserva> reserva = query.getResultList();
-        if (reserva != null && reserva.size() > 0) {
-            return reserva.get(0);
+        Reserva reserva = query.getSingleResult();
+        if (reserva != null) {
+            return reserva;
         }
         return null;
     }
@@ -34,14 +34,14 @@ public class ReservaDAO implements CrudDAO<Reserva>{
     @Override
     public List<Reserva> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Reserva As a");
+        TypedQuery<Reserva> query = em.createQuery("from Reserva As r", Reserva.class);
         return query.getResultList();
     }
 
     @Override
     public List<Reserva> buscarInstancia() {
-         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Reserva a group by a.usuario");
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Reserva> query = em.createQuery("select distinct r from Reserva r group by r.cancelar", Reserva.class);
         return query.getResultList();
     }
 
@@ -78,5 +78,5 @@ public class ReservaDAO implements CrudDAO<Reserva>{
         query.executeUpdate();
         em.getTransaction().commit();
     }
-    
+
 }

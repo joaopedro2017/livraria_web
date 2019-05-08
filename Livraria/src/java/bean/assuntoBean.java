@@ -7,7 +7,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.model.SelectItem;
 import model.Assunto;
-import model.Editora;
 
 @ManagedBean
 @ViewScoped

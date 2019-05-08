@@ -8,7 +8,7 @@ package dao;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import model.Emprestimo;
+import javax.persistence.TypedQuery;
 import model.Exemplar;
 import util.PersistenceUtil;
 
@@ -30,12 +30,12 @@ public class ExemplarDAO implements CrudDAO<Exemplar> {
     @Override
     public Exemplar buscarId(int id) { 
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Exemplar a where a.id =:id ");
+        TypedQuery<Exemplar> query = em.createQuery("select e from Exemplar e where e.id =:id ", Exemplar.class);
         query.setParameter("id", id);
 
-        List<Exemplar> exemplar = query.getResultList();
-        if (exemplar != null && exemplar.size() > 0) {
-            return exemplar.get(0);
+        Exemplar exemplar = query.getSingleResult();
+        if (exemplar != null) {
+            return exemplar;
         }
         return null;
     }
@@ -43,14 +43,14 @@ public class ExemplarDAO implements CrudDAO<Exemplar> {
     @Override
     public List<Exemplar> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Exemplar As a");
+        TypedQuery<Exemplar> query = em.createQuery("from Exemplar As e", Exemplar.class);
         return query.getResultList();
     }
 
     @Override
     public List<Exemplar> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Exemplar a group by a.exemplar");
+        TypedQuery<Exemplar> query = em.createQuery("select distinct e from Exemplar e group by e.circular", Exemplar.class);
         return query.getResultList();
     }
 

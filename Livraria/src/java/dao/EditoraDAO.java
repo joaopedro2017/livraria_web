@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -30,24 +31,24 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
     @Override
     public Editora buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Editora a where a.id =:id ");
+        TypedQuery<Editora> query = em.createQuery("select e from Editora e where e.id =:id ", Editora.class);
         query.setParameter("id", id);
 
-        List<Editora> editora = query.getResultList();
-        if (editora != null && editora.size() > 0) {
-            return editora.get(0);
+        Editora editora = query.getSingleResult();
+        if (editora != null) {
+            return editora;
         }
         return null;
     }
     
     public Editora buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Editora a where a.nomeEditora =:nome ");
+        TypedQuery<Editora> query = em.createQuery("select e from Editora e where e.nomeEditora =:nome ", Editora.class);
         query.setParameter("nome", nome);
 
-        List<Editora> editora = query.getResultList();
-        if (editora != null && editora.size() > 0) {
-            return editora.get(0);
+        Editora editora = query.getSingleResult();
+        if (editora != null) {
+            return editora;
         }
         return null;
     }
@@ -55,14 +56,14 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
     @Override
     public List<Editora> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Editora As a");
+        TypedQuery<Editora> query = em.createQuery("from Editora As e", Editora.class);
         return query.getResultList();
     }
 
     @Override
     public List<Editora> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Editora a group by a.editora");
+        TypedQuery<Editora> query = em.createQuery("select distinct e from Editora e group by e.nomeEditora", Editora.class);
         return query.getResultList();
     }
     

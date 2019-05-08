@@ -11,6 +11,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,12 +30,12 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
     
     public Autor buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Autor a where a.nomeAutor =:nome ");
+        TypedQuery<Autor> query = em.createQuery("select a from Autor a where a.nomeAutor =:nome ", Autor.class);
         query.setParameter("nome", nome);
 
-        List<Autor> autores = query.getResultList();
-        if (autores != null && autores.size() > 0) {
-            return autores.get(0);
+        Autor autor = query.getSingleResult();
+        if (autor != null) {
+            return autor;
         }
         return null;
     }
@@ -42,12 +43,12 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
     @Override
     public Autor buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select a from Autor a where a.id =:id ");
+        TypedQuery<Autor> query = em.createQuery("select a from Autor a where a.id =:id ", Autor.class);
         query.setParameter("id", id);
 
-        List<Autor> autores = query.getResultList();
-        if (autores != null && autores.size() > 0) {
-            return autores.get(0);
+        Autor autor = query.getSingleResult();
+        if (autor != null) {
+            return autor;
         }
         return null;
     }
@@ -55,14 +56,14 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
     @Override
     public List<Autor> buscarTodas() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("from Autor As a");
+        TypedQuery<Autor> query = em.createQuery("from Autor As a", Autor.class);
         return query.getResultList();
     }
 
     @Override
     public List<Autor> buscarInstancia() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        Query query = em.createQuery("select distinct a from Autor a group by a.autores");
+        TypedQuery<Autor> query = em.createQuery("select distinct a from Autor a group by a.nomeAutor", Autor.class);
         return query.getResultList();
     }
     
@@ -78,17 +79,17 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
     }
 
     @Override
-    public Autor persistir(Autor autores) {
+    public Autor persistir(Autor autor) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         try {
-            autores = em.merge(autores);
+            autor = em.merge(autor);
             em.getTransaction().commit();
             System.out.println("Registro Autor gravado com sucesso");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return autores;
+        return autor;
     }
 
     @Override

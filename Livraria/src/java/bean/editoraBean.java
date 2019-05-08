@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import model.Editora;
@@ -13,10 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 
-/**
- *
- * @author John Peter
- */
 @ManagedBean
 @ViewScoped
 public class editoraBean extends crudBean<Editora, EditoraDAO> {
