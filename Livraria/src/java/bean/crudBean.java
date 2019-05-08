@@ -59,8 +59,8 @@ public abstract class crudBean<E, D extends CrudDAO> {
             adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
             entidade = novo();
         } catch (RollbackException ex) {
-            System.out.println("Mensagem de Erro " + ex);
-            adicionarMensagem("Erro ao excluir!" + ex, FacesMessage.SEVERITY_ERROR);
+            String texto = entidade.getClass().getName().replace("model.", "");
+            adicionarMensagem("Não é possível excluir " + texto + ", pois se relaciona com outro elemento.", FacesMessage.SEVERITY_WARN);
         }
     }
 

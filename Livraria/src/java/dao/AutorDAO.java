@@ -10,6 +10,7 @@ import util.PersistenceUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -33,11 +34,11 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
         TypedQuery<Autor> query = em.createQuery("select a from Autor a where a.nomeAutor =:nome ", Autor.class);
         query.setParameter("nome", nome);
 
-        Autor autor = query.getSingleResult();
-        if (autor != null) {
-            return autor;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
     
     @Override
@@ -46,11 +47,11 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
         TypedQuery<Autor> query = em.createQuery("select a from Autor a where a.id =:id ", Autor.class);
         query.setParameter("id", id);
 
-        Autor autor = query.getSingleResult();
-        if (autor != null) {
-            return autor;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override

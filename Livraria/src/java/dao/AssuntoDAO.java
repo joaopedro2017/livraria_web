@@ -6,10 +6,11 @@ import javax.persistence.Query;
 import util.PersistenceUtil;
 import model.Assunto;
 import java.io.Serializable;
+import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
-    
+public class AssuntoDAO implements Serializable, CrudDAO<Assunto> {
+
     public static AssuntoDAO assuntoDAO;
 
     public static AssuntoDAO getInstance() {
@@ -24,24 +25,24 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
         TypedQuery<Assunto> query = em.createQuery("select a from Assunto a where a.nomeAssunto =:nome ", Assunto.class);
         query.setParameter("nome", nome);
 
-        Assunto assunto = query.getSingleResult();
-        if (assunto != null) {
-            return assunto;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
-    
+
     @Override
     public Assunto buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         TypedQuery<Assunto> query = em.createQuery("select a from Assunto a where a.id =:id ", Assunto.class);
         query.setParameter("id", id);
 
-        Assunto assunto = query.getSingleResult();
-        if (assunto != null) {
-            return assunto;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -59,7 +60,8 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
     }
 
     @Override
-    public void remover(Assunto assunto) {
+    public void remover(Assunto assunto
+    ) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         if (!em.contains(assunto)) {
@@ -70,7 +72,8 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto>{
     }
 
     @Override
-    public Assunto persistir(Assunto assunto) {
+    public Assunto persistir(Assunto assunto
+    ) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         try {

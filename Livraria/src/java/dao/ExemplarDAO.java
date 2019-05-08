@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Exemplar;
@@ -33,11 +34,11 @@ public class ExemplarDAO implements CrudDAO<Exemplar> {
         TypedQuery<Exemplar> query = em.createQuery("select e from Exemplar e where e.id =:id ", Exemplar.class);
         query.setParameter("id", id);
 
-        Exemplar exemplar = query.getSingleResult();
-        if (exemplar != null) {
-            return exemplar;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override

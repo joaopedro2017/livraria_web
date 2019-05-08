@@ -10,6 +10,7 @@ import util.PersistenceUtil;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
@@ -34,11 +35,11 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
         TypedQuery<Editora> query = em.createQuery("select e from Editora e where e.id =:id ", Editora.class);
         query.setParameter("id", id);
 
-        Editora editora = query.getSingleResult();
-        if (editora != null) {
-            return editora;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
     
     public Editora buscar(String nome) {
@@ -46,11 +47,11 @@ public class EditoraDAO implements Serializable, CrudDAO<Editora>{
         TypedQuery<Editora> query = em.createQuery("select e from Editora e where e.nomeEditora =:nome ", Editora.class);
         query.setParameter("nome", nome);
 
-        Editora editora = query.getSingleResult();
-        if (editora != null) {
-            return editora;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override

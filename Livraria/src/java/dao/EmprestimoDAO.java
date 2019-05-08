@@ -8,6 +8,7 @@ package dao;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Emprestimo;
@@ -51,11 +52,11 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         TypedQuery<Emprestimo> query = em.createQuery("select e from Emprestimo e where e.id =:id ", Emprestimo.class);
         query.setParameter("id", id);
 
-        Emprestimo emprestimo = query.getSingleResult();
-        if (emprestimo != null) {
-            return emprestimo;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override

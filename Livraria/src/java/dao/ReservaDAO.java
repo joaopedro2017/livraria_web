@@ -7,6 +7,7 @@ package dao;
 
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Reserva;
@@ -24,11 +25,11 @@ public class ReservaDAO implements CrudDAO<Reserva> {
         TypedQuery<Reserva> query = em.createQuery("select r from Reserva r where r.id =:id ", Reserva.class);
         query.setParameter("id", id);
 
-        Reserva reserva = query.getSingleResult();
-        if (reserva != null) {
-            return reserva;
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException nre) {
+            return null;
         }
-        return null;
     }
 
     @Override
