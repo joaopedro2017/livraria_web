@@ -13,25 +13,70 @@
 
             <pn:dataTableCrud crudBean="#{reservaBean}" arquivo="autores">
 
-                <p:column headerText="Exemplar" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">
-                    <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
-                </p:column>
-                <p:column headerText="Emprestimo" sortBy="#{lista.emprestimoid.id}" filterBy="#{lista.emprestimoid.id}">
-                    <h:outputText value="#{lista.emprestimoid.id}" />
-                </p:column>
                 <p:column headerText="Usuario" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
                     <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
                 </p:column>
+                <p:column headerText="Exemplar" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">
+                    <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
+                </p:column>
+                <p:column headerText="Data Reserva" sortBy="#{lista.dataReserva}" filterBy="#{lista.dataReserva}">
+                    <h:outputText value="#{lista.dataReserva}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="Emprestimo Nro" sortBy="#{lista.emprestimoid.id}" filterBy="#{lista.emprestimoid.id}">
+                    <h:outputText value="#{lista.emprestimoid == null ? '-' : lista.emprestimoid.id}" />
+                </p:column>
                 <p:column headerText="Cancelada" sortBy="#{lista.cancelar}" filterBy="#{lista.cancelar}">
                     <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
+                    <p:commandButton rendered="#{lista.cancelar == null}" 
+                                     icon="ui-icon-cancel"
+                                     actionListener="#{reservaBean.editar(lista)}"
+                                     onclick="PF('Cancelar').show();"
+                                     style="width: 34px; height: 20px; align-items: center; float: right" 
+                                     value="" />
                 </p:column>
 
             </pn:dataTableCrud>
 
+            <p:dialog header="Cancelar" widgetVar="Cancelar" modal="true" resizable="false"> 
+                Deseja realmente cancelar?                
+                <p:commandButton value="Cancelar" actionListener="#{reservaBean.cancelar}" onclick="remove.hide()" alt="Delete" /> 
+            </p:dialog>
+
             <center>
                 <p:panel rendered="#{!reservaBean.tabela}" header="Novo/Editar Autor" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">                       
-                        
+                    <p:panelGrid id="panelRecord" columns="6">
+
+                        <p:outputLabel value="Usuário: " style="float: right;"/>
+                        <p:selectOneMenu value="#{reservaBean.entidade.usuarioid}"
+                                         style="width: 202px"                                                     
+                                         required="true"
+                                         requiredMessage="Selecione um usuário">
+                            <f:selectItem itemLabel="Selecione" 
+                                          itemValue=""/>
+                            <f:selectItems value="#{usuarioBean.itens}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Exemplar: " style="float: right;"/>
+                        <p:selectOneMenu value="#{reservaBean.entidade.exemplarid}"
+                                         style="width: 202px"                                                     
+                                         required="true"
+                                         requiredMessage="Selecione um usuário">
+                            <f:selectItem itemLabel="Selecione" itemValue=""/>
+                            <f:selectItems value="#{exemplarBean.itens}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="Data: "
+                                       style="float: right;"/>
+                        <p:calendar pattern="dd/MM/yyyy"
+                                    navigator="true"
+                                    readonlyInput="true"
+                                    required="true"
+                                    mindate="today"
+                                    requiredMessage="Forneça uma data"
+                                    value="#{reservaBean.entidade.dataReserva}">
+
+                        </p:calendar>
+
 
                     </p:panelGrid>  
                     <br/>

@@ -8,6 +8,7 @@ package bean;
 import dao.ReservaDAO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
 import model.Reserva;
 
 /**
@@ -18,7 +19,12 @@ import model.Reserva;
 @ViewScoped
 public class reservaBean extends crudBean<Reserva, ReservaDAO> {
 
-    private ReservaDAO reservaDAO;
+    private ReservaDAO reservaDAO; 
+    
+    public void cancelar(ActionEvent actionEvent){
+        getEntidade().setCancelar("Usuário");
+        record(actionEvent);
+    }
 
     @Override
     public ReservaDAO getDao() {

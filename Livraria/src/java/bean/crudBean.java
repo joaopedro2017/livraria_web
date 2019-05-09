@@ -12,6 +12,8 @@ import com.lowagie.text.PageSize;
 import dao.CrudDAO;
 import java.io.IOException;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -32,15 +34,23 @@ import org.apache.poi.hssf.util.HSSFColor;
  */
 public abstract class crudBean<E, D extends CrudDAO> {
 
+    @EJB
     public abstract D getDao();
-
+    @EJB
     public abstract E novo();
+    @EJB
     private boolean tabela = true; //Controle de troca de tabela
-
+    @EJB
     private E entidade = novo();
-    private List<E> entidades = getDao().buscarTodas();
+    @EJB
+    private List<E> entidades;
 
-    //Métodos dos botões 
+    //Métodos dos botões
+    @PostConstruct
+    public void init(){
+        entidades = getDao().buscarTodas();
+    }  
+    
     public void record(ActionEvent actionEvent) {
         try {
             getDao().persistir(entidade);

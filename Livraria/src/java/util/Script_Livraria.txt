@@ -88,7 +88,7 @@ CREATE TABLE autorLivro(
 
 CREATE TABLE reserva(
 	id int not null AUTO_INCREMENT,
-    dataEmprestimo datetime,    
+    dataReserva datetime,    
     cancelar varchar(7),
     Exemplar_id int,
     Usuario_id int,

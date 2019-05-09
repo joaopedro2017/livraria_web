@@ -6,6 +6,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -56,6 +57,8 @@ public class Usuario implements Serializable {
     private List<Reserva> reservaList;
 
     public Usuario() {
+        emprestimoList = new ArrayList<Emprestimo>();
+        reservaList = new ArrayList<Reserva>();
     }
 
     public Usuario(Integer id) {

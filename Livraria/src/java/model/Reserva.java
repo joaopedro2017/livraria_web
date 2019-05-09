@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Reserva.findAll", query = "SELECT r FROM Reserva r"),
     @NamedQuery(name = "Reserva.findById", query = "SELECT r FROM Reserva r WHERE r.id = :id"),
-    @NamedQuery(name = "Reserva.findByDataEmprestimo", query = "SELECT r FROM Reserva r WHERE r.dataEmprestimo = :dataEmprestimo"),
+    @NamedQuery(name = "Reserva.findByDataReserva", query = "SELECT r FROM Reserva r WHERE r.dataReserva = :dataReserva"),
     @NamedQuery(name = "Reserva.findByCancelar", query = "SELECT r FROM Reserva r WHERE r.cancelar = :cancelar")})
 public class Reserva implements Serializable {
 
@@ -42,9 +42,9 @@ public class Reserva implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-    @Column(name = "dataEmprestimo")
+    @Column(name = "dataReserva")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date dataEmprestimo;
+    private Date dataReserva;
     @Column(name = "cancelar")
     private String cancelar;
     @JoinColumn(name = "Emprestimo_id", referencedColumnName = "id")
@@ -72,12 +72,12 @@ public class Reserva implements Serializable {
         this.id = id;
     }
 
-    public Date getDataEmprestimo() {
-        return dataEmprestimo;
+    public Date getDataReserva() {
+        return dataReserva;
     }
 
-    public void setDataEmprestimo(Date dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
+    public void setDataReserva(Date dataReserva) {
+        this.dataReserva = dataReserva;
     }
 
     public String getCancelar() {
