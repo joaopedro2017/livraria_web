@@ -47,9 +47,9 @@ header h1 {
     padding: 15px 10px;
     font-family: "Jockey One", sans-serif;
     margin: 0;
-    color: #29487D;
+    color: #FFFFFF;
     font-size: 40px;
-    text-shadow: 1px 1px 0 #FFFFFF;
+    text-shadow: 1px 1px 0 #000000;
 }
 
 .page-header {

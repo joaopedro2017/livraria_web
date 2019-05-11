@@ -2,8 +2,12 @@
 <web-app version="3.1" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd">
     <context-param>
         <param-name>primefaces.THEME</param-name>
-        <param-value>bootstrap</param-value>
+        <param-value>south-street</param-value>
     </context-param>
+    <context-param>  
+        <param-name>javax.faces.FULL_STATE_SAVING_VIEW_IDS</param-name>  
+        <param-value>/faces/assunto.xhtml,/faces/acervo.xhtml,/faces/autor.xhtml,/faces/editora.xhtml,/faces/emprestimo.xhtml,/faces/livro.xhtml,/faces/reserva.xhtml,/faces/usuario.xhtml</param-value>  
+    </context-param> 
     <filter>
         <filter-name>AutentificacaoFilter</filter-name>
         <filter-class>filter.AutentificacaoFilter</filter-class>
