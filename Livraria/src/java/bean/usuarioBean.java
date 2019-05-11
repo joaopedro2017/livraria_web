@@ -26,9 +26,10 @@ public class usuarioBean extends crudBean<Usuario, UsuarioDAO> {
 
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Usuario> editoras = usuarioDAO.buscarTodas();
+        List<Usuario> usuarios = null;
+        usuarios = usuarioDAO.buscarTodas();
 
-        for (Usuario usuario : editoras) {
+        for (Usuario usuario : usuarios) {
             list.add(new SelectItem(usuario, usuario.getNomeUsuario())); //nome Usuario ira aparecer no combo
         }
         return list;

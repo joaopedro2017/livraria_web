@@ -95,41 +95,43 @@
                         <p:commandButton icon="ui-icon-plus" 
                                          value="Adicionar autor" 
                                          action="#{livroBean.adicionarAutor()}" 
-                                         update="@form"/>
+                                         update=":formPrincipal:panelTabela"/>
                     </p:panelGrid>                    
 
-                    <h4>Autores do Livro:</h4>
-                    <h:dataTable value="#{livroBean.autoresDoLivro}" 
-                                 var="autor" 
-                                 style="width:15%">
-                        <h:column>                            
-                            <h:outputText value="#{autor.nomeAutor}"/>
-                        </h:column>
-                        <h:column>
-                            <center>
-                                <p:commandButton style="width: 34px; height: 20px; align-items: center" 
-                                                 icon="ui-icon-trash" 
-                                                 value="" 
-                                                 action="#{livroBean.removerAutor(autor)}" 
-                                                 update="@form"
-                                                 alt="Excluir"/>
-                            </center>
-                        </h:column>
-                    </h:dataTable>
-                    <br/>
-                    <p:commandButton icon="ui-icon-disk"                                     
-                                     value="Salvar"
-                                     rendered="#{livroBean.entidade.autorList.size() > 0}"                                     
-                                     update="@form" 
-                                     action="#{livroBean.setTabela(true)}" 
-                                     actionListener="#{livroBean.record}" 
-                                     onclick="record.hide()" 
-                                     alt="Record"/> 
-                    <p:commandButton icon="ui-icon-refresh" 
-                                     value="Voltar"
-                                     immediate="true"
-                                     update="@form" 
-                                     action="#{livroBean.setTabela(true)}"/> 
+                    <p:panel id="panelTabela" style="width:80%; border: none">
+                        <h4>Autores do Livro:</h4>
+                        <h:dataTable value="#{livroBean.autoresDoLivro}" 
+                                     var="autor" 
+                                     style="width:15%">
+                            <h:column>                            
+                                <h:outputText value="#{autor.nomeAutor}"/>
+                            </h:column>
+                            <h:column>
+                                <center>
+                                    <p:commandButton style="width: 34px; height: 20px; align-items: center" 
+                                                     icon="ui-icon-trash" 
+                                                     value="" 
+                                                     action="#{livroBean.removerAutor(autor)}" 
+                                                     update=":formPrincipal:panelTabela"
+                                                     alt="Excluir"/>
+                                </center>
+                            </h:column>
+                        </h:dataTable>
+                        <br/>
+                        <p:commandButton icon="ui-icon-disk"                                     
+                                         value="Salvar"
+                                         rendered="#{livroBean.entidade.autorList.size() > 0}"                                     
+                                         update="@form" 
+                                         action="#{livroBean.setTabela(true)}" 
+                                         actionListener="#{livroBean.record}" 
+                                         onclick="record.hide()" 
+                                         alt="Record"/> 
+                        <p:commandButton icon="ui-icon-refresh" 
+                                         value="Voltar"
+                                         immediate="true"
+                                         update="@form" 
+                                         action="#{livroBean.setTabela(true)}"/> 
+                    </p:panel>
                 </p:panel>
             </center>
 

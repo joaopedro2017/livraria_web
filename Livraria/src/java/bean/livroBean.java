@@ -30,7 +30,8 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     //Metodo para aparecer no combo box
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Livro> livros = livroDAO.buscarTodas();
+        List<Livro> livros = null;
+        livros = livroDAO.buscarTodas();
 
         for (Livro livro : livros) {
             list.add(new SelectItem(livro, livro.getTitulo())); //nome livro ira aparecer no combo

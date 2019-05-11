@@ -17,7 +17,8 @@ public class editoraBean extends crudBean<Editora, EditoraDAO> {
 
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Editora> editoras = editoraDAO.buscarTodas();
+        List<Editora> editoras = null;
+        editoras = editoraDAO.buscarTodas();
 
         for (Editora editora : editoras) {
             list.add(new SelectItem(editora, editora.getNomeEditora())); //nome Editora ira aparecer no combo

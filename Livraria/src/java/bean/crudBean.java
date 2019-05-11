@@ -48,6 +48,7 @@ public abstract class crudBean<E, D extends CrudDAO> {
     //Métodos dos botões
     @PostConstruct
     public void init(){
+        entidades = null;
         entidades = getDao().buscarTodas();
     }  
     

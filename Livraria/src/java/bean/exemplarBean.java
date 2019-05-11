@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
 import model.Exemplar;
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 
 /**
  *
@@ -22,7 +23,8 @@ public class exemplarBean extends crudBean<Exemplar, ExemplarDAO> {
 
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Exemplar> exemplares = exemplarDAO.buscarTodas();
+        List<Exemplar> exemplares = null;
+        exemplares = exemplarDAO.buscarTodas();
 
         for (Exemplar exemplar : exemplares) {
             list.add(new SelectItem(exemplar, exemplar.getLivroid().getTitulo())); //nome Editora ira aparecer no combo

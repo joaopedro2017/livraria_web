@@ -17,7 +17,8 @@ public class assuntoBean extends crudBean<Assunto, AssuntoDAO>{
 
     public List<SelectItem> getItens() {
         List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Assunto> assuntos = assuntoDAO.buscarTodas();
+        List<Assunto> assuntos = null;
+        assuntos = assuntoDAO.buscarTodas();
 
         for (Assunto assunto : assuntos) {
             list.add(new SelectItem(assunto, assunto.getNomeAssunto())); //nome assunto ira aparecer no combo
