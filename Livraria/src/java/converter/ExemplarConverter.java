@@ -9,10 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import model.Exemplar;
 
-/**
- *
- * @author John Peter
- */
 @FacesConverter(forClass = Exemplar.class)
 @ManagedBean
 public class ExemplarConverter implements Converter, Serializable {

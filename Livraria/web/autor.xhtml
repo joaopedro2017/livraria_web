@@ -20,8 +20,8 @@
             <center>
                 <p:panel rendered="#{!autorBean.tabela}" header="Novo/Editar Autor" style="width:85%">
                     <p:panelGrid id="panelRecord" columns="6">                        
-                        Nome:
-                        <p:inputText id="name" 
+                        <p:outputLabel value="Nome: " for="nome" />
+                        <p:inputText id="nome" 
                                      value="#{autorBean.entidade.nomeAutor}"
                                      required="true"
                                      requiredMessage="Nome em branco"/>

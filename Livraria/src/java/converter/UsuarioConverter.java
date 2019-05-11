@@ -9,10 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import model.Usuario;
 
-/**
- *
- * @author John Peter
- */
 @FacesConverter(forClass = Usuario.class)
 @ManagedBean
 public class UsuarioConverter implements Converter, Serializable {

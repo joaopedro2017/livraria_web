@@ -9,10 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import model.Assunto;
 
-/**
- *
- * @author John Peter
- */
 @FacesConverter(forClass = Assunto.class)
 @ManagedBean
 public class AssuntoConverter implements Converter, Serializable {

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import dao.AutorDAO;
@@ -16,10 +11,6 @@ import javax.faces.model.SelectItem;
 import model.Autor;
 import model.Livro;
 
-/**
- *
- * @author alunoces
- */
 @ManagedBean
 @ViewScoped
 public class livroBean extends crudBean<Livro, LivroDAO> {

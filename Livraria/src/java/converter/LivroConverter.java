@@ -9,10 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import model.Livro;
 
-/**
- *
- * @author John Peter
- */
 @FacesConverter(forClass = Livro.class)
 @ManagedBean
 public class LivroConverter implements Converter, Serializable {

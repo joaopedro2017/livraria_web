@@ -5,10 +5,6 @@ import dao.AutorDAO;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-/**
- *
- * @author John Peter
- */
 @ManagedBean
 @ViewScoped
 public class autorBean extends crudBean<Autor, AutorDAO> {

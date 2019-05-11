@@ -9,10 +9,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import model.Editora;
 
-/**
- *
- * @author John Peter
- */
 @FacesConverter(forClass = Editora.class)
 @ManagedBean
 public class EditoraConverter implements Converter, Serializable {

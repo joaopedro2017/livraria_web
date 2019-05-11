@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package bean;
 
 import dao.UsuarioDAO;
@@ -17,10 +12,6 @@ import model.Usuario;
 import util.SessionUtil;
 import static util.SessionUtil.getRequest;
 
-/**
- *
- * @author John Peter
- */
 @ManagedBean
 @ViewScoped
 public class loginBean {

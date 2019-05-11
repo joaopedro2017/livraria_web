@@ -64,6 +64,7 @@ CREATE TABLE exemplar(
 CREATE TABLE emprestimo(
 	id int not null AUTO_INCREMENT,
     dataEmprestimo datetime,
+    dataPrevista datetime,
     dataDevolucao datetime,
     Exemplar_id int,
     Usuario_id int,

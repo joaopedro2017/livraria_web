@@ -12,25 +12,44 @@
         <h:form id="formPrincipal">
             <pn:dataTableCrud crudBean="#{emprestimoBean}" arquivo="emprestimos">
                 <p:column headerText="Usuário" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
-                        <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
-                    </p:column>
+                    <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
+                </p:column>
 
-                    <p:column headerText="Livro" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">
-                        <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
-                    </p:column>
+                <p:column headerText="Livro" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">
+                    <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
+                </p:column>
 
-                    <p:column headerText="Feito" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
-                        <h:outputText value="#{lista.dataEmprestimo}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column> 
+                <p:column headerText="De" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
+                    <h:outputText value="#{lista.dataEmprestimo}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column> 
 
-                    <p:column headerText="Devolução" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}">
-                        <h:outputText value="#{lista.dataDevolucao}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-            </pn:dataTableCrud>           
+                <p:column headerText="Até" sortBy="#{lista.dataPrevista}" filterBy="#{lista.dataPrevista}">
+                    <h:outputText value="#{lista.dataPrevista}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="Devolvido em" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}">
+                    <h:outputText value="#{lista.dataDevolucao == null ? 'aberto' : lista.dataDevolucao}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                    
+                    <p:commandButton rendered="#{lista.dataDevolucao == null}" 
+                                     icon="ui-icon-cancel"
+                                     actionListener="#{emprestimoBean.editar(lista)}"
+                                     onclick="PF('Devolver').show();"
+                                     style="width: 34px; height: 20px; align-items: center; float: right" 
+                                     value="" />
+                    
+                </p:column>
+            </pn:dataTableCrud> 
+            
+            <p:dialog header="Devolver" widgetVar="Devolver" modal="true" resizable="false"> 
+                Deseja realizar a devolução?                
+                <p:commandButton value="Devolver" actionListener="#{emprestimoBean.devolver}" onclick="remove.hide()" alt="Devolver" /> 
+            </p:dialog>
 
             <center>
                 <p:panel rendered="#{!emprestimoBean.tabela}">
@@ -38,8 +57,9 @@
                         <p:tab id="usuario" title="Usuário"> 
                             <p:panel header="Detalhes Usuário: ">
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
-                                    <p:outputLabel value="Usuário: " style="float: right;"/>
-                                    <p:selectOneMenu value="#{emprestimoBean.entidade.usuarioid}"
+                                    <p:outputLabel value="Usuário: " for="u" style="float: right;" />                                    
+                                    <p:selectOneMenu id="u"
+                                                     value="#{emprestimoBean.entidade.usuarioid}"
                                                      style="width: 202px"
                                                      required="true">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
@@ -78,8 +98,9 @@
                         <p:tab id="livro" title="Livro"> 
                             <p:panel header="Detalhes Livro">
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
-                                    <p:outputLabel value="Livro: " style="float: right;"/>
-                                    <p:selectOneMenu value="#{emprestimoBean.entidade.exemplarid}"
+                                    <p:outputLabel value="Livro: " for="l" style="float: right;"/>
+                                    <p:selectOneMenu id="l"
+                                                     value="#{emprestimoBean.entidade.exemplarid}"
                                                      style="width: 202px"                                                     
                                                      required="true"
                                                      requiredMessage="Selecione um livro">

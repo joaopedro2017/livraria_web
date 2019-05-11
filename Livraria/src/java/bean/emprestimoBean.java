@@ -10,10 +10,6 @@ import javax.faces.event.ActionEvent;
 import model.Emprestimo;
 import org.primefaces.event.FlowEvent;
 
-/**
- *
- * @author John Peter
- */
 @ManagedBean
 @ViewScoped
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
@@ -72,15 +68,15 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
         switch (opcao) {
             case 0:
                 c.add(Calendar.DATE, 10);
-                getEntidade().setDataDevolucao(c.getTime());
+                getEntidade().setDataPrevista(c.getTime());
                 break;
             case 1:
                 c.add(Calendar.DATE, 15);
-                getEntidade().setDataDevolucao(c.getTime());
+                getEntidade().setDataPrevista(c.getTime());
                 break;
             case 2:
                 proximoDiaUtil(c);
-                getEntidade().setDataDevolucao(c.getTime());
+                getEntidade().setDataPrevista(c.getTime());
                 break;
             default:
                 break;
@@ -115,6 +111,11 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     public void setDebito(boolean debito) {
         this.debito = debito;
+    }
+    
+    public void devolver(ActionEvent actionEvent){
+        getEntidade().setDataDevolucao(new Date());
+        record(actionEvent);
     }
 
     @Override

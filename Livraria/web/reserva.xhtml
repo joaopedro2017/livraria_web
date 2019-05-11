@@ -45,11 +45,12 @@
             </p:dialog>
 
             <center>
-                <p:panel rendered="#{!reservaBean.tabela}" header="Novo/Editar Autor" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">
+                <p:panel rendered="#{!reservaBean.tabela}" header="Novo/Editar Reserva" style="width:85%">
+                    <p:panelGrid id="panelRecord" columns="6" style="border: none">
 
-                        <p:outputLabel value="Usuário: " style="float: right;"/>
-                        <p:selectOneMenu value="#{reservaBean.entidade.usuarioid}"
+                        <p:outputLabel value="Usuário: " style="float: right;" for="usuario"/>
+                        <p:selectOneMenu id="usuario"
+                                         value="#{reservaBean.entidade.usuarioid}"
                                          style="width: 202px"                                                     
                                          required="true"
                                          requiredMessage="Selecione um usuário">
@@ -57,18 +58,22 @@
                                           itemValue=""/>
                             <f:selectItems value="#{usuarioBean.itens}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="Exemplar: " style="float: right;"/>
-                        <p:selectOneMenu value="#{reservaBean.entidade.exemplarid}"
+                        <p:outputLabel value="Exemplar: " style="float: right;" for="exemplar"/>
+                        <p:selectOneMenu id="exemplar"
+                                         value="#{reservaBean.entidade.exemplarid}"
                                          style="width: 202px"                                                     
                                          required="true"
                                          requiredMessage="Selecione um usuário">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{exemplarBean.itens}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="Data: "
+                        <p:outputLabel for="data"
+                                       value="Data: "
                                        style="float: right;"/>
-                        <p:calendar pattern="dd/MM/yyyy"
+                        <p:calendar id="data"
+                                    pattern="dd/MM/yyyy"
                                     navigator="true"
+                                    showOn="button"
                                     readonlyInput="true"
                                     required="true"
                                     mindate="today"
