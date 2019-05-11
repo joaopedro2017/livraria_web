@@ -92,10 +92,13 @@
                                            itemLabel="#{autor.nomeAutor}"
                                            itemValue="#{autor.id}"/>
                         </p:selectOneMenu>
-                        <p:commandButton icon="ui-icon-plus" 
-                                         value="Adicionar autor" 
+                        <p:commandButton id="adiciona"
+                                         icon="ui-icon-plus"
+                                         style="width: 45px; height: 28px;"
+                                         value="" 
                                          action="#{livroBean.adicionarAutor()}" 
                                          update=":formPrincipal:panelTabela"/>
+                        <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
                     </p:panelGrid>                    
 
                     <p:panel id="panelTabela" style="width:80%; border: none">
@@ -108,12 +111,13 @@
                             </h:column>
                             <h:column>
                                 <center>
-                                    <p:commandButton style="width: 34px; height: 20px; align-items: center" 
+                                    <p:commandButton id="excluir"
+                                                     style="width: 34px; height: 20px; align-items: center" 
                                                      icon="ui-icon-trash" 
                                                      value="" 
                                                      action="#{livroBean.removerAutor(autor)}" 
-                                                     update=":formPrincipal:panelTabela"
-                                                     alt="Excluir"/>
+                                                     update=":formPrincipal:panelTabela"/>
+                                    <p:tooltip id="toolTipDeletar" for="excluir" value="Excluir autor" position="top"/>
                                 </center>
                             </h:column>
                         </h:dataTable>

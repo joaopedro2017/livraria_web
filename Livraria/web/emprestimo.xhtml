@@ -35,17 +35,19 @@
                     <h:outputText value="#{lista.dataDevolucao == null ? 'aberto' : lista.dataDevolucao}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
-                    
-                    <p:commandButton rendered="#{lista.dataDevolucao == null}" 
-                                     icon="ui-icon-cancel"
+
+                    <p:commandButton id="devolver"
+                                     rendered="#{lista.dataDevolucao == null}" 
+                                     icon="ui-icon-calendar"
                                      actionListener="#{emprestimoBean.editar(lista)}"
                                      onclick="PF('Devolver').show();"
                                      style="width: 34px; height: 20px; align-items: center; float: right" 
                                      value="" />
-                    
+                    <p:tooltip id="toolTipDevolver" for="devolver" value="Devolver" position="left"/>
+
                 </p:column>
             </pn:dataTableCrud> 
-            
+
             <p:dialog header="Devolver" widgetVar="Devolver" modal="true" resizable="false"> 
                 Deseja realizar a devolução?                
                 <p:commandButton value="Devolver" actionListener="#{emprestimoBean.devolver}" onclick="remove.hide()" alt="Devolver" /> 

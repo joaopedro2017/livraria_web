@@ -21,30 +21,41 @@
                          value="#{cc.attrs.crudBean.entidades}"
                          id="tabela" emptyMessage="Nenhum registro encontrado"
                          paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
-                         paginator="true" rows="5" 
-                         rowsPerPageTemplate="5,10,25,50,100,9999" 
-                         style="width:100%">
-                <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}">
-                    <h:outputText value="#{lista.id}" />
+                         paginator="true"
+                         rowsPerPageTemplate="5,10,25,50,100,9999"
+                         rows="5"                         
+                         reflow="true"                         
+                         stickyHeader="true"
+                         style="width:90%">
+                <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width:95px">
+                    <center>
+                        <h:outputText value="#{lista.id}" />
+                    </center>
                 </p:column>
 
                 <cc:insertChildren>                    
                 </cc:insertChildren>
 
-                <p:column headerText="Opções" exportable="false">
+                <p:column headerText="Opções" exportable="false" style="width:95px">
                     <center>
 
-                        <p:commandButton icon="ui-icon-pencil" 
-                                         value="E" 
+                        <p:commandButton id="editar"
+                                         icon="ui-icon-pencil"
+                                         style="width: 34px; height: 20px"
+                                         value="" 
                                          action="#{cc.attrs.crudBean.setTabela(false)}" 
                                          actionListener="#{cc.attrs.crudBean.editar(lista)}" 
                                          update="@form" />
+                        <p:tooltip id="toolTipEditar" for="editar" value="Editar" position="left"/>
 
-                        <p:commandButton icon="ui-icon-trash" 
-                                         value="D" 
+                        <p:commandButton id="deletar" 
+                                         icon="ui-icon-trash"
+                                         style="width: 34px; height: 20px"
+                                         value="" alt="Deletar" label="Deletar"
                                          onclick="PF('remove').show();"> 
                             <f:setPropertyActionListener target="#{cc.attrs.crudBean.entidade}" value="#{lista}" />
-                        </p:commandButton> 
+                        </p:commandButton>
+                        <p:tooltip id="toolTipDeletar" for="deletar" value="Deletar" position="right"/>
 
                     </center>
                 </p:column>

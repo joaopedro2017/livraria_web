@@ -29,12 +29,14 @@
                 </p:column>
                 <p:column headerText="Cancelada" sortBy="#{lista.cancelar}" filterBy="#{lista.cancelar}">
                     <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
-                    <p:commandButton rendered="#{lista.cancelar == null}" 
+                    <p:commandButton id="cancelar"
+                                     rendered="#{lista.cancelar == null}" 
                                      icon="ui-icon-cancel"
                                      actionListener="#{reservaBean.editar(lista)}"
                                      onclick="PF('Cancelar').show();"
                                      style="width: 34px; height: 20px; align-items: center; float: right" 
                                      value="" />
+                    <p:tooltip id="toolTipCancelar" for="cancelar" value="Cancelar" position="left"/>
                 </p:column>
 
             </pn:dataTableCrud>

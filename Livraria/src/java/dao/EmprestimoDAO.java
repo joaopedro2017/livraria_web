@@ -13,29 +13,37 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
 
     public Long verificarDebito(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e where e.usuarioid.id =:id and e.dataDevolucao <= :hoje ", Long.class);
+        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
+                + "where e.usuarioid.id =:id "
+                + "AND e.dataDevolucao IS NULL "
+                + "AND e.dataPrevista <= :hoje", Long.class);
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
         return query.getSingleResult();
     }
-    
+
     public Long verificarEmAberto(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e where e.usuarioid.id =:id and e.dataDevolucao >= :hoje ", Long.class);
+        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
+                + "where e.usuarioid.id =:id "
+                + "AND e.dataDevolucao IS NOT NULL "
+                + "AND e.dataPrevista >= :hoje ", Long.class);
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());
 
-        return query.getSingleResult();        
+        return query.getSingleResult();
     }
-    
+
     public Long exemplarDisponivel(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
-        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e where e.exemplarid.id =:id ", Long.class);
-        query.setParameter("id", id);        
+        TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
+                + "where e.dataDevolucao IS NULL "
+                + "AND e.exemplarid.id =:id ", Long.class);
+        query.setParameter("id", id);
 
-        return query.getSingleResult();        
-    }   
+        return query.getSingleResult();
+    }
 
     @Override
     public Emprestimo buscarId(int id) {
