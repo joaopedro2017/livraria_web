@@ -9,6 +9,7 @@ import dao.AutorDAO;
 import dao.LivroDAO;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.model.SelectItem;
@@ -53,17 +54,24 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     }
 
     public void adicionarAutor() {
-        Autor autor = new AutorDAO().buscarId(this.autorId);
-        getEntidade().getAutorList().add(autor);
+        if (this.autorId != null) {
+            for (Autor a : getEntidade().getAutorList()) {
+                if (Objects.equals(a.getId(), this.autorId)) {
+                    return;
+                }
+            }
+            Autor autor = new AutorDAO().buscarId(this.autorId);
+            getEntidade().getAutorList().add(autor);
+        }
     }
-    
-    public void removerAutor(Autor autor) {        
+
+    public void removerAutor(Autor autor) {
         getEntidade().getAutorList().remove(autor);
     }
 
     public List<Autor> getAutoresDoLivro() {
         return getEntidade().getAutorList();
-    }  
+    }
 
     @Override
     public LivroDAO getDao() {
