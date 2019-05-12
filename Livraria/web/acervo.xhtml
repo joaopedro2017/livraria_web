@@ -46,7 +46,31 @@
                 <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
                     <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
                 </p:column>
-                
+
+                <p:column headerText="Autores" style="width: 75px">
+                    <p:rowToggler id="coluna" />
+                    <p:tooltip id="toolTipColuna" for="coluna" value="Adicionar autor" position="top"/>
+                </p:column>
+
+                <p:rowExpansion>
+                    <p:graphicImage library="capas" name="#{lista.id % 10}.jpg" style="height: 200px; float: left"/>
+                    <p:dataTable  
+                        var="autor" 
+                        value="#{lista.autorList}"
+                        id="tabela2" 
+                        emptyMessage="Nenhum registro encontrado"
+                        sortBy="#{autor.nomeAutor}"
+                        style="width:30%; float: right">
+                        <f:facet name="header">
+                            Autores do Livro #{lista.titulo}
+                        </f:facet>
+                        <p:column headerText="Nome">
+                            <center>
+                                <h:outputText value="#{autor.nomeAutor}" style="color: blue;" />
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </p:rowExpansion>
             </p:dataTable>
 
         </h:form>

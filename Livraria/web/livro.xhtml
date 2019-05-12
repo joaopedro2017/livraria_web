@@ -15,21 +15,21 @@
                     <h:outputText value="#{lista.titulo}" />
                 </p:column>
 
-                <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
+                <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}" style="width: 155px">
                     <h:outputText value="#{lista.isbn}" />
                 </p:column>
 
-                <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
+                <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}" style="width: 90px">
                     <h:outputText value="#{lista.edicao}" />
                 </p:column>
 
-                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
+                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}" style="width: 100px">
                     <h:outputText value="#{lista.ano}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
                 </p:column>                 
 
-                <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
+                <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}" style="width: 100px">
                     <h:outputText value="#{lista.editoraid.nomeEditora}" />
                 </p:column>
 

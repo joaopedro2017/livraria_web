@@ -19,19 +19,19 @@
                     <h:outputText value="#{lista.exemplarid.livroid.titulo}" />
                 </p:column>
 
-                <p:column headerText="De" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}">
+                <p:column headerText="De" sortBy="#{lista.dataEmprestimo}" filterBy="#{lista.dataEmprestimo}" style="width: 100px">
                     <h:outputText value="#{lista.dataEmprestimo}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
                 </p:column> 
 
-                <p:column headerText="Até" sortBy="#{lista.dataPrevista}" filterBy="#{lista.dataPrevista}">
+                <p:column headerText="Até" sortBy="#{lista.dataPrevista}" filterBy="#{lista.dataPrevista}" style="width: 100px">
                     <h:outputText value="#{lista.dataPrevista}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
                 </p:column>
 
-                <p:column headerText="Devolvido em" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}">
+                <p:column headerText="Devolvido em" sortBy="#{lista.dataDevolucao}" filterBy="#{lista.dataDevolucao}" style="width: 140px">
                     <h:outputText value="#{lista.dataDevolucao == null ? 'aberto' : lista.dataDevolucao}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
