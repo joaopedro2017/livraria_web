@@ -15,6 +15,45 @@
                 <p:column headerText="Nome" sortBy="#{lista.nomeAutor}" filterBy="#{lista.nomeAutor}">
                     <h:outputText value="#{lista.nomeAutor}" />
                 </p:column>
+
+                <p:column headerText="Livros" style="width:60px">                    
+                    <p:rowToggler id="coluna"/>                   
+                </p:column>
+
+                <p:rowExpansion>
+
+                    <p:dataTable  
+                        var="livro" 
+                        value="#{lista.livroList}"
+                        id="tabela2" 
+                        emptyMessage="Nenhum registro encontrado"                                                 
+                        style="width:50%; float: right">
+                        <f:facet name="header">
+                            Livros escritos por #{lista.nomeAutor}
+                        </f:facet>
+                        <p:column headerText="Título">
+                            <center>
+                                <h:outputText value="#{livro.titulo}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Edição">
+                            <center>
+                                <h:outputText value="#{livro.edicao}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Editora">
+                            <center>
+                                <h:outputText value="#{livro.editoraid.nomeEditora}" />
+                            </center>
+                        </p:column>
+                        <p:column headerText="Assunto">
+                            <center>
+                                <h:outputText value="#{livro.assuntoid.nomeAssunto}" />
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </p:rowExpansion>
+
             </pn:dataTableCrud>
 
             <center>

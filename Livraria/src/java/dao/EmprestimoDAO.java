@@ -27,7 +27,7 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         EntityManager em = PersistenceUtil.getEntityManager();
         TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
                 + "where e.usuarioid.id =:id "
-                + "AND e.dataDevolucao IS NOT NULL "
+                + "AND e.dataDevolucao IS NULL "
                 + "AND e.dataPrevista >= :hoje ", Long.class);
         query.setParameter("id", id);
         query.setParameter("hoje", new Date());

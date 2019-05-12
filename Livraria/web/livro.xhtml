@@ -36,6 +36,29 @@
                 <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
                     <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
                 </p:column>
+
+                <p:column headerText="Autores" style="width:75px">
+                    <p:rowToggler id="coluna" />                    
+                </p:column>
+
+                <p:rowExpansion>
+                    <p:dataTable  
+                        var="autor" 
+                        value="#{lista.autorList}"
+                        id="tabela2" 
+                        emptyMessage="Nenhum registro encontrado"                                                 
+                        style="width:30%; float: right">
+                        <f:facet name="header">
+                            Autores do Livro #{lista.titulo}
+                        </f:facet>
+                        <p:column headerText="Nome">
+                            <center>
+                                <h:outputText value="#{autor.nomeAutor}" />
+                            </center>
+                        </p:column>
+                    </p:dataTable>
+                </p:rowExpansion>
+
             </pn:dataTableCrud>
 
             <center>                    
@@ -94,7 +117,7 @@
                         </p:selectOneMenu>
                         <p:commandButton id="adiciona"
                                          icon="ui-icon-plus"
-                                         style="width: 45px; height: 28px;"
+                                         style="width: 34px; height: 28px; align-items: center"
                                          value="" 
                                          action="#{livroBean.adicionarAutor()}" 
                                          update=":formPrincipal:panelTabela"/>

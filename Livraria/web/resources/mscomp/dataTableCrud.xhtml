@@ -25,7 +25,6 @@
                          rowsPerPageTemplate="5,10,25,50,100,9999"
                          rows="5"                         
                          reflow="true"                         
-                         stickyHeader="true"
                          style="width:90%">
                 <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width:95px">
                     <center>
@@ -51,7 +50,7 @@
                         <p:commandButton id="deletar" 
                                          icon="ui-icon-trash"
                                          style="width: 34px; height: 20px"
-                                         value="" alt="Deletar" label="Deletar"
+                                         value=""
                                          onclick="PF('remove').show();"> 
                             <f:setPropertyActionListener target="#{cc.attrs.crudBean.entidade}" value="#{lista}" />
                         </p:commandButton>
