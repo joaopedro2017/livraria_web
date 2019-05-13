@@ -48,16 +48,14 @@
                 </p:column>
 
                 <p:column headerText="Autores" style="width: 75px">
-                    <p:rowToggler id="coluna" />
-                    <p:tooltip id="toolTipColuna" for="coluna" value="Adicionar autor" position="top"/>
+                    <p:rowToggler/>                    
                 </p:column>
 
                 <p:rowExpansion>
                     <p:graphicImage library="capas" name="#{lista.id % 10}.jpg" style="height: 200px; float: left"/>
                     <p:dataTable  
                         var="autor" 
-                        value="#{lista.autorList}"
-                        id="tabela2" 
+                        value="#{lista.autorList}"                        
                         emptyMessage="Nenhum registro encontrado"
                         sortBy="#{autor.nomeAutor}"
                         style="width:30%; float: right">

@@ -38,7 +38,7 @@
                 </p:column>
 
                 <p:column headerText="Autores" style="width:75px">
-                    <p:rowToggler id="coluna" />                    
+                    <p:rowToggler/>                    
                 </p:column>
 
                 <p:rowExpansion>
@@ -46,7 +46,7 @@
                         var="autor" 
                         value="#{lista.autorList}"
                         id="tabela2" 
-                        emptyMessage="Nenhum registro encontrado"                                                 
+                        emptyMessage="Nenhum registro encontrado"
                         style="width:30%; float: right">
                         <f:facet name="header">
                             Autores do Livro #{lista.titulo}
@@ -145,9 +145,9 @@
                             </h:column>
                         </h:dataTable>
                         <br/>
-                        <p:commandButton icon="ui-icon-disk"                                     
+                        <p:commandButton icon="ui-icon-disk"
                                          value="Salvar"
-                                         rendered="#{livroBean.entidade.autorList.size() > 0}"                                     
+                                         rendered="#{livroBean.entidade.autorList.size() > 0}"
                                          update="@form" 
                                          action="#{livroBean.setTabela(true)}" 
                                          actionListener="#{livroBean.record}" 

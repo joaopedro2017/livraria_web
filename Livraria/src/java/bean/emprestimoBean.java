@@ -8,10 +8,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
+import model.Exemplar;
+import model.Usuario;
 import org.primefaces.event.FlowEvent;
 
-@ManagedBean
 @ViewScoped
+@ManagedBean(name = "emprestimoBean")
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     private EmprestimoDAO emprestimoDAO;
@@ -33,7 +35,7 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
             setDebito(true);
         } else {
             setDebito(false);
-        }        
+        }
     }
 
     public void verificarExemplar() {
@@ -48,38 +50,30 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     }
 
     public void gravar(ActionEvent actionEvent) {
-        getEntidade().setDataEmprestimo(new Date());
-        if (getEntidade().getExemplarid().getCircular()) {
-            if ("Professor".equals(getEntidade().getUsuarioid().getTipo())) {
-                calcularData(1);
-            } else {
-                calcularData(0);
-            }
-        } else {
-            calcularData(2);
-        }
+        calcularData(getEntidade().getExemplarid(), getEntidade().getUsuarioid());
         record(actionEvent);
     }
 
-    public void calcularData(int opcao) {
+    public void calcularData(Exemplar ex, Usuario us) {
+        getEntidade().setDataEmprestimo(new Date());
+        boolean opcao = ex.getCircular();
+        String tipo = us.getTipo();
         Calendar c = new GregorianCalendar();
         c.setTime(new Date());
 
-        switch (opcao) {
-            case 0:
-                c.add(Calendar.DATE, 10);
-                getEntidade().setDataPrevista(c.getTime());
-                break;
-            case 1:
+        if (opcao) {
+            if ("Professor".equals(tipo)) {
                 c.add(Calendar.DATE, 15);
                 getEntidade().setDataPrevista(c.getTime());
-                break;
-            case 2:
-                proximoDiaUtil(c);
+            } else {
+                c.add(Calendar.DATE, 10);
                 getEntidade().setDataPrevista(c.getTime());
-                break;
-            default:
-                break;
+
+            }
+        } else {
+            proximoDiaUtil(c);
+            getEntidade().setDataPrevista(c.getTime());
+
         }
     }
 
@@ -112,10 +106,12 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     public void setDebito(boolean debito) {
         this.debito = debito;
     }
-    
-    public void devolver(ActionEvent actionEvent){
-        getEntidade().setDataDevolucao(new Date());
-        record(actionEvent);
+
+    public void devolver(ActionEvent actionEvent) {
+        if (getEntidade().getId() != null) {
+            getEntidade().setDataDevolucao(new Date());
+            record(actionEvent);
+        }
     }
 
     @Override

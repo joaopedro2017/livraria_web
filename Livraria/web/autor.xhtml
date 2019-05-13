@@ -17,17 +17,14 @@
                 </p:column>
 
                 <p:column headerText="Livros" style="width:60px">                    
-                    <p:rowToggler id="coluna"/>                   
+                    <p:rowToggler/>                   
                 </p:column>
 
                 <p:rowExpansion>
-
-                    <p:dataTable  
-                        var="livro" 
-                        value="#{lista.livroList}"
-                        id="tabela2" 
-                        emptyMessage="Nenhum registro encontrado"                                                 
-                        style="width:50%; float: right">
+                    <p:dataTable var="livro"
+                                 value="#{lista.livroList}"
+                                 emptyMessage="Nenhum registro encontrado"
+                                 style="width:50%; float: right">
                         <f:facet name="header">
                             Livros escritos por #{lista.nomeAutor}
                         </f:facet>
@@ -58,29 +55,27 @@
 
             <center>
                 <p:panel rendered="#{!autorBean.tabela}" header="Novo/Editar Autor" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">                        
+                    <p:panelGrid id="panelRecord" columns="6">
                         <p:outputLabel value="Nome: " for="nome" />
-                        <p:inputText id="nome" 
+                        <p:inputText id="nome"
                                      value="#{autorBean.entidade.nomeAutor}"
                                      required="true"
                                      requiredMessage="Nome em branco"/>
-                    </p:panelGrid>  
+                    </p:panelGrid>
                     <br/>
-                    <p:commandButton value="Salvar" 
-                                     update="@form" 
+                    <p:commandButton value="Salvar"
+                                     update="@form"
                                      icon="ui-icon-disk"
-                                     action="#{autorBean.setTabela(true)}" 
-                                     actionListener="#{autorBean.record}" 
-                                     onclick="record.hide()"
-                                     alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
-                                     value="Voltar" 
+                                     action="#{autorBean.setTabela(true)}"
+                                     actionListener="#{autorBean.record}"
+                                     onclick="record.hide()"/>
+                    <p:commandButton icon="ui-icon-refresh"
+                                     value="Voltar"
                                      immediate="true"
-                                     update="@form" 
-                                     action="#{autorBean.setTabela(true)}"/> 
+                                     update="@form"
+                                     action="#{autorBean.setTabela(true)}"/>
                 </p:panel>
-            </center>      
-
+            </center>
         </h:form>
     </ui:define>
 </ui:composition>

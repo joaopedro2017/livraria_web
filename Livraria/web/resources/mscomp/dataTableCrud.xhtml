@@ -103,8 +103,10 @@
         </p:confirmDialog>
 
         <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
-            Você tem certeza?
-            <p:commandButton value="Deletar" actionListener="#{cc.attrs.crudBean.exclude}" onclick="remove.hide()" alt="Delete" /> 
+            Deseja realmente excluir?
+            <br/>
+            <br/>
+            <p:commandButton value="Deletar" style="float: right" actionListener="#{cc.attrs.crudBean.exclude}" onclick="remove.hide()"/> 
         </p:dialog>
     </cc:implementation>
 </html>

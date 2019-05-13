@@ -60,8 +60,7 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto> {
     }
 
     @Override
-    public void remover(Assunto assunto
-    ) {
+    public void remover(Assunto assunto) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         if (!em.contains(assunto)) {
@@ -72,8 +71,7 @@ public class AssuntoDAO implements Serializable, CrudDAO<Assunto> {
     }
 
     @Override
-    public Assunto persistir(Assunto assunto
-    ) {
+    public Assunto persistir(Assunto assunto) {
         EntityManager em = PersistenceUtil.getEntityManager();
         em.getTransaction().begin();
         try {

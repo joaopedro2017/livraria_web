@@ -26,6 +26,14 @@
                 </p:column>
                 <p:column headerText="Emprestimo Nro" sortBy="#{lista.emprestimoid.id}" filterBy="#{lista.emprestimoid.id}">
                     <h:outputText value="#{lista.emprestimoid == null ? '-' : lista.emprestimoid.id}" />
+                    <p:commandButton id="emprestimo"
+                                     rendered="#{lista.emprestimoid == null}" 
+                                     icon="ui-icon-calendar"
+                                     actionListener="#{reservaBean.editar(lista)}"
+                                     onclick="PF('Emprestar').show();"                                     
+                                     style="width: 34px; height: 20px; align-items: center; float: right" 
+                                     value="" />
+                    <p:tooltip id="toolTipEmprestimo" for="emprestimo" value="Realizar Empréstimo" position="left"/>
                 </p:column>
                 <p:column headerText="Cancelada" sortBy="#{lista.cancelar}" filterBy="#{lista.cancelar}">
                     <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
@@ -42,8 +50,17 @@
             </pn:dataTableCrud>
 
             <p:dialog header="Cancelar" widgetVar="Cancelar" modal="true" resizable="false"> 
-                Deseja realmente cancelar?                
-                <p:commandButton value="Cancelar" actionListener="#{reservaBean.cancelar}" onclick="remove.hide()" alt="Delete" /> 
+                Deseja realmente cancelar?
+                <br/>
+                <br/>
+                <p:commandButton value="Cancelar" style="float: right" actionListener="#{reservaBean.cancelar}" onclick="remove.hide()"/> 
+            </p:dialog>
+
+            <p:dialog header="Associar a reserva" widgetVar="Emprestar" modal="true" resizable="false"> 
+                Fazer Empréstimo?
+                <br/>
+                <br/>
+                <p:commandButton value="Ok" style="float: right" actionListener="#{reservaBean.realizarEmprestimo}" onclick="remove.hide()"/> 
             </p:dialog>
 
             <center>

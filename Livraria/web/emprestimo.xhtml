@@ -7,7 +7,7 @@
                 xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
-        <h2 class="page-header">Gerenciar Emprestimo</h2>
+        <h2 class="page-header">Gerenciar Empréstimo</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal">
             <pn:dataTableCrud crudBean="#{emprestimoBean}" arquivo="emprestimos">
@@ -23,7 +23,7 @@
                     <h:outputText value="#{lista.dataEmprestimo}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
-                </p:column> 
+                </p:column>
 
                 <p:column headerText="Até" sortBy="#{lista.dataPrevista}" filterBy="#{lista.dataPrevista}" style="width: 100px">
                     <h:outputText value="#{lista.dataPrevista}">
@@ -37,11 +37,11 @@
                     </h:outputText>
 
                     <p:commandButton id="devolver"
-                                     rendered="#{lista.dataDevolucao == null}" 
+                                     rendered="#{lista.dataDevolucao == null}"
                                      icon="ui-icon-calendar"
                                      actionListener="#{emprestimoBean.editar(lista)}"
                                      onclick="PF('Devolver').show();"
-                                     style="width: 34px; height: 20px; align-items: center; float: right" 
+                                     style="width: 34px; height: 20px; align-items: center; float: right"
                                      value="" />
                     <p:tooltip id="toolTipDevolver" for="devolver" value="Devolver" position="left"/>
 
@@ -49,8 +49,10 @@
             </pn:dataTableCrud> 
 
             <p:dialog header="Devolver" widgetVar="Devolver" modal="true" resizable="false"> 
-                Deseja realizar a devolução?                
-                <p:commandButton value="Devolver" actionListener="#{emprestimoBean.devolver}" onclick="remove.hide()" alt="Devolver" /> 
+                Deseja realizar a devolução?
+                <br/>
+                <br/>
+                <p:commandButton value="Devolver" style="float: right" actionListener="#{emprestimoBean.devolver}" onclick="remove.hide()" alt="Devolver" /> 
             </p:dialog>
 
             <center>
@@ -59,7 +61,7 @@
                         <p:tab id="usuario" title="Usuário"> 
                             <p:panel header="Detalhes Usuário: ">
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
-                                    <p:outputLabel value="Usuário: " for="u" style="float: right;" />                                    
+                                    <p:outputLabel value="Usuário: " for="u" style="float: right;" />
                                     <p:selectOneMenu id="u"
                                                      value="#{emprestimoBean.entidade.usuarioid}"
                                                      style="width: 202px"
@@ -72,9 +74,9 @@
                                                      ajax="true"
                                                      update="@form"
                                                      icon="ui-icon-search"
-                                                     action="#{emprestimoBean.emprestimoAtraso}"/>                                    
+                                                     action="#{emprestimoBean.emprestimoAtraso}"/>
                                     <h:outputText value="Nome:" style="float: right;"/>
-                                    <p:inputText readonly="true"                                                 
+                                    <p:inputText readonly="true"
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.nomeUsuario : null}"/>
                                     <br/>
                                     <h:outputText value="Email: " style="float: right;"/>
@@ -83,7 +85,7 @@
                                     <br/>
                                     <h:outputText value="Tipo: " style="float: right;"/>
                                     <p:inputText readonly="true" 
-                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>              
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>
                                 </h:panelGrid>
                                 <br/>
                                 <p:outputLabel value="* Usuário possui débito ou atingiu o limite de empréstimo!" 
@@ -103,7 +105,7 @@
                                     <p:outputLabel value="Livro: " for="l" style="float: right;"/>
                                     <p:selectOneMenu id="l"
                                                      value="#{emprestimoBean.entidade.exemplarid}"
-                                                     style="width: 202px"                                                     
+                                                     style="width: 202px"                                                  
                                                      required="true"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
@@ -116,11 +118,11 @@
                                                      action="#{emprestimoBean.verificarExemplar}"/>
 
                                     <h:outputText value="Título:" style="float: right;"/>
-                                    <p:inputText readonly="true"                                                 
+                                    <p:inputText readonly="true"
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.titulo : null}"/>
                                     <br/>
                                     <h:outputText value="ISBN:" style="float: right;"/>
-                                    <p:inputText readonly="true"                                                 
+                                    <p:inputText readonly="true"
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.isbn : null}"/>
                                     <br/>
                                     <h:outputText value="Edição:" style="float: right;"/>
@@ -147,7 +149,7 @@
                         <p:tab id="confirmar" title="Confirmar">
                             <p:panel header="Corfirmar: ">
                                 <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:commandButton value="Salvar"                                                     
+                                    <p:commandButton value="Salvar"
                                                      icon="ui-icon-disk"
                                                      action="#{emprestimoBean.setTabela(true)}" 
                                                      actionListener="#{emprestimoBean.gravar}" 
@@ -162,7 +164,7 @@
                         </p:tab>
                     </p:wizard>
                 </p:panel>
-            </center>           
+            </center>
 
         </h:form>
     </ui:define>
