@@ -1,0 +1,35 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+    <ui:define name="content">
+        <h2 class="page-header">Relatórios Gerenciais</h2>
+        <ms:mensagem/>        
+        <h:form id="formPrincipal">
+
+            <p:layout style="height: 425px; background-color: white; color: greenyellow">
+                <p:layoutUnit position="west" size="205" header="Relatórios">
+                    <p:menu style="border: none; float: right">
+                        <p:submenu label="Livros" icon="ui-icon-bookmark">
+                            <p:menuitem value="Nro de exemplares" icon="ui-icon-tag" url="/faces/relatorio/relatorio_exemplares.xhtml" />
+                            <p:menuitem value="Emprestados" icon="ui-icon-tag" url="/faces/relatorio/relatorio_emprestimo.xhtml" />
+                            <p:menuitem value="Em atraso" icon="ui-icon-tag" url="/faces/relatorio/relatorio_atraso.xhtml" />
+                            <p:menuitem value="Reservados" icon="ui-icon-tag" url="/faces/relatorio/relatorio_reserva.xhtml" />                            
+                        </p:submenu>
+                        <p:submenu label="Usuário" icon="ui-icon-person">
+                            <p:menuitem value="Dados cadastrais" icon="ui-icon-contact" url="/faces/relatorio/relatorio_usuario.xhtml" />                                                     
+                        </p:submenu>
+                    </p:menu>
+                </p:layoutUnit>
+
+                <p:layoutUnit position="center">                                           
+                    <ui:insert name="relatorio"></ui:insert>                    
+                </p:layoutUnit>
+            </p:layout>            
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -7,7 +7,7 @@
                 xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
-        <h2 class="page-header">Gerenciar Usuario</h2>
+        <h2 class="page-header">Gerenciar Usuário</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal">
             <pn:dataTableCrud crudBean="#{usuarioBean}" arquivo="usuarios">
@@ -25,7 +25,7 @@
             </pn:dataTableCrud>
 
             <center>
-                <p:panel rendered="#{!usuarioBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
+                <p:panel rendered="#{!usuarioBean.tabela}" header="Novo/Editar Usuário" style="width: 85%">
                     <p:panelGrid id="panelRecord" columns="2">
                         Nome:
                         <p:inputText id="name"

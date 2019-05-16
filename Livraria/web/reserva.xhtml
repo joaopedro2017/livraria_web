@@ -13,7 +13,7 @@
 
             <pn:dataTableCrud crudBean="#{reservaBean}" arquivo="autores">
 
-                <p:column headerText="Usuario" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
+                <p:column headerText="Usuário" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
                     <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
                 </p:column>
                 <p:column headerText="Exemplar" sortBy="#{lista.exemplarid.livroid.titulo}" filterBy="#{lista.exemplarid.livroid.titulo}">

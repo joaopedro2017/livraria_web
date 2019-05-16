@@ -26,10 +26,8 @@
                          rows="5"                         
                          reflow="true"                         
                          style="width:90%">
-                <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width:95px">
-                    <center>
-                        <h:outputText value="#{lista.id}" />
-                    </center>
+                <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width: 95px">                    
+                    <h:outputText value="#{lista.id}" style="; float: right"/>                   
                 </p:column>
 
                 <cc:insertChildren>                    

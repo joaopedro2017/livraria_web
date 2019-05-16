@@ -13,6 +13,7 @@
                     <p:menuitem value="Pesquisar Livro" icon="ui-icon-bookmark" url="/faces/acervo.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Cadastro" icon="ui-icon-document" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Bibliotecário'}">
+                    <p:menuitem value="Dashboard" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Assunto" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Autor" icon="ui-icon-person" url="/faces/autor.xhtml"/>
                     <p:menuitem value="Editora" icon="ui-icon-tag" url="/faces/editora.xhtml"/>                    
@@ -25,7 +26,7 @@
                     <p:menuitem value="Usuário" icon="ui-icon-contact" url="/faces/usuario.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Relatório" icon="ui-icon-clipboard" rendered="#{loginBean.tipo == 'Administrador'}">
-                    <p:menuitem value="Relatório de Reserva" icon="ui-icon-clipboard" url="/faces/emprestimo.xhtml"/>                    
+                    <p:menuitem value="Relatórios" icon="ui-icon-clipboard" url="/faces/relatorio/relatorio_index.xhtml"/>                    
                 </p:submenu>                
                 <p:menuitem value="Sair" icon="ui-icon-power" action="#{loginBean.logoff}" />
             </p:menubar>

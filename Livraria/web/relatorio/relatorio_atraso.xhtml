@@ -1,0 +1,81 @@
+<ui:composition template="/relatorio/relatorio.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+
+    <ui:define name="relatorio">
+        <h2 class="page-header">Empréstimos em atraso</h2>       
+
+        <p:dataTable var="lista" 
+                     value="#{livroBean.entidades}"
+                     id="tabela" emptyMessage="Nenhum registro encontrado"
+                     paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                     paginator="true"
+                     reflow="true"
+                     rows="5"
+                     rowsPerPageTemplate="5,10,25,50,100,9999" 
+                     style="width:100%">
+
+            <f:facet name="paginatorBottomRight">
+                <h:commandLink id="pdf">
+                    <p:graphicImage name="./images/exports/pdf.png" />
+                    <p:dataExporter type="pdf" target="tabela" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
+                </h:commandLink>
+                <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>
+            </f:facet>
+
+            <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
+                <h:outputText value="#{lista.titulo}" />
+            </p:column>
+
+            <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
+                <h:outputText value="#{lista.isbn}" />
+            </p:column>
+
+            <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
+                <h:outputText value="#{lista.edicao}" />
+            </p:column>
+
+            <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
+                <h:outputText value="#{lista.ano}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+            </p:column>                 
+
+            <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
+                <h:outputText value="#{lista.editoraid.nomeEditora}" />
+            </p:column>
+
+            <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
+                <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+            </p:column>
+
+            <p:column headerText="Autores" style="width: 75px" exportable="false">
+                <p:rowToggler/>                    
+            </p:column>
+
+            <p:rowExpansion>
+                <p:graphicImage library="capas" name="#{lista.id % 10}.jpg" style="height: 200px; float: left"/>
+                <p:dataTable  
+                    var="autor" 
+                    value="#{lista.autorList}"                        
+                    emptyMessage="Nenhum registro encontrado"
+                    sortBy="#{autor.nomeAutor}"
+                    style="width:30%; float: right">
+                    <f:facet name="header">
+                        Autores do Livro #{lista.titulo}
+                    </f:facet>
+                    <p:column headerText="Nome">
+                        <center>
+                            <h:outputText value="#{autor.nomeAutor}" style="color: blue;" />
+                        </center>
+                    </p:column>
+                </p:dataTable>
+            </p:rowExpansion>
+        </p:dataTable>
+    </ui:define>
+</ui:composition>

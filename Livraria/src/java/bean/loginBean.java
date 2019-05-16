@@ -53,7 +53,8 @@ public class loginBean {
 
     public void logoff() throws IOException {
         getRequest().getSession().invalidate();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().redirect("/Livraria/faces/login.xhtml");
         setNomeUsuario("");
         setSenha("");
     }
