@@ -23,9 +23,9 @@
                     <h:outputText value="#{lista.edicao}" />
                 </p:column>
 
-                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}" style="width: 100px">
+                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}" style="width: 70px">
                     <h:outputText value="#{lista.ano}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        <f:convertDateTime pattern="yyyy"/>
                     </h:outputText>
                 </p:column>                 
 
