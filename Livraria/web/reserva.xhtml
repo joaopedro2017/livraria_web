@@ -69,22 +69,28 @@
 
                         <p:outputLabel value="Usuário: " style="float: right;" for="usuario"/>
                         <p:selectOneMenu id="usuario"
-                                         value="#{reservaBean.entidade.usuarioid}"
+                                         value="#{reservaBean.usuarioId}"
                                          style="width: 202px"                                                     
                                          required="true"
                                          requiredMessage="Selecione um usuário">
                             <f:selectItem itemLabel="Selecione" 
                                           itemValue=""/>
-                            <f:selectItems value="#{usuarioBean.itens}"/>
+                            <f:selectItems value="#{reservaBean.usuario.entidades}"
+                                           var="usuario"
+                                           itemLabel="#{usuario.nomeUsuario}"
+                                           itemValue="#{usuario.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Exemplar: " style="float: right;" for="exemplar"/>
                         <p:selectOneMenu id="exemplar"
-                                         value="#{reservaBean.entidade.exemplarid}"
+                                         value="#{reservaBean.exemplarId}"
                                          style="width: 202px"                                                     
                                          required="true"
                                          requiredMessage="Selecione um usuário">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{exemplarBean.itens}"/>
+                            <f:selectItems value="#{reservaBean.exemplar.entidades}"
+                                           var="exemplar"
+                                           itemLabel="#{exemplar.livroid.titulo}"
+                                           itemValue="#{exemplar.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel for="data"
                                        value="Data: "
@@ -108,7 +114,7 @@
                                      update="@form" 
                                      icon="ui-icon-disk"
                                      action="#{reservaBean.setTabela(true)}" 
-                                     actionListener="#{reservaBean.record}" 
+                                     actionListener="#{reservaBean.gravar}" 
                                      onclick="record.hide()"
                                      alt="Record"/>
                     <p:commandButton icon="ui-icon-refresh" 

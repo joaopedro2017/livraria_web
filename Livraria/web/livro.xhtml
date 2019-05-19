@@ -90,27 +90,33 @@
                                     required="true"
                                     requiredMessage="Forneça uma data"/> 
                         Editora:
-                        <p:selectOneMenu value="#{livroBean.entidade.editoraid}"
+                        <p:selectOneMenu value="#{livroBean.editoraId}"
                                          style="width: 205px" 
                                          required="true"
                                          requiredMessage="Selecione a editora">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{editoraBean.itens}"/>
+                            <f:selectItems value="#{livroBean.editora.entidades}"
+                                           var="editora"
+                                           itemLabel="#{editora.nomeEditora}"
+                                           itemValue="#{editora.id}"/>
                         </p:selectOneMenu>
                         Assunto:
-                        <p:selectOneMenu value="#{livroBean.entidade.assuntoid}"
+                        <p:selectOneMenu value="#{livroBean.assuntoId}"
                                          style="width: 205px" 
                                          required="true"
                                          requiredMessage="Selecione o assunto">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{assuntoBean.itens}"/>
+                            <f:selectItems value="#{livroBean.assunto.entidades}"
+                                           var="assunto"
+                                           itemLabel="#{assunto.nomeAssunto}"
+                                           itemValue="#{assunto.id}"/>
                         </p:selectOneMenu>
 
                         <h:outputLabel value="Secionar Autor: " for="autor"/>
                         <p:selectOneMenu value="#{livroBean.autorId}" 
                                          style="width: 205px">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{livroBean.autores}" 
+                            <f:selectItems value="#{livroBean.autor.entidades}" 
                                            var="autor"
                                            itemLabel="#{autor.nomeAutor}"
                                            itemValue="#{autor.id}"/>
@@ -150,7 +156,7 @@
                                          rendered="#{livroBean.entidade.autorList.size() > 0}"
                                          update="@form" 
                                          action="#{livroBean.setTabela(true)}" 
-                                         actionListener="#{livroBean.record}" 
+                                         actionListener="#{livroBean.gravar}" 
                                          onclick="record.hide()" 
                                          alt="Record"/> 
                         <p:commandButton icon="ui-icon-refresh" 

@@ -30,12 +30,15 @@
                                                  value="#{exemplarBean.entidade.circular}" 
                                                  itemLabel=" Circular"/>  
                         Livro:
-                        <p:selectOneMenu value="#{exemplarBean.entidade.livroid}" 
+                        <p:selectOneMenu value="#{exemplarBean.livroId}" 
                                          style="width: 180px" 
                                          required="true"
                                          requiredMessage="Selecione um livro">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{livroBean.itens}"/>
+                            <f:selectItems value="#{exemplarBean.livro.entidades}"
+                                           var="livro"
+                                           itemLabel="#{livro.titulo}"
+                                           itemValue="#{livro.id}"/>
                         </p:selectOneMenu>
                     </p:panelGrid>  
                     <br/>
@@ -43,7 +46,7 @@
                                      value="Salvar" 
                                      update="@form" 
                                      action="#{exemplarBean.setTabela(true)}" 
-                                     actionListener="#{exemplarBean.record}" 
+                                     actionListener="#{exemplarBean.gravar}" 
                                      onclick="record.hide()" alt="Record"/>
                     <p:commandButton icon="ui-icon-refresh" 
                                      value="Voltar" 

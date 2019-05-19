@@ -17,7 +17,6 @@
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
       <property name="javax.persistence.jdbc.password" value=""/>
       <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-      <property name="hibernate.cache.use_second_level_cache" value="false"/>        
       <property name="hibernate.hbm2ddl.auto" value="validate"/>
     </properties>
   </persistence-unit>

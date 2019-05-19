@@ -59,15 +59,18 @@
                 <p:panel rendered="#{!emprestimoBean.tabela}">
                     <p:wizard flowListener="#{emprestimoBean.proximaAba}" style="width:85%" backLabel="anterior" nextLabel="próximo" >
                         <p:tab id="usuario" title="Usuário"> 
-                            <p:panel header="Detalhes Usuário: ">
+                            <p:panel header="Detalhes Usuário: " style="height: 300px">
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
                                     <p:outputLabel value="Usuário: " for="u" style="float: right;" />
                                     <p:selectOneMenu id="u"
-                                                     value="#{emprestimoBean.entidade.usuarioid}"
+                                                     value="#{emprestimoBean.usuarioId}"
                                                      style="width: 202px"
                                                      required="true">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                        <f:selectItems value="#{usuarioBean.itens}" />
+                                        <f:selectItems value="#{emprestimoBean.usuario.entidades}" 
+                                                       var="usuario"
+                                                       itemLabel="#{usuario.nomeUsuario}"
+                                                       itemValue="#{usuario.id}"/>
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="Verificar"
@@ -100,16 +103,19 @@
                             </p:panel>
                         </p:tab>
                         <p:tab id="livro" title="Livro"> 
-                            <p:panel header="Detalhes Livro">
+                            <p:panel header="Detalhes Livro" style="height: 300px">
                                 <h:panelGrid columns="3" columnClasses="grid, grid, grid">
                                     <p:outputLabel value="Livro: " for="l" style="float: right;"/>
                                     <p:selectOneMenu id="l"
-                                                     value="#{emprestimoBean.entidade.exemplarid}"
+                                                     value="#{emprestimoBean.exemplarId}"
                                                      style="width: 202px"                                                  
                                                      required="true"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                        <f:selectItems value="#{exemplarBean.itens}"/>
+                                        <f:selectItems value="#{emprestimoBean.exemplar.entidades}"
+                                                       var="exemplar"
+                                                       itemLabel="#{exemplar.livroid.titulo}"
+                                                       itemValue="#{exemplar.id}"/>
                                     </p:selectOneMenu>
                                     <p:commandButton value="Consultar"
                                                      ajax="true"
@@ -131,8 +137,10 @@
                                     <br/>
                                     <h:outputText value="Ano:" style="float: right;"/>
                                     <p:inputText readonly="true"                                                 
-                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.ano : null}"/>
-                                    <br/>                                    
+                                                 value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.exemplarid.livroid.ano : null}">
+                                        <f:convertDateTime type="date" pattern="dd/MM/yyyy" />
+                                    </p:inputText>
+
                                 </h:panelGrid>
                                 <br/>
                                 <p:outputLabel value="* Exemplar não está disponível ou está emprestado a esse usuário!" 
@@ -147,19 +155,34 @@
                             </p:panel>
                         </p:tab>
                         <p:tab id="confirmar" title="Confirmar">
-                            <p:panel header="Corfirmar: ">
-                                <h:panelGrid columns="3" columnClasses="label, value, grid">
-                                    <p:commandButton value="Salvar"
-                                                     icon="ui-icon-disk"
-                                                     action="#{emprestimoBean.setTabela(true)}" 
-                                                     actionListener="#{emprestimoBean.gravar}" 
-                                                     onclick="record.hide()" alt="Record"/>
-                                    <p:commandButton icon="ui-icon-cancel" 
-                                                     value="Cancelar" 
-                                                     immediate="true"
-                                                     update="@form" 
-                                                     action="#{emprestimoBean.setTabela(true)}"/>
+                            <p:panel header="Confirmar: " style="height: 300px">
+                                <h:panelGrid columns="3" columnClasses="grid, grid, grid">
+                                    <h:outputText value="Usuário:" 
+                                                  style="float: right; font-style: initial"/>
+                                    <p:outputLabel value="#{emprestimoBean.entidade.usuarioid.nomeUsuario}"/>
+                                    <br/>
+                                    <h:outputText value="Exemplar:" style="float: right;"/>
+                                    <p:outputLabel value="#{emprestimoBean.entidade.exemplarid.livroid.titulo}"/>
+                                    <br/>
+                                    <h:outputText value="Data de entrega:" style="float: right;"/>
+                                    <p:calendar value="#{emprestimoBean.entidade.dataPrevista}"
+                                                pattern="dd/MM/yyyy"
+                                                readonlyInput="true"
+                                                showOn="false"
+                                                size="8"/>
+                                    <br/>
                                 </h:panelGrid>
+                                <br/>
+                                <p:commandButton value="Salvar"                                                 
+                                                 icon="ui-icon-disk"
+                                                 action="#{emprestimoBean.setTabela(true)}" 
+                                                 actionListener="#{emprestimoBean.gravar}" 
+                                                 onclick="record.hide()" alt="Record"/>
+                                <p:commandButton icon="ui-icon-cancel" 
+                                                 value="Cancelar" 
+                                                 immediate="true"
+                                                 update="@form" 
+                                                 action="#{emprestimoBean.setTabela(true)}"/>
                             </p:panel>
                         </p:tab>
                     </p:wizard>

@@ -1,14 +1,15 @@
 package bean;
 
-import dao.AutorDAO;
 import dao.LivroDAO;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.model.SelectItem;
+import javax.faces.event.ActionEvent;
+import model.Assunto;
 import model.Autor;
+import model.Editora;
 import model.Livro;
 
 @ManagedBean
@@ -16,24 +17,26 @@ import model.Livro;
 public class livroBean extends crudBean<Livro, LivroDAO> {
 
     private LivroDAO livroDAO;
-    public List<SelectItem> itens; //Combobox 1 x n    
-    private Integer autorId; //Relacionamento n x n
 
-    //Metodo para aparecer no combo box
-    public List<SelectItem> getItens() {
-        List<SelectItem> list = new ArrayList<SelectItem>();
-        List<Livro> livros = null;
-        livros = livroDAO.buscarTodas();
+    private Integer assuntoId = null;
+    private Integer autorId;
+    private Integer editoraId = null;
 
-        for (Livro livro : livros) {
-            list.add(new SelectItem(livro, livro.getTitulo())); //nome livro ira aparecer no combo
-        }
-        return list;
+    //ManagedProperty's
+    @ManagedProperty(value = "#{autorBean}")
+    private autorBean autor = new autorBean();
+    @ManagedProperty(value = "#{assuntoBean}")
+    private assuntoBean assunto = new assuntoBean();
+    @ManagedProperty(value = "#{editoraBean}")
+    private editoraBean editora = new editoraBean();
+
+    //get e set dos Integer Aux
+    public Integer getAssuntoId() {
+        return assuntoId;
     }
 
-    //Relacionamento n x n
-    public List<Autor> getAutores() {
-        return new AutorDAO().buscarTodas();
+    public void setAssuntoId(Integer assuntoId) {
+        this.assuntoId = assuntoId;
     }
 
     public Integer getAutorId() {
@@ -44,15 +47,50 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         this.autorId = autorId;
     }
 
+    public Integer getEditoraId() {
+        return editoraId;
+    }
+
+    public void setEditoraId(Integer editoraId) {
+        this.editoraId = editoraId;
+    }
+
+    //get e set dos bean's
+    public autorBean getAutor() {
+        return autor;
+    }
+
+    public void setAutor(autorBean autor) {
+        this.autor = autor;
+    }
+
+    public assuntoBean getAssunto() {
+        return assunto;
+    }
+
+    public void setAssunto(assuntoBean assunto) {
+        this.assunto = assunto;
+    }
+
+    public editoraBean getEditora() {
+        return editora;
+    }
+
+    public void setEditora(editoraBean editora) {
+        this.editora = editora;
+    }
+
+    //Métodos do livro
     public void adicionarAutor() {
+        System.out.println("VAlor");
         if (this.autorId != null) {
             for (Autor a : getEntidade().getAutorList()) {
                 if (Objects.equals(a.getId(), this.autorId)) {
                     return;
                 }
             }
-            Autor autor = new AutorDAO().buscarId(this.autorId);
-            getEntidade().getAutorList().add(autor);
+            Autor aut = autor.getDao().buscarId(autorId);
+            getEntidade().getAutorList().add(aut);
         }
     }
 
@@ -62,6 +100,23 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public List<Autor> getAutoresDoLivro() {
         return getEntidade().getAutorList();
+    }
+
+    public void gravar(ActionEvent actionEvent) {
+        if (assuntoId != null && editoraId != null) {
+            System.out.println("Assunto: " + assuntoId + "Editora: " + editoraId);
+            Assunto ass = assunto.buscarId(assuntoId);
+            getEntidade().setAssuntoid(ass);
+            Editora edit = editora.buscarId(editoraId);
+            getEntidade().setEditoraid(edit);
+            record(actionEvent);            
+            assuntoId = null;
+            editoraId = null;
+        }
+    }
+
+    public Livro buscarId(int id) {
+        return new LivroDAO().buscarId(id);
     }
 
     @Override

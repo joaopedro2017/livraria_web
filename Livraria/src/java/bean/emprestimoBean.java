@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
@@ -13,19 +14,26 @@ import model.Usuario;
 import org.primefaces.event.FlowEvent;
 
 @ViewScoped
-@ManagedBean(name = "emprestimoBean")
+@ManagedBean
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     private EmprestimoDAO emprestimoDAO;
     private boolean debito = false;
 
+    private Integer usuarioId = null;
+    private Integer exemplarId = null;
+    @ManagedProperty(value = "#{usuarioBean}")
+    private usuarioBean usuario;
+    @ManagedProperty(value = "#{exemplarBean}")
+    private exemplarBean exemplar;
+
     public void emprestimoAtraso() {
-        int id = getEntidade().getUsuarioid().getId();
-        Long atraso = getDao().verificarDebito(id);
-        Long aberto = getDao().verificarEmAberto(id);
+        getEntidade().setUsuarioid(usuario.buscarId(usuarioId));
+        Long atraso = getDao().verificarDebito(usuarioId);
+        Long aberto = getDao().verificarEmAberto(usuarioId);
         String tipo = getEntidade().getUsuarioid().getTipo();
 
-        System.out.println("id: " + id + " Atraso: " + atraso + " aberto: " + aberto + " tipo: " + tipo + "\n");
+        System.out.println("id: " + usuarioId + " Atraso: " + atraso + " aberto: " + aberto + " tipo: " + tipo + "\n");
 
         if (atraso > 0) {
             setDebito(true);
@@ -39,19 +47,21 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     }
 
     public void verificarExemplar() {
-        int idExemplar = getEntidade().getExemplarid().getId();
-        Long disponivel = getDao().exemplarDisponivel(idExemplar);
+        Long disponivel = getDao().exemplarDisponivel(exemplarId);
         if (disponivel != 0) {
             System.out.println("Verificar Quantidade se pode " + disponivel);
             setDebito(true);
         } else {
+            getEntidade().setExemplarid(exemplar.buscarId(exemplarId));
+            calcularData(getEntidade().getExemplarid(), getEntidade().getUsuarioid());
             setDebito(false);
         }
     }
 
-    public void gravar(ActionEvent actionEvent) {
-        calcularData(getEntidade().getExemplarid(), getEntidade().getUsuarioid());
+    public void gravar(ActionEvent actionEvent) {        
         record(actionEvent);
+        usuarioId = null;
+        exemplarId = null;
     }
 
     public void calcularData(Exemplar ex, Usuario us) {
@@ -112,6 +122,39 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
             getEntidade().setDataDevolucao(new Date());
             record(actionEvent);
         }
+    }
+
+    //aux
+    public Integer getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Integer usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public usuarioBean getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(usuarioBean usuario) {
+        this.usuario = usuario;
+    }
+
+    public Integer getExemplarId() {
+        return exemplarId;
+    }
+
+    public void setExemplarId(Integer exemplarId) {
+        this.exemplarId = exemplarId;
+    }
+
+    public exemplarBean getExemplar() {
+        return exemplar;
+    }
+
+    public void setExemplar(exemplarBean exemplar) {
+        this.exemplar = exemplar;
     }
 
     @Override
