@@ -39,7 +39,8 @@
                         <p:commandButton id="editar"
                                          icon="ui-icon-pencil"
                                          style="width: 34px; height: 20px"
-                                         value="" 
+                                         value=""
+                                         ajax="false"
                                          action="#{cc.attrs.crudBean.setTabela(false)}" 
                                          actionListener="#{cc.attrs.crudBean.editar(lista)}" 
                                          update="@form" />
@@ -48,7 +49,7 @@
                         <p:commandButton id="deletar" 
                                          icon="ui-icon-trash"
                                          style="width: 34px; height: 20px"
-                                         value=""
+                                         value=""                                         
                                          onclick="PF('remove').show();"> 
                             <f:setPropertyActionListener target="#{cc.attrs.crudBean.entidade}" value="#{lista}" />
                         </p:commandButton>
@@ -65,7 +66,9 @@
             <p:commandButton icon="ui-icon-plus" 
                              update="@form" 
                              value="Novo" 
-                             action="#{cc.attrs.crudBean.setTabela(false)}" /> 
+                             action="#{cc.attrs.crudBean.setTabela(false)}"
+                             actionListener="#{cc.attrs.crudBean.init}" 
+                             ajax="false"/> 
         </p:column>
 
         <p:panel rendered="#{cc.attrs.crudBean.tabela}" style="border: none; background-color: white">

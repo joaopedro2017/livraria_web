@@ -30,7 +30,8 @@
                     <br/>
                     <p:commandButton icon="ui-icon-disk"
                                      value="Salvar" 
-                                     update="@form" 
+                                     update="@form"
+                                     ajax="false"
                                      action="#{editoraBean.setTabela(true)}" 
                                      actionListener="#{editoraBean.record}" 
                                      onclick="record.hide()" alt="Record"/>
@@ -38,6 +39,7 @@
                                      value="Voltar"
                                      immediate="true"
                                      update="@form" 
+                                     ajax="false"
                                      action="#{editoraBean.setTabela(true)}"/>
                 </p:panel>
             </center>

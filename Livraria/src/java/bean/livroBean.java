@@ -3,6 +3,7 @@ package bean;
 import dao.LivroDAO;
 import java.util.List;
 import java.util.Objects;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -18,9 +19,9 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     private LivroDAO livroDAO;
 
-    private Integer assuntoId = null;
+    private Integer assuntoId;
     private Integer autorId;
-    private Integer editoraId = null;
+    private Integer editoraId;
 
     //ManagedProperty's
     @ManagedProperty(value = "#{autorBean}")
@@ -82,8 +83,8 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     //Métodos do livro
     public void adicionarAutor() {
-        System.out.println("VAlor");
-        if (this.autorId != null) {
+        //autorId = null;
+        try {
             for (Autor a : getEntidade().getAutorList()) {
                 if (Objects.equals(a.getId(), this.autorId)) {
                     return;
@@ -91,6 +92,8 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
             }
             Autor aut = autor.getDao().buscarId(autorId);
             getEntidade().getAutorList().add(aut);
+        } catch (Exception ex) {
+            adicionarMensagem("Selecione um autor", FacesMessage.SEVERITY_WARN);
         }
     }
 
@@ -104,12 +107,11 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public void gravar(ActionEvent actionEvent) {
         if (assuntoId != null && editoraId != null) {
-            System.out.println("Assunto: " + assuntoId + "Editora: " + editoraId);
             Assunto ass = assunto.buscarId(assuntoId);
             getEntidade().setAssuntoid(ass);
             Editora edit = editora.buscarId(editoraId);
             getEntidade().setEditoraid(edit);
-            record(actionEvent);            
+            record(actionEvent);
             assuntoId = null;
             editoraId = null;
         }
@@ -129,6 +131,9 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     @Override
     public Livro novo() {
+        autorId = null;
+        assuntoId = null;
+        editoraId = null;
         return new Livro();
     }
 }

@@ -63,13 +63,15 @@
                     <p:commandButton icon="ui-icon-disk"
                                      value="Salvar" 
                                      update="@form" 
+                                     ajax="false"
                                      action="#{usuarioBean.setTabela(true)}" 
                                      actionListener="#{usuarioBean.record}" 
                                      onclick="record.hide()" alt="Record"/>
                     <p:commandButton icon="ui-icon-refresh" 
                                      value="Voltar"
                                      immediate="true"
-                                     update="@form" 
+                                     update="@form"
+                                     ajax="false"
                                      action="#{usuarioBean.setTabela(true)}"/> 
                 </p:panel>
             </center>

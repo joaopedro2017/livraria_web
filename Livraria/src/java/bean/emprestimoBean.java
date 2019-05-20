@@ -167,6 +167,8 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     @Override
     public Emprestimo novo() {
+        usuarioId = null;
+        exemplarId = null;
         return new Emprestimo();
     }
 

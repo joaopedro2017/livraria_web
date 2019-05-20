@@ -53,14 +53,22 @@
                 Deseja realmente cancelar?
                 <br/>
                 <br/>
-                <p:commandButton value="Cancelar" style="float: right" actionListener="#{reservaBean.cancelar}" onclick="remove.hide()"/> 
+                <p:commandButton value="Cancelar"
+                                 style="float: right"
+                                 ajax="false"
+                                 actionListener="#{reservaBean.cancelar}" 
+                                 onclick="remove.hide()"/> 
             </p:dialog>
 
             <p:dialog header="Associar a reserva" widgetVar="Emprestar" modal="true" resizable="false"> 
                 Fazer Empréstimo?
                 <br/>
                 <br/>
-                <p:commandButton value="Ok" style="float: right" actionListener="#{reservaBean.realizarEmprestimo}" onclick="remove.hide()"/> 
+                <p:commandButton value="Ok" 
+                                 style="float: right" 
+                                 ajax="false" 
+                                 actionListener="#{reservaBean.realizarEmprestimo}" 
+                                 onclick="remove.hide()"/> 
             </p:dialog>
 
             <center>
@@ -113,6 +121,7 @@
                     <p:commandButton value="Salvar" 
                                      update="@form" 
                                      icon="ui-icon-disk"
+                                     ajax="false"
                                      action="#{reservaBean.setTabela(true)}" 
                                      actionListener="#{reservaBean.gravar}" 
                                      onclick="record.hide()"
@@ -121,6 +130,7 @@
                                      value="Voltar" 
                                      immediate="true"
                                      update="@form" 
+                                     ajax="false"
                                      action="#{reservaBean.setTabela(true)}"/> 
                 </p:panel>
             </center>      

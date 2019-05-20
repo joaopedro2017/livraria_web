@@ -52,7 +52,11 @@
                 Deseja realizar a devolução?
                 <br/>
                 <br/>
-                <p:commandButton value="Devolver" style="float: right" actionListener="#{emprestimoBean.devolver}" onclick="remove.hide()" /> 
+                <p:commandButton value="Devolver" 
+                                 style="float: right" 
+                                 ajax="false"
+                                 actionListener="#{emprestimoBean.devolver}" 
+                                 onclick="remove.hide()" /> 
             </p:dialog>
 
             <center>
@@ -65,7 +69,8 @@
                                     <p:selectOneMenu id="u"
                                                      value="#{emprestimoBean.usuarioId}"
                                                      style="width: 202px"
-                                                     required="true">
+                                                     required="true"
+                                                     requiredMessage="Selecione um usuário">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
                                         <f:selectItems value="#{emprestimoBean.usuario.entidades}" 
                                                        var="usuario"
@@ -74,7 +79,7 @@
                                     </p:selectOneMenu>
 
                                     <p:commandButton value="Verificar"
-                                                     ajax="true"
+                                                     ajax="false"
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.emprestimoAtraso}"/>
@@ -98,6 +103,7 @@
                                 <p:commandButton icon="ui-icon-refresh" 
                                                  value="Cancelar" 
                                                  immediate="true"
+                                                 ajax="false"
                                                  update="@form" 
                                                  action="#{emprestimoBean.setTabela(true)}"/>
                             </p:panel>
@@ -118,7 +124,7 @@
                                                        itemValue="#{exemplar.id}"/>
                                     </p:selectOneMenu>
                                     <p:commandButton value="Consultar"
-                                                     ajax="true"
+                                                     ajax="false"
                                                      update="@form"
                                                      icon="ui-icon-search"
                                                      action="#{emprestimoBean.verificarExemplar}"/>
@@ -150,6 +156,7 @@
                                 <p:commandButton icon="ui-icon-cancel" 
                                                  value="Cancelar" 
                                                  immediate="true"
+                                                 ajax="false"
                                                  update="@form" 
                                                  action="#{emprestimoBean.setTabela(true)}"/>
                             </p:panel>
@@ -175,10 +182,12 @@
                                 <br/>
                                 <p:commandButton value="Salvar"                                                 
                                                  icon="ui-icon-disk"
+                                                 ajax="false"
                                                  action="#{emprestimoBean.setTabela(true)}" 
                                                  actionListener="#{emprestimoBean.gravar}" 
                                                  onclick="record.hide()" alt="Record"/>
                                 <p:commandButton icon="ui-icon-cancel" 
+                                                 ajax="false"
                                                  value="Cancelar" 
                                                  immediate="true"
                                                  update="@form" 

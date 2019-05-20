@@ -36,13 +36,14 @@ public abstract class crudBean<E, D extends CrudDAO> {
     @EJB
     private boolean tabela = true; //Controle de troca de tabela
     @EJB
-    private E entidade = novo();
+    private E entidade;
     @EJB
     private List<E> entidades;
 
     //Métodos dos botões
     @PostConstruct
     public void init(){
+        entidade = novo();
         entidades = null;
         entidades = getDao().buscarTodas();
     }  

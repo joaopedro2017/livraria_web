@@ -63,7 +63,7 @@
 
             <center>                    
                 <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">                    
+                    <p:panelGrid id="panelRecord" columns="6" style="border: none">                    
                         Título:
                         <p:inputText id="titulo" 
                                      value="#{livroBean.entidade.titulo}"
@@ -76,8 +76,7 @@
                                      required="true"
                                      requiredMessage="ISBN em branco"/>
                         Edição:
-                        <p:inputMask mask="9999"
-                                     id="edicao" 
+                        <p:inputText id="edicao" 
                                      value="#{livroBean.entidade.edicao}"
                                      required="true"
                                      requiredMessage="Edição em branco"/>
@@ -93,7 +92,7 @@
                         <p:selectOneMenu value="#{livroBean.editoraId}"
                                          style="width: 205px" 
                                          required="true"
-                                         requiredMessage="Selecione a editora">
+                                         requiredMessage="Selecione uma editora">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{livroBean.editora.entidades}"
                                            var="editora"
@@ -104,7 +103,7 @@
                         <p:selectOneMenu value="#{livroBean.assuntoId}"
                                          style="width: 205px" 
                                          required="true"
-                                         requiredMessage="Selecione o assunto">
+                                         requiredMessage="Selecione um assunto">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{livroBean.assunto.entidades}"
                                            var="assunto"
@@ -112,10 +111,10 @@
                                            itemValue="#{assunto.id}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel value="Secionar Autor: " for="autor"/>
+                        <h:outputLabel value="Selecione Autor: " for="autor"/>
                         <p:selectOneMenu value="#{livroBean.autorId}" 
                                          style="width: 205px">
-                            <f:selectItem itemLabel="Selecione" itemValue=""/>
+                            <f:selectItem itemLabel="Selecione" noSelectionOption="true"/>
                             <f:selectItems value="#{livroBean.autor.entidades}" 
                                            var="autor"
                                            itemLabel="#{autor.nomeAutor}"
@@ -124,9 +123,10 @@
                         <p:commandButton id="adiciona"
                                          icon="ui-icon-plus"
                                          style="width: 34px; height: 28px; align-items: center"
-                                         value="" 
-                                         action="#{livroBean.adicionarAutor()}" 
-                                         update=":formPrincipal:panelTabela"/>
+                                         value=""
+                                         ajax="false"
+                                         update=":formPrincipal:panelTabela"
+                                         action="#{livroBean.adicionarAutor()}"/>
                         <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
                     </p:panelGrid>                    
 
@@ -154,6 +154,7 @@
                         <p:commandButton icon="ui-icon-disk"
                                          value="Salvar"
                                          rendered="#{livroBean.entidade.autorList.size() > 0}"
+                                         ajax="false"
                                          update="@form" 
                                          action="#{livroBean.setTabela(true)}" 
                                          actionListener="#{livroBean.gravar}" 
@@ -161,6 +162,7 @@
                                          alt="Record"/> 
                         <p:commandButton icon="ui-icon-refresh" 
                                          value="Voltar"
+                                         ajax="false"
                                          immediate="true"
                                          update="@form" 
                                          action="#{livroBean.setTabela(true)}"/> 
