@@ -20,18 +20,15 @@
                      rowsPerPageTemplate="5,10,25,50,100,9999" 
                      style="width:100%">
 
-            <f:facet name="paginatorBottomRight">
-                <h:commandLink id="pdf">
-                    <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabela" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
-                </h:commandLink>
+            <f:facet name="paginatorBottomRight">               
+                <p:commandButton id="pdf" value="Relatório" action="#{usuarioBean.gerarRelatorioAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>
             </f:facet>
 
             <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width: 95px">
                 <h:outputText value="#{lista.id}" style="float: right"/>
             </p:column>
-            
+
             <p:column headerText="Nome" sortBy="#{lista.nomeUsuario}" filterBy="#{lista.nomeUsuario}">
                 <h:outputText value="#{lista.nomeUsuario}" />
             </p:column>
