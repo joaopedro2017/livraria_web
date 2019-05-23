@@ -27,18 +27,18 @@
 
             <center>
                 <p:panel rendered="#{!assuntoBean.tabela}" header="Novo/Editar Assunto" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">
-                        <p:outputLabel value="Nome: " for="nome" />
+                    <p:panelGrid id="panelRecord" columns="6" columnClasses="grade, grade, grade, grade, grade, grade">
+                        <p:outputLabel value="Nome: " for="nome" style="float: right;"/>
                         <p:inputText id="nome" 
                                      value="#{assuntoBean.entidade.nomeAssunto}" 
                                      required="true"
                                      requiredMessage="Nome em branco"/>
-                        <p:outputLabel value="Descrição: " for="descricaoAssunto" />
+                        <p:outputLabel value="Descrição: " for="descricaoAssunto" style="float: right;"/>
                         <p:inputText id="descricaoAssunto" 
                                      value="#{assuntoBean.entidade.descricaoAssunto}" 
                                      required="true"
                                      requiredMessage="Descrição em branco"/>
-                        <p:outputLabel value="Assunto: " for="Assunto" />
+                        <p:outputLabel value="Assunto: " for="Assunto" style="float: right;"/>
                         <p:inputText id="Assunto" 
                                      value="#{assuntoBean.entidade.assunto}"
                                      required="true"

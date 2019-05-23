@@ -63,24 +63,24 @@
 
             <center>                    
                 <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
-                    <p:panelGrid id="panelRecord" columns="6">                    
-                        Título:
+                    <p:panelGrid id="panelRecord" columns="6" columnClasses="grade, grade, grade, grade, grade, grade"> 
+                        <p:outputLabel value="Título: " for="titulo" style="float: right;" />
                         <p:inputText id="titulo" 
                                      value="#{livroBean.entidade.titulo}"
                                      required="true"
-                                     requiredMessage="Título em branco"/>    
-                        ISBN:
+                                     requiredMessage="Título em branco"/>   
+                        <p:outputLabel value="ISBN: " for="isbn" style="float: right;" />
                         <p:inputMask mask="999-99-999-9999-9" 
                                      id="isbn"
                                      value="#{livroBean.entidade.isbn}"
                                      required="true"
                                      requiredMessage="ISBN em branco"/>
-                        Edição:
+                        <p:outputLabel value="Edição: " for="edicao" style="float: right;" />                       
                         <p:inputText id="edicao" 
                                      value="#{livroBean.entidade.edicao}"
                                      required="true"
                                      requiredMessage="Edição em branco"/>
-                        Ano:
+                        <p:outputLabel value="Ano: " for="ano" style="float: right;" />
                         <p:calendar locale="pt" 
                                     navigator="true" 
                                     pattern="dd/MM/yyyy" 
@@ -88,8 +88,9 @@
                                     value="#{livroBean.entidade.ano}"
                                     required="true"
                                     requiredMessage="Forneça uma data"/> 
-                        Editora:
-                        <p:selectOneMenu value="#{livroBean.entidade.editoraid}"
+                        <p:outputLabel value="Editora: " for="editora" style="float: right;" />
+                        <p:selectOneMenu id="editora"
+                                         value="#{livroBean.entidade.editoraid}"
                                          style="width: 205px"
                                          converter="editoraConverter"
                                          required="true"
@@ -99,8 +100,9 @@
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{livroBean.editora.entidades}"/>
                         </p:selectOneMenu>
-                        Assunto:
-                        <p:selectOneMenu value="#{livroBean.entidade.assuntoid}"
+                        <p:outputLabel value="Assunto: " for="assunto" style="float: right;" />                        
+                        <p:selectOneMenu id="assunto"
+                                         value="#{livroBean.entidade.assuntoid}"
                                          style="width: 205px" 
                                          converter="assuntoConverter"
                                          required="true"
@@ -111,8 +113,9 @@
                             <f:selectItems value="#{livroBean.assunto.entidades}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel value="Selecione Autor: " for="autor"/>
-                        <p:selectOneMenu value="#{livroBean.autorId}" 
+                        <h:outputLabel value="Selecione Autor: " for="aut" style="float: right;"/>
+                        <p:selectOneMenu id="aut"
+                                         value="#{livroBean.autorId}" 
                                          filter="true"
                                          filterMatchMode="startsWith"
                                          style="width: 205px">
@@ -170,7 +173,6 @@
                                          action="#{livroBean.setTabela(true)}"/> 
                     </p:panel>
                 </p:panel>
-
             </center>
 
         </h:form>

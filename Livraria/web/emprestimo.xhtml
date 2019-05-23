@@ -69,6 +69,8 @@
                                     <p:selectOneMenu id="u"
                                                      value="#{emprestimoBean.usuarioId}"
                                                      style="width: 202px"
+                                                     filter="true"
+                                                     filterMatchMode="startsWith"
                                                      required="true"
                                                      requiredMessage="Selecione um usuário">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
