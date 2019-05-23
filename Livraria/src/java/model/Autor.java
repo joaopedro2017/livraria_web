@@ -91,7 +91,7 @@ public class Autor implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Autor[ id=" + id + " ]";
+        return nomeAutor;
     }
     
 }

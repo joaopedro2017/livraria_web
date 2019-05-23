@@ -113,7 +113,7 @@ public class Assunto implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Assunto[ id=" + id + " ]";
+        return nomeAssunto;
     }
     
 }

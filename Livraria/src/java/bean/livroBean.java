@@ -7,10 +7,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
-import model.Assunto;
 import model.Autor;
-import model.Editora;
 import model.Livro;
 
 @ManagedBean
@@ -18,10 +15,7 @@ import model.Livro;
 public class livroBean extends crudBean<Livro, LivroDAO> {
 
     private LivroDAO livroDAO;
-
-    private Integer assuntoId;
     private Integer autorId;
-    private Integer editoraId;
 
     //ManagedProperty's
     @ManagedProperty(value = "#{autorBean}")
@@ -30,31 +24,6 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     private assuntoBean assunto = new assuntoBean();
     @ManagedProperty(value = "#{editoraBean}")
     private editoraBean editora = new editoraBean();
-
-    //get e set dos Integer Aux
-    public Integer getAssuntoId() {
-        return assuntoId;
-    }
-
-    public void setAssuntoId(Integer assuntoId) {
-        this.assuntoId = assuntoId;
-    }
-
-    public Integer getAutorId() {
-        return autorId;
-    }
-
-    public void setAutorId(Integer autorId) {
-        this.autorId = autorId;
-    }
-
-    public Integer getEditoraId() {
-        return editoraId;
-    }
-
-    public void setEditoraId(Integer editoraId) {
-        this.editoraId = editoraId;
-    }
 
     //get e set dos bean's
     public autorBean getAutor() {
@@ -105,16 +74,12 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         return getEntidade().getAutorList();
     }
 
-    public void gravar(ActionEvent actionEvent) {
-        if (assuntoId != null && editoraId != null) {
-            Assunto ass = assunto.buscarId(assuntoId);
-            getEntidade().setAssuntoid(ass);
-            Editora edit = editora.buscarId(editoraId);
-            getEntidade().setEditoraid(edit);
-            record(actionEvent);
-            assuntoId = null;
-            editoraId = null;
-        }
+    public Integer getAutorId() {
+        return autorId;
+    }
+
+    public void setAutorId(Integer autorId) {
+        this.autorId = autorId;
     }
 
     public Livro buscarId(int id) {
@@ -131,9 +96,6 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     @Override
     public Livro novo() {
-        autorId = null;
-        assuntoId = null;
-        editoraId = null;
         return new Livro();
     }
 }

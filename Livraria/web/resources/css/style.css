@@ -72,6 +72,10 @@ header h1 {
     font-weight: bold;
 }
 
+.ui-panel {
+    background-color: white !important;
+}
+
 #main {
     margin-bottom: 20px;
 }

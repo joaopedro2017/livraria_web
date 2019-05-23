@@ -91,7 +91,7 @@ public class Editora implements Serializable {
 
     @Override
     public String toString() {
-        return "model.Editora[ id=" + id + " ]";
+        return nomeEditora;
     }
     
 }
