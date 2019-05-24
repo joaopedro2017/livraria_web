@@ -1,8 +1,4 @@
-/*
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
-*/@import url(http://fonts.googleapis.com/css?family=Jockey+One);
+@import url(http://fonts.googleapis.com/css?family=Jockey+One);
 
 .value {
     width:80%;
@@ -41,13 +37,9 @@ and open the template in the editor.
     box-sizing: border-box;
 }
 
-.ui-panel
-.ui-panel-content
-.ui-panelgrid
-.ui-widget
-.ui-widget-content
-.ui-corner-all {
-    background-color: white!important;
+.ui-panelgrid-cell {
+    border-style: hidden!important;
+    background-color: #f5f3e5!important;    
 }
 
 body {
@@ -104,7 +96,7 @@ header h1 {
     box-sizing: content-box;
 }
 /* 
-    Created on : 23/05/2019, 15:47:45
+    Created on : 24/05/2019, 08:56:37
     Author     : John Peter
 */
 

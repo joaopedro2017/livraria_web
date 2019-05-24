@@ -1,14 +1,18 @@
 package bean;
 
 import dao.LivroDAO;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import model.Autor;
 import model.Livro;
+import relatorio.RelatorioQntExemplar;
 
 @ManagedBean
 @ViewScoped
@@ -97,5 +101,16 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     @Override
     public Livro novo() {
         return new Livro();
+    }
+
+    //Relatorio
+    public void gerarRelatorioAction() {
+        try {
+            RelatorioQntExemplar relatorio = new RelatorioQntExemplar();
+            relatorio.getRelatorio();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(livroBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

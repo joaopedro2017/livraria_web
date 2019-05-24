@@ -33,6 +33,8 @@
                         <p:selectOneMenu value="#{exemplarBean.livroId}" 
                                          style="width: 180px" 
                                          required="true"
+                                         filter="true"
+                                         filterMatchMode="startsWith"
                                          requiredMessage="Selecione um livro">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
                             <f:selectItems value="#{exemplarBean.livro.entidades}"

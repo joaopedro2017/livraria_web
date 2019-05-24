@@ -116,7 +116,9 @@
                                     <p:outputLabel value="Livro: " for="l" style="float: right;"/>
                                     <p:selectOneMenu id="l"
                                                      value="#{emprestimoBean.exemplarId}"
-                                                     style="width: 202px"                                                  
+                                                     style="width: 202px"
+                                                     filter="true"
+                                                     filterMatchMode="startsWith"
                                                      required="true"
                                                      requiredMessage="Selecione um livro">
                                         <f:selectItem itemLabel="Selecione" itemValue=""/>
