@@ -103,3 +103,93 @@ CREATE TABLE reserva(
     CONSTRAINT FK_Reserva_Emprestimo FOREIGN KEY(Emprestimo_id)
     	REFERENCES emprestimo(id)
 );
+
+-----------------------------------------------------------
+Consultas no JasperReports:
+
+1 - Relatório de todos os livros e o respectivo número de exemplares cadastrados no sistema.
+
+select l.titulo as 'Título', 
+	l.isbn as 'ISBN',		
+        l.edicao as 'Edição',
+        l.ano as 'Ano',
+        a.nomeAssunto as 'Assunto',
+        ed.nomeEditora as 'Editora',       
+    	COUNT(case when e.circular = 1 then e.id end) as 'Circular',
+        COUNT(case when e.circular = 0 then e.id end) as 'Não-Circular'
+from livro l 
+        LEFT join exemplar e 
+        ON l.id = e.Livro_id
+        INNER JOIN assunto a
+        ON l.Assunto_id = a.id
+        INNER JOIN editora ed
+        ON l.Editora_id = ed.id
+Group by l.id Order by l.id
+
+2 - Relatório de todos os livros emprestados.
+
+SELECT l.id as 'Id', 
+        l.titulo as 'Título', 
+	l.isbn as 'ISBN', 
+	l.edicao as 'Edição',
+	l.ano as 'Ano', 
+	ed.nomeEditora as 'Editora', 
+	a.nomeAssunto as 'Assunto'
+FROM emprestimo e
+        INNER JOIN exemplar ex
+        ON ex.id = e.Exemplar_id
+        INNER JOIN livro l
+        on l.id = ex.Livro_id
+        INNER JOIN editora ed
+        ON ed.id = l.Editora_id
+        INNER JOIN assunto a
+        ON l.Assunto_id = a.id
+WHERE e.dataDevolucao is null
+
+3 - Relatório de todos os livros reservados.
+
+SELECT l.id as 'Id',
+		l.titulo as 'Título', 
+        l.isbn as 'ISBN', 
+        l.edicao as 'Edição', 
+        l.ano as 'Ano', 
+        ed.nomeEditora as 'Editora', 
+        a.nomeAssunto as 'Assunto' 
+FROM reserva r 
+        LEFT JOIN exemplar ex 
+        ON ex.id = r.Exemplar_id 
+        INNER JOIN livro l 
+        ON l.id = ex.Livro_id 
+        INNER JOIN editora ed 
+        ON l.Editora_id = ed.id 
+        INNER JOIN assunto a 
+        ON l.Assunto_id = a.id 
+WHERE r.cancelar IS NULL AND r.Emprestimo_id IS NULL
+
+4 - Relatório de todos os usuários e seus respectivos dados cadastrais.
+
+SELECT u.id as 'Id', 
+        u.nomeUsuario as 'Nome', 
+	u.email as 'E-mail', 
+	u.tipo as 'Tipo' 
+from usuario u
+
+5 - Relatório de todos os livros em atraso a devolução.
+
+SELECT l.id as 'Id', 
+        l.titulo as 'Título', 
+        l.isbn as 'ISBN', 
+        l.edicao as 'Edição',
+        l.ano as 'Ano', 
+        ed.nomeEditora as 'Editora', 
+        a.nomeAssunto as 'Assunto'
+FROM emprestimo e
+        INNER JOIN exemplar ex
+        ON ex.id = e.Exemplar_id
+        INNER JOIN livro l
+        on l.id = ex.Livro_id
+        INNER JOIN editora ed
+        ON ed.id = l.Editora_id
+        INNER JOIN assunto a
+        ON l.Assunto_id = a.id
+WHERE e.dataDevolucao is null AND e.dataPrevista < current_date

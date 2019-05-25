@@ -5,10 +5,17 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import model.Livro;
 import model.Reserva;
 import util.PersistenceUtil;
 
 public class ReservaDAO implements CrudDAO<Reserva> {
+    
+    public List<Livro> livrosReservados() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Livro> query = em.createQuery("SELECT r.exemplarid.livroid from Reserva r WHERE r.cancelar is null", Livro.class);
+        return query.getResultList();
+    }    
 
     @Override
     public Reserva buscarId(int id) {

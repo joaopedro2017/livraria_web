@@ -2,12 +2,18 @@ package bean;
 
 import dao.EmprestimoDAO;
 import dao.ReservaDAO;
+import java.sql.SQLException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
+import model.Livro;
 import model.Reserva;
+import relatorio.Relatorio;
 
 @ManagedBean
 @ViewScoped
@@ -92,6 +98,20 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
         record(actionEvent);
         usuarioId = null;
         exemplarId = null;
+    }
+    
+    public List<Livro> getLivrosReservados(){
+        return getDao().livrosReservados();
+    }
+    
+    public void gerarRelatorioAction() {
+        try {
+            Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("reservado");
+            relatorio.getRelatorio();
+        } catch (SQLException ex) {
+            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

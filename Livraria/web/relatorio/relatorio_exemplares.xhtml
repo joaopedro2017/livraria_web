@@ -20,8 +20,11 @@
                      rowsPerPageTemplate="5,10,25,50,100,9999" 
                      style="width:100%">
 
-            <f:facet name="paginatorBottomRight">                
-                <p:commandButton id="pdf" value="Relatório" action="#{livroBean.gerarRelatorioAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+            <f:facet name="paginatorBottomRight">
+                <h:commandLink id="pdf" action="#{livroBean.gerarRelatorioAction()}" onclick="this.form.target = '_blank'" >
+                    <p:graphicImage name="./images/exports/excel.png" />
+                </h:commandLink>
+
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                    
             </f:facet>
 
