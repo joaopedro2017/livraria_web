@@ -22,6 +22,7 @@ public class usuarioBean extends crudBean<Usuario, UsuarioDAO> {
     public void gerarRelatorioAction() {
         try {
             Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("usuario");
             relatorio.getRelatorio();
         } catch (SQLException ex) {
             Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);

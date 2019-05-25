@@ -1,17 +1,23 @@
 package bean;
 
 import dao.EmprestimoDAO;
+import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
 import model.Exemplar;
+import model.Livro;
 import model.Usuario;
 import org.primefaces.event.FlowEvent;
+import relatorio.Relatorio;
 
 @ViewScoped
 @ManagedBean
@@ -58,7 +64,7 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
         }
     }
 
-    public void gravar(ActionEvent actionEvent) {        
+    public void gravar(ActionEvent actionEvent) {
         record(actionEvent);
         usuarioId = null;
         exemplarId = null;
@@ -155,6 +161,20 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     public void setExemplar(exemplarBean exemplar) {
         this.exemplar = exemplar;
+    }
+
+    public List<Livro> getEmprestados() {
+        return getDao().livrosEmprestados();
+    }
+    
+    public void gerarRelatorioAction() {
+        try {
+            Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("emprestado");
+            relatorio.getRelatorio();
+        } catch (SQLException ex) {
+            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

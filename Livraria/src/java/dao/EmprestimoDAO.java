@@ -7,6 +7,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import model.Emprestimo;
+import model.Livro;
 import util.PersistenceUtil;
 
 public class EmprestimoDAO implements CrudDAO<Emprestimo> {
@@ -44,6 +45,13 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
 
         return query.getSingleResult();
     }
+    
+    
+    public List<Livro> livrosEmprestados() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Livro> query = em.createQuery("SELECT e.exemplarid.livroid from Emprestimo e WHERE e.dataDevolucao IS NULL", Livro.class);
+        return query.getResultList();
+    }    
 
     @Override
     public Emprestimo buscarId(int id) {

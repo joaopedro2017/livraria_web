@@ -24,14 +24,15 @@ public class Relatorio {
     private FacesContext context;
     private ByteArrayOutputStream baos;
     private InputStream stream;
+    private String caminho;
 
     public Relatorio() {
         this.context = FacesContext.getCurrentInstance();
         this.response = (HttpServletResponse) context.getExternalContext().getResponse();
     }
-    
+
     public void getRelatorio() throws SQLException {
-        stream = this.getClass().getResourceAsStream("relatorio.jasper"); //nome do arquivo jasper
+        stream = this.getClass().getResourceAsStream(caminho + ".jasper"); //nome do arquivo jasper
         Map<String, Object> params = new HashMap<String, Object>();
         baos = new ByteArrayOutputStream();
 
@@ -44,7 +45,7 @@ public class Relatorio {
             response.reset();
             response.setContentType("application/pdf");
             response.setContentLength(baos.size());
-            response.setHeader("Content-disposition", "inline; filename=relatorio.pdf"); //nome de saida do arquivo
+            response.setHeader("Content-disposition", "inline; filename=" + caminho + ".pdf"); //nome de saida do arquivo
             response.getOutputStream().write(baos.toByteArray());
             response.getOutputStream().flush();
             response.getOutputStream().close();
@@ -56,4 +57,8 @@ public class Relatorio {
             Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    public void setCaminho(String caminho) {
+        this.caminho = caminho;
+    }   
 }

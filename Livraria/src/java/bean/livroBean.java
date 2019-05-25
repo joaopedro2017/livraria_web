@@ -12,7 +12,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import model.Autor;
 import model.Livro;
-import relatorio.RelatorioQntExemplar;
+import relatorio.Relatorio;
 
 @ManagedBean
 @ViewScoped
@@ -104,13 +104,14 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     @Override
     public Livro novo() {
-        return new Livro();
+        return new Livro(); 
     }
 
     //Relatorio
     public void gerarRelatorioAction() {
         try {
-            RelatorioQntExemplar relatorio = new RelatorioQntExemplar();
+            Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("exemplar");            
             relatorio.getRelatorio();
 
         } catch (SQLException ex) {

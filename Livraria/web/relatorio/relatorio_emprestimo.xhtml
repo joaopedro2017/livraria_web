@@ -11,7 +11,7 @@
         <h2 class="page-header">Resumo de livros emprestados</h2>       
 
         <p:dataTable var="lista" 
-                     value="#{livroBean.entidades}"
+                     value="#{emprestimoBean.emprestados}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -21,18 +21,19 @@
                      style="width:100%">
 
             <f:facet name="paginatorBottomRight">
-                <h:commandLink id="pdf">
-                    <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabela" fileName="livros" preProcessor="#{livroBean.preProcessPDF}" />
-                </h:commandLink>
-                <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>
+                <p:commandButton id="pdf" value="Relatório" action="#{emprestimoBean.gerarRelatorioAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                
             </f:facet>
+
+            <p:column headerText="Id" sortBy="#{lista.id}" filterBy="#{lista.id}">
+                <h:outputText value="#{lista.id}" />
+            </p:column>
 
             <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
                 <h:outputText value="#{lista.titulo}" />
             </p:column>
 
-            <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
+            <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}" style="width: 155px">
                 <h:outputText value="#{lista.isbn}" />
             </p:column>
 
