@@ -11,7 +11,7 @@
         <h2 class="page-header">Número de exemplares</h2>       
 
         <p:dataTable var="lista" 
-                     value="#{livroBean.entidades}"
+                     value="#{livroBean.exemplares}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -25,54 +25,56 @@
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                    
             </f:facet>
 
-            <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
-                <h:outputText value="#{lista.titulo}" />
+            <p:column headerText="Título" filterBy="#{lista[0]}" sortBy="#{lista[0]}">
+                <center>
+                    <h:outputText value="#{lista[0]}" />
+                </center>
             </p:column>
 
-            <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
-                <h:outputText value="#{lista.isbn}" />
+            <p:column headerText="ISBN" filterBy="#{lista[1]}" sortBy="#{lista[1]}" style="width: 155px">
+                <center>
+                    <h:outputText value="#{lista[1]}" />
+                </center>
             </p:column>
 
-            <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
-                <h:outputText value="#{lista.edicao}" />
+            <p:column headerText="Edição" filterBy="#{lista[2]}" sortBy="#{lista[2]}">
+                <center>
+                    <h:outputText value="#{lista[2]}" />
+                </center>
             </p:column>
 
-            <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
-                <h:outputText value="#{lista.ano}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputText>
+            <p:column headerText="Ano" filterBy="#{lista[3]}" sortBy="#{lista[3]}">
+                <center>
+                    <h:outputText value="#{lista[3]}" >
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </center>
             </p:column>                 
 
-            <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
-                <h:outputText value="#{lista.editoraid.nomeEditora}" />
+            <p:column headerText="Assunto" filterBy="#{lista[4]}" sortBy="#{lista[4]}">
+                <center>
+                    <h:outputText value="#{lista[4]}" />
+                </center>
             </p:column>
 
-            <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+            <p:column headerText="Editora" filterBy="#{lista[5]}" sortBy="#{lista[5]}">
+                <center>
+                    <h:outputText value="#{lista[5]}" />
+                </center>
+            </p:column>            
+
+            <p:column headerText="Circular" filterBy="#{lista[6]}" sortBy="#{lista[6]}">
+                <center>
+                    <h:outputText value="#{lista[6] != 0 ? lista[6] : '-'}" />
+                </center>
             </p:column>
 
-            <p:column headerText="Autores" style="width: 75px" exportable="false">
-                <p:rowToggler/>                    
-            </p:column>
+            <p:column headerText="Não Circular" filterBy="#{lista[7]}" sortBy="#{lista[7]}">
+                <center>
+                    <h:outputText value="#{lista[7] != 0 ? lista[7] : '-'}" />
+                </center>
+            </p:column>           
 
-            <p:rowExpansion>
-                <p:graphicImage library="capas" name="#{lista.id % 10}.jpg" style="height: 200px; float: left"/>
-                <p:dataTable  
-                    var="autor" 
-                    value="#{lista.autorList}"                        
-                    emptyMessage="Nenhum registro encontrado"
-                    sortBy="#{autor.nomeAutor}"
-                    style="width:30%; float: right">
-                    <f:facet name="header">
-                        Autores do Livro #{lista.titulo}
-                    </f:facet>
-                    <p:column headerText="Nome">
-                        <center>
-                            <h:outputText value="#{autor.nomeAutor}" style="color: blue;" />
-                        </center>
-                    </p:column>
-                </p:dataTable>
-            </p:rowExpansion>
         </p:dataTable>
     </ui:define>
 </ui:composition>

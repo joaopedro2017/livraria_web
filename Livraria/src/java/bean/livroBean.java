@@ -89,6 +89,10 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     public Livro buscarId(int id) {
         return new LivroDAO().buscarId(id);
     }
+    
+    public List<Object[]> getExemplares(){
+        return getDao().qntLivroExemplares();
+    }
 
     @Override
     public LivroDAO getDao() {

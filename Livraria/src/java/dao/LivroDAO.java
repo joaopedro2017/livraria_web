@@ -32,6 +32,24 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
         }
     }
 
+    public List<Object[]> qntLivroExemplares() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Object[]> query = em.createQuery("SELECT l.titulo,"
+                + "l.isbn,"
+                + "l.edicao,"
+                + "l.ano,"
+                + "l.assuntoid.nomeAssunto,"
+                + "l.editoraid.nomeEditora,"
+                + "(Select COUNT(e) from Exemplar e WHERE e.circular =:valor AND e.livroid.id = l.id),"
+                + "(Select COUNT(e) from Exemplar e WHERE e.circular =:falso AND e.livroid.id = l.id)"
+                + "from Livro l", Object[].class);
+        
+        query.setParameter("valor", Boolean.TRUE);
+        query.setParameter("falso", Boolean.FALSE);
+
+        return query.getResultList();
+    }
+
     @Override
     public Livro buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
