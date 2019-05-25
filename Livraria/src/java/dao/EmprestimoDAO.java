@@ -45,13 +45,21 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
 
         return query.getSingleResult();
     }
-    
-    
+
     public List<Livro> livrosEmprestados() {
         EntityManager em = PersistenceUtil.getEntityManager();
-        TypedQuery<Livro> query = em.createQuery("SELECT e.exemplarid.livroid from Emprestimo e WHERE e.dataDevolucao IS NULL", Livro.class);
+        TypedQuery<Livro> query = em.createQuery("SELECT e.exemplarid.livroid from Emprestimo e "
+                + "WHERE e.dataDevolucao IS NULL", Livro.class);
         return query.getResultList();
-    }    
+    }
+
+    public List<Livro> livrosAtrasados() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Livro> query = em.createQuery("SELECT e.exemplarid.livroid from Emprestimo e "
+                + "WHERE e.dataDevolucao IS NULL AND e.dataPrevista <:hoje", Livro.class);
+        query.setParameter("hoje", new Date());
+        return query.getResultList();
+    }
 
     @Override
     public Emprestimo buscarId(int id) {

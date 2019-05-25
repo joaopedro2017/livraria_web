@@ -167,10 +167,24 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
         return getDao().livrosEmprestados();
     }
     
+    public List<Livro> getAtrasados() {
+        return getDao().livrosAtrasados();
+    }
+    
     public void gerarRelatorioAction() {
         try {
             Relatorio relatorio = new Relatorio();
             relatorio.setCaminho("emprestado");
+            relatorio.getRelatorio();
+        } catch (SQLException ex) {
+            Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void gerarRelatorioAtrasadoAction() {
+        try {
+            Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("atrasado");
             relatorio.getRelatorio();
         } catch (SQLException ex) {
             Logger.getLogger(usuarioBean.class.getName()).log(Level.SEVERE, null, ex);
