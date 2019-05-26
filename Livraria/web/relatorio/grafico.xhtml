@@ -1,0 +1,20 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+    <ui:define name="content">
+        <h2 class="page-header">Gerenciar Autores</h2>     
+        <h:form>
+
+            <p:commandButton id="emprestadoAssunto" image="relatorio" action="#{graficoBean.gerarRelatorioEmprestadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <p:commandButton id="emprestadoMes" value="Emprestado/Mes" action="#{graficoBean.gerarRelatorioEmprestadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <p:commandButton id="reservadoAssunto" value="Reservado/Assunto" action="#{graficoBean.gerarRelatorioReservadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <p:commandButton id="reservaMes" value="Reservado/Mes" action="#{graficoBean.gerarRelatorioReservadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
+

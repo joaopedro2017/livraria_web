@@ -1,0 +1,111 @@
+@import url(http://fonts.googleapis.com/css?family=Jockey+One);
+
+.value {
+    width:80%;
+    padding:4px;
+}
+
+.error {
+    color: red;
+}
+
+.delete {
+    background-image: url("./images/icon/delete.png") !important;
+}
+
+.edit {
+    background-image: url("./images/icon/edit.png") !important;
+}
+
+
+.outputLabel {
+    font-weight: bold;
+}
+
+.grid {
+    border: none!important;
+    border-style: none!important;
+    width:33%;
+    padding:1px;
+}
+
+.grade {
+    border: hidden!important;
+    width:16%;
+    padding:1px;
+}
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.ui-panelgrid-cell {
+    border-style: hidden!important;
+    background-color: #f5f3e5!important;    
+}
+
+body {
+    font-family: Arial,sans-serif;
+    font-size: 14px;
+    margin: 0;
+}
+
+header {
+    background-image: url(images/header/cabecalho.jpg);
+}
+
+header h1 {
+    padding: 15px 10px;
+    font-family: "Jockey One", sans-serif;
+    margin: 0;
+    color: #FFFFFF;
+    font-size: 40px;
+    text-shadow: 1px 1px 0 #000000;
+}
+
+.page-header {
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #DDD;
+}
+
+.ui-breadcrumb ul li a {
+    text-decoration: none;
+}
+
+.hide {
+    display: none;
+}
+
+.panelGridLabel {
+    text-align: right;
+    display: block;
+    font-weight: bold;
+}
+
+#main {
+    margin-bottom: 20px;
+}
+
+.btn-small {
+    font-size: .8em!important;
+}
+
+/* Prime Faces bug fixes caused by global box-sizing */
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+}
+/* 
+    Created on : 26/05/2019, 20:30:02
+    Author     : John Peter
+*/
+

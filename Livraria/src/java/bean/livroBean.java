@@ -117,5 +117,5 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         } catch (SQLException ex) {
             Logger.getLogger(livroBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+    }   
 }

@@ -13,11 +13,11 @@
                     <p:menuitem value="Pesquisar Livro" ajax="false" icon="ui-icon-bookmark" url="/faces/acervo.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Cadastro" icon="ui-icon-document" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Bibliotecário'}">
-                    <p:menuitem value="Dashboard" ajax="false" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Assunto" ajax="false" icon="ui-icon-comment" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Autor" ajax="false" icon="ui-icon-person" url="/faces/autor.xhtml"/>
                     <p:menuitem value="Editora" ajax="false" icon="ui-icon-tag" url="/faces/editora.xhtml"/>                    
                     <p:menuitem value="Exemplar" ajax="false" icon="ui-icon-note" url="/faces/exemplar.xhtml"/>
+                    <p:menuitem value="Gráfico" ajax="false" icon="ui-icon-comment" url="/faces/relatorio/grafico.xhtml"/>                    
                     <p:menuitem value="Livro" ajax="false" icon="ui-icon-bookmark" url="/faces/livro.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Gerenciar" icon="ui-icon-gear" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Funcionário'}">  
