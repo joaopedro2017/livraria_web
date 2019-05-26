@@ -1,6 +1,5 @@
 package dao;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,9 +16,8 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
                 + "where e.usuarioid.id =:id "
                 + "AND e.dataDevolucao IS NULL "
-                + "AND e.dataPrevista <= :hoje", Long.class);
+                + "AND e.dataPrevista < current_date", Long.class);
         query.setParameter("id", id);
-        query.setParameter("hoje", new Date());
 
         return query.getSingleResult();
     }
@@ -29,9 +27,8 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
         TypedQuery<Long> query = em.createQuery("select COUNT(e) from Emprestimo e "
                 + "where e.usuarioid.id =:id "
                 + "AND e.dataDevolucao IS NULL "
-                + "AND e.dataPrevista >= :hoje ", Long.class);
+                + "AND e.dataPrevista > current_date ", Long.class);
         query.setParameter("id", id);
-        query.setParameter("hoje", new Date());
 
         return query.getSingleResult();
     }
@@ -56,8 +53,8 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
     public List<Livro> livrosAtrasados() {
         EntityManager em = PersistenceUtil.getEntityManager();
         TypedQuery<Livro> query = em.createQuery("SELECT e.exemplarid.livroid from Emprestimo e "
-                + "WHERE e.dataDevolucao IS NULL AND e.dataPrevista <:hoje", Livro.class);
-        query.setParameter("hoje", new Date());
+                + "WHERE e.dataDevolucao IS NULL AND e.dataPrevista < current_date", Livro.class);
+
         return query.getResultList();
     }
 
