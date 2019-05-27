@@ -10,7 +10,10 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.event.ActionEvent;
+import model.Assunto;
 import model.Autor;
+import model.Editora;
 import model.Livro;
 import relatorio.Relatorio;
 
@@ -19,7 +22,9 @@ import relatorio.Relatorio;
 public class livroBean extends crudBean<Livro, LivroDAO> {
 
     private LivroDAO livroDAO;
+    private Integer assuntoId;
     private Integer autorId;
+    private Integer editoraId;
 
     //ManagedProperty's
     @ManagedProperty(value = "#{autorBean}")
@@ -78,6 +83,15 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         return getEntidade().getAutorList();
     }
 
+    //get e set de IdAux
+    public Integer getAssuntoId() {
+        return assuntoId;
+    }
+
+    public void setAssuntoId(Integer assuntoId) {
+        this.assuntoId = assuntoId;
+    }
+
     public Integer getAutorId() {
         return autorId;
     }
@@ -86,12 +100,37 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         this.autorId = autorId;
     }
 
+    public Integer getEditoraId() {
+        return editoraId;
+    }
+
+    public void setEditoraId(Integer editoraId) {
+        this.editoraId = editoraId;
+    }
+
+    //Demais métodos
     public Livro buscarId(int id) {
+        assuntoId = null;
+        autorId = null;
+        editoraId = null;
         return new LivroDAO().buscarId(id);
     }
-    
-    public List<Object[]> getExemplares(){
+
+    public List<Object[]> getExemplares() {
         return getDao().qntLivroExemplares();
+    }
+
+    public void gravar(ActionEvent actionEvent) {
+        if (assuntoId != null && editoraId != null) {
+            System.out.println("Assunto: " + assuntoId + "Editora: " + editoraId);
+            Assunto ass = assunto.buscarId(assuntoId);
+            getEntidade().setAssuntoid(ass);
+            Editora edit = editora.buscarId(editoraId);
+            getEntidade().setEditoraid(edit);
+            record(actionEvent);
+            assuntoId = null;
+            editoraId = null;
+        }
     }
 
     @Override
@@ -104,18 +143,18 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     @Override
     public Livro novo() {
-        return new Livro(); 
+        return new Livro();
     }
 
     //Relatorio
     public void gerarRelatorioAction() {
         try {
             Relatorio relatorio = new Relatorio();
-            relatorio.setCaminho("exemplar");            
+            relatorio.setCaminho("exemplar");
             relatorio.getRelatorio();
 
         } catch (SQLException ex) {
             Logger.getLogger(livroBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }   
+    }
 }

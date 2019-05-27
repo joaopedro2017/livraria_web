@@ -90,27 +90,31 @@
                                     requiredMessage="Forneça uma data"/> 
                         <p:outputLabel value="Editora: " for="editora" style="float: right;" />
                         <p:selectOneMenu id="editora"
-                                         value="#{livroBean.entidade.editoraid}"
-                                         style="width: 205px"
-                                         converter="editoraConverter"
+                                         value="#{livroBean.editoraId}"
+                                         style="width: 205px"                                         
                                          required="true"
                                          filter="true"
                                          filterMatchMode="startsWith"
                                          requiredMessage="Selecione uma editora">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{livroBean.editora.entidades}"/>
+                            <f:selectItems value="#{livroBean.editora.entidades}"
+                                           var="editora"
+                                           itemLabel="#{editora.nomeEditora}"
+                                           itemValue="#{editora.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Assunto: " for="assunto" style="float: right;" />                        
                         <p:selectOneMenu id="assunto"
-                                         value="#{livroBean.entidade.assuntoid}"
-                                         style="width: 205px" 
-                                         converter="assuntoConverter"
+                                         value="#{livroBean.assuntoId}"
+                                         style="width: 205px"                                         
                                          required="true"
                                          filter="true"
                                          filterMatchMode="startsWith"
                                          requiredMessage="Selecione um assunto">
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{livroBean.assunto.entidades}"/>
+                            <f:selectItems value="#{livroBean.assunto.entidades}"
+                                           var="assunto"
+                                           itemLabel="#{assunto.nomeAssunto}"
+                                           itemValue="#{assunto.id}"/>
                         </p:selectOneMenu>
 
                         <h:outputLabel value="Selecione Autor: " for="aut" style="float: right;"/>
@@ -126,7 +130,7 @@
                                            itemValue="#{autor.id}"/>
                         </p:selectOneMenu>
                         <p:commandButton id="adiciona"
-                                         icon="ui-icon-plus"
+                                         image="adicionar"
                                          style="width: 34px; height: 28px; align-items: center"
                                          value=""
                                          ajax="false"
@@ -147,7 +151,7 @@
                                 <center>
                                     <p:commandButton id="excluir"
                                                      style="width: 34px; height: 20px; align-items: center" 
-                                                     icon="ui-icon-trash" 
+                                                     image="delete"
                                                      value="" 
                                                      action="#{livroBean.removerAutor(autor)}" 
                                                      update=":formPrincipal:panelTabela"/>
@@ -162,7 +166,7 @@
                                          ajax="false"
                                          update="@form" 
                                          action="#{livroBean.setTabela(true)}" 
-                                         actionListener="#{livroBean.record}" 
+                                         actionListener="#{livroBean.gravar}" 
                                          onclick="record.hide()" 
                                          alt="Record"/> 
                         <p:commandButton icon="ui-icon-refresh" 

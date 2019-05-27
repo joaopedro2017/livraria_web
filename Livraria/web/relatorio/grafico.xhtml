@@ -7,13 +7,30 @@
                 xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
-        <h2 class="page-header">Gerenciar Autores</h2>     
+        <h2 class="page-header">Relatorio de Empréstimo e Reserva</h2>     
         <h:form>
-
-            <p:commandButton id="emprestadoAssunto" image="relatorio" action="#{graficoBean.gerarRelatorioEmprestadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
-            <p:commandButton id="emprestadoMes" value="Emprestado/Mes" action="#{graficoBean.gerarRelatorioEmprestadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
-            <p:commandButton id="reservadoAssunto" value="Reservado/Assunto" action="#{graficoBean.gerarRelatorioReservadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
-            <p:commandButton id="reservaMes" value="Reservado/Mes" action="#{graficoBean.gerarRelatorioReservadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <center>
+                <p:panel header="Gráfico de Empréstimos" style="width:50%; float: left">
+                    <p:panel header="Categorizado por Assunto" style="width:50%;">
+                        <p:commandButton id="emprestadoAssunto" value="" style="width: 64px; height: 64px;" image="grafico" action="#{graficoBean.gerarRelatorioEmprestadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                        <p:tooltip id="toolTipEmprestimoAssunto" for="emprestadoAssunto" value="Gerar gráfico de empréstimos por assunto" position="left"/>
+                    </p:panel>
+                    <p:panel header="Categorizado por Mês" style="width:50%">                        
+                        <p:commandButton id="emprestadoMes" value="" style="width: 64px; height: 64px;"  image="grafico" action="#{graficoBean.gerarRelatorioEmprestadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                        <p:tooltip id="toolTipEmprestimoMes" for="emprestadoMes" value="Gerar gráfico de empréstimos por mês" position="right"/>
+                    </p:panel>
+                </p:panel>
+                <p:panel header="Gráfico de Reservas" style="width:50%; float: right">
+                    <p:panel header="Categorizado por Assunto" style="width:50%;">
+                        <p:commandButton id="reservadoAssunto" value="" style="width: 64px; height: 64px;"  image="grafico" action="#{graficoBean.gerarRelatorioReservadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                        <p:tooltip id="toolTipReservaAssunto" for="reservadoAssunto" value="Gerar gráfico de reservas por assunto" position="left"/>
+                    </p:panel>
+                    <p:panel header="Categorizado por Mês" style="width:50%;">
+                        <p:commandButton id="reservaMes" value="" style="width: 64px; height: 64px;"  image="grafico" action="#{graficoBean.gerarRelatorioReservadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+                        <p:tooltip id="toolTipReservaMes" for="reservaMes" value="Gerar gráfico de reservas por mês" position="right"/>
+                    </p:panel>
+                </p:panel>
+            </center>
         </h:form>
     </ui:define>
 </ui:composition>

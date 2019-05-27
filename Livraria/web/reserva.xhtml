@@ -28,7 +28,7 @@
                     <h:outputText value="#{lista.emprestimoid == null ? '-' : lista.emprestimoid.id}" />
                     <p:commandButton id="emprestimo"
                                      rendered="#{lista.emprestimoid == null}" 
-                                     icon="ui-icon-calendar"
+                                     image="emprestimo"
                                      actionListener="#{reservaBean.editar(lista)}"
                                      onclick="PF('Emprestar').show();"                                     
                                      style="width: 34px; height: 20px; align-items: center; float: right" 
@@ -39,7 +39,7 @@
                     <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
                     <p:commandButton id="cancelar"
                                      rendered="#{lista.cancelar == null}" 
-                                     icon="ui-icon-cancel"
+                                     image="cancel"
                                      actionListener="#{reservaBean.editar(lista)}"
                                      onclick="PF('Cancelar').show();"
                                      style="width: 34px; height: 20px; align-items: center; float: right" 

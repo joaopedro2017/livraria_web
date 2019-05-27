@@ -1,4 +1,4 @@
-CREATE DATABASE livraria;
+﻿CREATE DATABASE livraria;
 USE livraria;
 
 CREATE TABLE assunto(
@@ -104,7 +104,7 @@ CREATE TABLE reserva(
     	REFERENCES emprestimo(id)
 );
 
------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------
 Consultas no JasperReports:
 
 1 - Relatório de todos os livros e o respectivo número de exemplares cadastrados no sistema.
@@ -193,3 +193,104 @@ FROM emprestimo e
         INNER JOIN assunto a
         ON l.Assunto_id = a.id
 WHERE e.dataDevolucao is null AND e.dataPrevista < current_date
+
+----------------------------------------------------------------------------------------------------------------
+1 - Um gráfico informando quantos livros foram reservados por mês, considerando os últimos 3 meses.
+
+SELECT (CASE (MONTH  (r.dataReserva))
+                WHEN 1 THEN 'Jan'
+                WHEN 2 THEN 'Fev'
+                WHEN 3 THEN 'Mar'
+                WHEN 4 THEN 'Abr'
+                WHEN 5 THEN 'Mai'
+                WHEN 6 THEN 'Jun'
+                WHEN 7 THEN 'Jul'
+                WHEN 8 THEN 'Ago'
+                WHEN 9 THEN 'Set'
+                WHEN 10 THEN 'Out'
+                WHEN 11 THEN 'Nov'
+                WHEN 12 THEN 'Dez' END) as 'MÊS',
+		COUNT(*) as 'Livros'
+from reserva r WHERE MONTH (r.dataReserva) BETWEEN (MONTH (CURRENT_DATE) - 3) AND (MONTH (CURRENT_DATE) - 1 ) 
+GROUP BY MONTH (r.dataReserva);
+
+----------------------------------------------------------------------------------------------------------------
+2 - Um gráfico informando quantos livros foram emprestados por mês, considerando os últimos 3 meses.
+
+SELECT (CASE (MONTH  (e.dataEmprestimo))
+                WHEN 1 THEN 'Jan'
+                WHEN 2 THEN 'Fev'
+                WHEN 3 THEN 'Mar'
+                WHEN 4 THEN 'Abr'
+                WHEN 5 THEN 'Mai'
+                WHEN 6 THEN 'Jun'
+                WHEN 7 THEN 'Jul'
+                WHEN 8 THEN 'Ago'
+                WHEN 9 THEN 'Set'
+                WHEN 10 THEN 'Out'
+                WHEN 11 THEN 'Nov'
+                WHEN 12 THEN 'Dez' END) as 'MÊS',
+		COUNT(*) as 'Livros'
+from  emprestimo e WHERE  MONTH (e.dataEmprestimo) BETWEEN (MONTH (CURRENT_DATE) - 3) AND (MONTH (CURRENT_DATE) - 1)
+GROUP BY MONTH (e.dataEmprestimo);
+
+-----------------------------------------------------------------
+3 - Um	gráfico	informando quantos livros foram	reservados por categoria, considerando os últimos 3 meses.
+
+SELECT (CASE (MONTH  (r.dataReserva))
+                WHEN 1 THEN 'Jan'
+                WHEN 2 THEN 'Fev'
+                WHEN 3 THEN 'Mar'
+                WHEN 4 THEN 'Abr'
+                WHEN 5 THEN 'Mai'
+                WHEN 6 THEN 'Jun'
+                WHEN 7 THEN 'Jul'
+                WHEN 8 THEN 'Ago'
+                WHEN 9 THEN 'Set'
+                WHEN 10 THEN 'Out'
+                WHEN 11 THEN 'Nov'
+                WHEN 12 THEN 'Dez' END) as 'MÊS',
+		COUNT(*) as 'Livros',
+		a.nomeAssunto as 'Assunto'      
+from reserva r
+		INNER JOIN exemplar ex
+        on r.Exemplar_id = ex.id
+        INNER JOIN livro l
+        on l.id = ex.Livro_id
+        INNER JOIN assunto a
+        on a.id = l.Assunto_id
+WHERE MONTH (r.dataReserva) BETWEEN (MONTH (CURRENT_DATE) - 3) AND (MONTH (CURRENT_DATE) - 1 ) 
+GROUP BY MONTH (r.dataReserva), a.nomeAssunto;
+
+----------------------------------------------------------------------------------------------------------------
+4 - Um	gráfico	informando quantos livros foram	emprestados por	categoria, considerando os últimos 3 meses.
+
+SELECT (CASE (MONTH  (e.dataEmprestimo))
+                WHEN 1 THEN 'Jan'
+                WHEN 2 THEN 'Fev'
+                WHEN 3 THEN 'Mar'
+                WHEN 4 THEN 'Abr'
+                WHEN 5 THEN 'Mai'
+                WHEN 6 THEN 'Jun'
+                WHEN 7 THEN 'Jul'
+                WHEN 8 THEN 'Ago'
+                WHEN 9 THEN 'Set'
+                WHEN 10 THEN 'Out'
+                WHEN 11 THEN 'Nov'
+                WHEN 12 THEN 'Dez' END) as 'MÊS',
+		COUNT(*) as 'Livros',
+		a.nomeAssunto as 'Assunto'		
+from  emprestimo e
+		INNER JOIN exemplar ex
+        	on e.Exemplar_id = ex.id
+        	INNER JOIN livro l
+        	on l.id = ex.Livro_id
+        	INNER JOIN assunto a
+        	on a.id = l.Assunto_id
+WHERE  MONTH (e.dataEmprestimo) BETWEEN (MONTH (CURRENT_DATE) - 3) AND (MONTH (CURRENT_DATE) - 1)
+GROUP BY MONTH (e.dataEmprestimo), a.nomeAssunto;
+
+----------------------------------------------------------------------------------------------------------------
+5 - Um	gráfico	informando o total de livros que foram reservados e emprestados, considerando o último mês.
+
+A FAZER
