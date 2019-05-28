@@ -1,11 +1,8 @@
 package bean;
 
 import dao.LivroDAO;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -15,7 +12,6 @@ import model.Assunto;
 import model.Autor;
 import model.Editora;
 import model.Livro;
-import relatorio.Relatorio;
 
 @ManagedBean
 @ViewScoped
@@ -61,7 +57,6 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     //Métodos do livro
     public void adicionarAutor() {
-        //autorId = null;
         try {
             for (Autor a : getEntidade().getAutorList()) {
                 if (Objects.equals(a.getId(), this.autorId)) {
@@ -116,10 +111,6 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
         return new LivroDAO().buscarId(id);
     }
 
-    public List<Object[]> getExemplares() {
-        return getDao().qntLivroExemplares();
-    }
-
     public void gravar(ActionEvent actionEvent) {
         if (assuntoId != null && editoraId != null) {
             System.out.println("Assunto: " + assuntoId + "Editora: " + editoraId);
@@ -144,17 +135,5 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     @Override
     public Livro novo() {
         return new Livro();
-    }
-
-    //Relatorio
-    public void gerarRelatorioAction() {
-        try {
-            Relatorio relatorio = new Relatorio();
-            relatorio.setCaminho("exemplar");
-            relatorio.getRelatorio();
-
-        } catch (SQLException ex) {
-            Logger.getLogger(livroBean.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 }

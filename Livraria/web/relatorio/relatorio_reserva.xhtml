@@ -11,7 +11,7 @@
         <h2 class="page-header">Resumo de livros reservados</h2>       
 
         <p:dataTable var="lista" 
-                     value="#{reservaBean.livrosReservados}"
+                     value="#{relatorioBean.livrosReservados}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -21,7 +21,7 @@
                      style="width:100%">
             
             <f:facet name="paginatorBottomRight">                
-                <p:commandButton id="pdf" value="Relatório" action="#{reservaBean.gerarRelatorioAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:commandButton id="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioReservaAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                    
             </f:facet>
 

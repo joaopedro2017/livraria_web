@@ -11,7 +11,7 @@
         <h2 class="page-header">Número de exemplares</h2>       
 
         <p:dataTable var="lista" 
-                     value="#{livroBean.exemplares}"
+                     value="#{relatorioBean.exemplares}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -21,11 +21,8 @@
                      style="width:100%">
 
             <f:facet name="paginatorBottomRight">
-                <h:commandLink id="pdf" action="#{livroBean.gerarRelatorioAction()}" onclick="this.form.target = '_blank'" >
-                    <p:graphicImage name="./images/exports/excel.png" />
-                </h:commandLink>
-
-                <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                    
+                <p:commandButton id="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioExemplaresAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                                   
             </f:facet>
 
             <p:column headerText="Título" filterBy="#{lista[0]}" sortBy="#{lista[0]}">

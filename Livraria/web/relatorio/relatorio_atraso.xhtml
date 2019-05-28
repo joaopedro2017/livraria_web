@@ -11,7 +11,7 @@
         <h2 class="page-header">Empréstimos em atraso</h2>       
 
         <p:dataTable var="lista" 
-                     value="#{emprestimoBean.atrasados}"
+                     value="#{relatorioBean.atrasados}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -21,7 +21,7 @@
                      style="width:100%">
 
             <f:facet name="paginatorBottomRight">
-                <p:commandButton id="pdf" value="Relatório" action="#{emprestimoBean.gerarRelatorioAtrasadoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:commandButton id="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioAtrasadoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>
             </f:facet>
 
