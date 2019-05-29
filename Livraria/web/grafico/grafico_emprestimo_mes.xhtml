@@ -1,0 +1,19 @@
+<ui:composition template="/grafico/grafico.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp"
+                xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
+
+    <ui:define name="grafico">
+
+        <br/>
+        <center>
+            <p:chart type="bar" model="#{graficoEmpresimoMesBean.livrosModel}" style="height:300px;"/>
+            <p:commandButton id="emprestadoMes" value="" style="width: 64px; height: 64px;"  image="grafico" action="#{graficoBean.gerarRelatorioEmprestadoMesAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <p:tooltip id="toolTipEmprestimoMes" for="emprestadoMes" value="Gerar gráfico de empréstimos por mês" position="right"/>
+        </center>        
+    </ui:define>
+</ui:composition>

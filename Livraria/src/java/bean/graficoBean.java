@@ -55,4 +55,15 @@ public class graficoBean {
         }
     }
     
+    public void gerarRelatorioEmprestadoReservadoAction() {
+        try {
+            Relatorio relatorio = new Relatorio();
+            relatorio.setCaminho("emprestadosReservados");            
+            relatorio.getRelatorio();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(graficoBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
 }
