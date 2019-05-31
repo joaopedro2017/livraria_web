@@ -68,7 +68,10 @@
                         <p:inputText id="titulo" 
                                      value="#{livroBean.entidade.titulo}"
                                      required="true"
-                                     requiredMessage="Título em branco"/>   
+                                     validatorMessage="Título inválido"
+                                     requiredMessage="Título em branco">
+                            <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                        </p:inputText>   
                         <p:outputLabel value="ISBN: " for="isbn" style="float: right;" />
                         <p:inputMask mask="999-99-999-9999-9" 
                                      id="isbn"

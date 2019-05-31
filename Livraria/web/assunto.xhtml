@@ -32,7 +32,10 @@
                         <p:inputText id="nome" 
                                      value="#{assuntoBean.entidade.nomeAssunto}" 
                                      required="true"
-                                     requiredMessage="Nome em branco"/>
+                                     validatorMessage="Nome inválido"
+                                     requiredMessage="Nome em branco">
+                            <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                        </p:inputText>
                         <p:outputLabel value="Descrição: " for="descricaoAssunto" style="float: right;"/>
                         <p:inputText id="descricaoAssunto" 
                                      value="#{assuntoBean.entidade.descricaoAssunto}" 
@@ -42,7 +45,10 @@
                         <p:inputText id="Assunto" 
                                      value="#{assuntoBean.entidade.assunto}"
                                      required="true"
-                                     requiredMessage="Assunto em branco"/>
+                                     validatorMessage="Assunto inválido"
+                                     requiredMessage="Assunto em branco">
+                            <f:validateRegex pattern="[A-za-z]+( [a-za-z]+)*" />
+                        </p:inputText>
 
                     </p:panelGrid>                    
                     <br/>

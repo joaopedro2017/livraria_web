@@ -28,15 +28,21 @@
                 <p:panel rendered="#{!usuarioBean.tabela}" header="Novo/Editar Usuário" style="width: 85%">
                     <p:panelGrid id="panelRecord" columns="2">
                         Nome:
-                        <p:inputText id="name"
+                        <p:inputText id="nome"
                                      value="#{usuarioBean.entidade.nomeUsuario}"
                                      required="true"
-                                     requiredMessage="Nome em branco"/>    
+                                     validatorMessage="Nome incorreto"
+                                     requiredMessage="Nome em branco">
+                            <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                        </p:inputText>    
                         Email:
                         <p:inputText id="email" 
                                      value="#{usuarioBean.entidade.email}"
                                      required="true"
-                                     requiredMessage="Email em branco"/>
+                                     validatorMessage="E-mail incorreto"
+                                     requiredMessage="Email em branco">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
                         Senha:
                         <p:password feedback="true" id="senha" 
                                     value="#{usuarioBean.entidade.senha}"

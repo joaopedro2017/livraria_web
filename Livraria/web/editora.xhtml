@@ -24,7 +24,10 @@
                         <p:inputText id="nome" 
                                      value="#{editoraBean.entidade.nomeEditora}"
                                      required="true"
-                                     requiredMessage="Nome em branco"/>     
+                                     validatorMessage="Nome inválido"
+                                     requiredMessage="Nome em branco">
+                            <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                        </p:inputText>     
 
                     </p:panelGrid>  
                     <br/>

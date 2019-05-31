@@ -22,7 +22,10 @@
                                  required="true"
                                  placeholder="Usuário"
                                  tabindex="1"
-                                 requiredMessage="Usuário em branco"/>
+                                 validatorMessage="Usuário inválido"
+                                 requiredMessage="Usuário em branco">
+                        <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                    </p:inputText>
                 </div>
                 <br/>
                 <div>
