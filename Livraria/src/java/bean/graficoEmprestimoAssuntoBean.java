@@ -34,7 +34,7 @@ public class graficoEmprestimoAssuntoBean {
         try {
             lista = new GraficoDAO().emprestimoPorAssunto("Emprestimo");
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmpresimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         livrosModel = new BarChartModel();
@@ -46,22 +46,22 @@ public class graficoEmprestimoAssuntoBean {
         String aux = "serie";
         for (Object[] obj : lista) {
             if (livrosModel.getSeries().isEmpty()) {
-                aux = (String) obj[0];
+                aux = (String) obj[2];
                 ChartSeries serie = new ChartSeries();
                 serie.setLabel(aux);
                 livrosModel.addSeries(serie);
-            } else if (!aux.equals(obj[0])) {
+            } else if (!aux.equals(obj[2])) {
                 ChartSeries serie2 = new ChartSeries();
-                serie2.setLabel((String) obj[0]);
+                serie2.setLabel((String) obj[2]);
                 livrosModel.addSeries(serie2);
-                aux = (String) obj[0];
+                aux = (String) obj[2];
             }
         }
 
         for (ChartSeries serie : livrosModel.getSeries()) {
             for (Object[] obj : lista) {
-                if (obj[0].equals(serie.getLabel())) {
-                    serie.set((String) obj[2], (Number) obj[1]);
+                if (obj[2].equals(serie.getLabel())) {
+                    serie.set((String) obj[0], (Number) obj[1]);
                 }
             }
         }
@@ -84,6 +84,7 @@ public class graficoEmprestimoAssuntoBean {
         livrosModel.setTitle("Empréstimo por Assunto");
         livrosModel.setLegendPosition("ne");
         livrosModel.setBarWidth(120); //Largura da barra
+        livrosModel.setAnimate(true);
 
         Axis xAxis = livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Meses");

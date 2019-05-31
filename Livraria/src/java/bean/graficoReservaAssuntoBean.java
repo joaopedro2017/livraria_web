@@ -16,7 +16,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 @ManagedBean
 @ViewScoped
-public class graficoReservaMesBean {
+public class graficoReservaAssuntoBean {
 
     private BarChartModel livrosModel;
 
@@ -25,14 +25,14 @@ public class graficoReservaMesBean {
         try {
             createBarModel();
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoAssuntoBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private BarChartModel initBarModel() {
         List<Object[]> lista = new ArrayList<>();
         try {
-            lista = new GraficoDAO().emprestimoPorMes("Reserva");
+            lista = new GraficoDAO().emprestimoPorAssunto("Reserva");
         } catch (SQLException ex) {
             Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -40,12 +40,37 @@ public class graficoReservaMesBean {
         livrosModel = new BarChartModel();
 
         for (Object[] obj : lista) {
-            ChartSeries serie = new ChartSeries();
-            serie.setLabel((String) obj[0]);
-
-            serie.set((String) obj[0], (Number) obj[1]);
-            livrosModel.addSeries(serie);
+            System.out.println("Mês: " + obj[0] + " Quantidade: " + obj[1] + " Assunto: " + obj[2]);
         }
+
+        String aux = "serie";
+        for (Object[] obj : lista) {
+            if (livrosModel.getSeries().isEmpty()) {
+                aux = (String) obj[2];
+                ChartSeries serie = new ChartSeries();
+                serie.setLabel(aux);
+                livrosModel.addSeries(serie);
+            } else if (!aux.equals(obj[2])) {
+                ChartSeries serie2 = new ChartSeries();
+                serie2.setLabel((String) obj[2]);
+                livrosModel.addSeries(serie2);
+                aux = (String) obj[2];
+            }
+        }
+
+        for (ChartSeries serie : livrosModel.getSeries()) {
+            for (Object[] obj : lista) {
+                if (obj[2].equals(serie.getLabel())) {
+                    serie.set((String) obj[0], (Number) obj[1]);
+                }
+            }
+        }
+
+        for (ChartSeries serie : livrosModel.getSeries()) {
+            System.out.println("Serie: " + serie.getLabel() + " Valor: " + serie.getData());
+
+        }
+
         return livrosModel;
     }
 
@@ -56,8 +81,9 @@ public class graficoReservaMesBean {
     private void createBarModel() throws SQLException {
         livrosModel = initBarModel();
 
-        livrosModel.setTitle("Reserva por Mês");
+        livrosModel.setTitle("Empréstimo por Assunto");
         livrosModel.setLegendPosition("ne");
+        livrosModel.setBarWidth(120); //Largura da barra
         livrosModel.setAnimate(true);
 
         Axis xAxis = livrosModel.getAxis(AxisType.X);

@@ -23,7 +23,7 @@ public class graficoEmprestimoReservaUltimoMesBean {
         try {
             createBarModel();
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmpresimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -32,7 +32,7 @@ public class graficoEmprestimoReservaUltimoMesBean {
         try {
             lista = new GraficoDAO().reservaEmprestimoUltimoMes();
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmpresimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         livrosModel = new BarChartModel();
@@ -40,14 +40,14 @@ public class graficoEmprestimoReservaUltimoMesBean {
         ChartSeries serie = new ChartSeries();
         serie.setLabel("Empréstimo");
         serie.set("Livros", (Number) lista[1]);
-                
+
         ChartSeries serie2 = new ChartSeries();
         serie2.setLabel("Reserva");
-        serie2.set("Livros", (Number) lista[0]);      
-        
+        serie2.set("Livros", (Number) lista[0]);
+
         livrosModel.addSeries(serie);
         livrosModel.addSeries(serie2);
-     
+
         return livrosModel;
     }
 
@@ -60,7 +60,7 @@ public class graficoEmprestimoReservaUltimoMesBean {
 
         livrosModel.setTitle("Empréstimo e Reserva último mês");
         livrosModel.setLegendPosition("ne");
-        livrosModel.setSeriesColors("20B2AA, 8B8B00");        
+        livrosModel.setAnimate(true);
 
         Axis xAxis = livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Mês");

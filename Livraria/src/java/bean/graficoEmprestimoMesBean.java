@@ -16,7 +16,7 @@ import org.primefaces.model.chart.ChartSeries;
 
 @ManagedBean
 @ViewScoped
-public class graficoEmpresimoMesBean {
+public class graficoEmprestimoMesBean {
 
     private BarChartModel livrosModel;
 
@@ -25,7 +25,7 @@ public class graficoEmpresimoMesBean {
         try {
             createBarModel();
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmpresimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -34,7 +34,7 @@ public class graficoEmpresimoMesBean {
         try {
             lista = new GraficoDAO().emprestimoPorMes("Emprestimo");
         } catch (SQLException ex) {
-            Logger.getLogger(graficoEmpresimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         livrosModel = new BarChartModel();
@@ -42,10 +42,15 @@ public class graficoEmpresimoMesBean {
         for (Object[] obj : lista) {
             ChartSeries serie = new ChartSeries();
             serie.setLabel((String) obj[0]);
-
             serie.set((String) obj[0], (Number) obj[1]);
+
             livrosModel.addSeries(serie);
         }
+
+        for (ChartSeries serie : livrosModel.getSeries()) {
+            System.out.println("Valor: " + serie.getData());
+        }
+
         return livrosModel;
     }
 
@@ -58,6 +63,7 @@ public class graficoEmpresimoMesBean {
 
         livrosModel.setTitle("Empréstimo por Mês");
         livrosModel.setLegendPosition("ne");
+        livrosModel.setAnimate(true);
 
         Axis xAxis = livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Meses");

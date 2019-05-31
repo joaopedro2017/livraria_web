@@ -69,7 +69,7 @@ public class GraficoDAO {
                 + "        INNER JOIN assunto a\n"
                 + "        on a.id = l.Assunto_id\n"
                 + "WHERE MONTH (r.data" + empRes + ") BETWEEN (MONTH (CURRENT_DATE) - 3) AND (MONTH (CURRENT_DATE) - 1 ) \n"
-                + "GROUP BY MONTH (r.data" + empRes + "), a.nomeAssunto ORDER by MONTH (r.data" + empRes + ")";
+                + "GROUP BY MONTH (r.data" + empRes + "), a.nomeAssunto ORDER BY a.nomeAssunto, MONTH (r.data" + empRes + ")";
 
         try (Statement stmt = ConexaoRelatorio.getConexao().createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
 
