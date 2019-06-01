@@ -1,6 +1,10 @@
 package bean;
 
 import dao.EmprestimoDAO;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -18,6 +22,7 @@ import org.primefaces.event.FlowEvent;
 public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     private EmprestimoDAO emprestimoDAO;
+    private String msg = "";
     private boolean debito = false;
 
     private Integer usuarioId = null;
@@ -27,23 +32,45 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     @ManagedProperty(value = "#{exemplarBean}")
     private exemplarBean exemplar;
 
-    public void emprestimoAtraso() {
-        getEntidade().setUsuarioid(usuario.buscarId(usuarioId));
+    public void emprestimoAtraso() throws SQLException {
         Long atraso = getDao().verificarDebito(usuarioId);
-        Long aberto = getDao().verificarEmAberto(usuarioId);
-        String tipo = getEntidade().getUsuarioid().getTipo();
-
-        System.out.println("id: " + usuarioId + " Atraso: " + atraso + " aberto: " + aberto + " tipo: " + tipo + "\n");
 
         if (atraso > 0) {
             setDebito(true);
-        } else if (("Professor".equals(tipo) && aberto >= 5)) {
-            setDebito(true);
-        } else if ((!"Professor".equals(tipo) && aberto >= 3)) {
-            setDebito(true);
-        } else {
-            setDebito(false);
+            setMsg("Possui " + atraso + " empréstimo em atraso");
+            return;
         }
+
+        Date bloqueio = getDao().diasBloqueado(usuarioId);
+        if (bloqueio != null) {
+            LocalDate data1 = bloqueio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate data2 = LocalDate.now();
+            long intervalo = ChronoUnit.DAYS.between(data1, data2);
+
+            if (intervalo < 30) {
+                setDebito(true);
+                setMsg("Usuário bloqueado(a) há " + intervalo + " dias, máximo 30 dias!");
+                return;
+            }
+        }
+
+        getEntidade().setUsuarioid(usuario.buscarId(usuarioId));
+        String tipo = getEntidade().getUsuarioid().getTipo();
+        Long aberto = getDao().verificarEmAberto(usuarioId);
+        if (("Professor".equals(tipo) && aberto >= 5)) {
+            setDebito(true);
+            setMsg("O usuário(a) atingiu limite de empréstimo");
+            return;
+        }
+
+        if ((!"Professor".equals(tipo) && aberto >= 3)) {
+            setDebito(true);
+            setMsg("O usuário(a) atingiu limite de empréstimo");
+            return;
+        }
+
+        setDebito(false);
+        setMsg("Clique em próximo!");
     }
 
     public void verificarExemplar() {
@@ -103,10 +130,19 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     public String proximaAba(FlowEvent event) {
         if (debito) {
+            setMsg("");
             return event.getOldStep();
         } else {
             return event.getNewStep();
         }
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
     }
 
     public boolean isDebito() {
@@ -155,7 +191,7 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
 
     public void setExemplar(exemplarBean exemplar) {
         this.exemplar = exemplar;
-    }      
+    }
 
     @Override
     public EmprestimoDAO getDao() {

@@ -98,9 +98,8 @@
                                                  value="#{(!emprestimoBean.debito) ? emprestimoBean.entidade.usuarioid.tipo : null}"/>
                                 </h:panelGrid>
                                 <br/>
-                                <p:outputLabel value="* Usuário possui débito ou atingiu o limite de empréstimo!" 
-                                               rendered="#{emprestimoBean.debito}" 
-                                               style="color: #ff0100; font-style: oblique" />
+                                <p:outputLabel value="#{emprestimoBean.msg}"
+                                               style="color: #191970; font-style: oblique" />
                                 <br/>
                                 <p:commandButton icon="ui-icon-refresh" 
                                                  value="Cancelar" 

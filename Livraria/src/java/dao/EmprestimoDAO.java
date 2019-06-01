@@ -1,5 +1,7 @@
 package dao;
 
+import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -17,6 +19,17 @@ public class EmprestimoDAO implements CrudDAO<Emprestimo> {
                 + "where e.usuarioid.id =:id "
                 + "AND e.dataDevolucao IS NULL "
                 + "AND e.dataPrevista < current_date", Long.class);
+        query.setParameter("id", id);
+
+        return query.getSingleResult();
+    }
+
+    public Date diasBloqueado(int id) throws SQLException {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Date> query = em.createQuery("SELECT MAX(  e.dataDevolucao ) from Emprestimo e "
+                + "WHERE e.usuarioid.id =:id "
+                + "AND e.dataDevolucao IS NOT NULL "
+                + "AND e.dataDevolucao > dataPrevista", Date.class);
         query.setParameter("id", id);
 
         return query.getSingleResult();
