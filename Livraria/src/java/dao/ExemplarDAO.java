@@ -17,10 +17,16 @@ public class ExemplarDAO implements CrudDAO<Exemplar> {
             exemplarDAO = new ExemplarDAO();
         }
         return exemplarDAO;
-    }    
+    }
+
+    public List<Exemplar> exemplarCirculante() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Exemplar> query = em.createQuery("select e from Exemplar e where e.circular = true", Exemplar.class);
+        return query.getResultList();
+    }
 
     @Override
-    public Exemplar buscarId(int id) { 
+    public Exemplar buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
         TypedQuery<Exemplar> query = em.createQuery("select e from Exemplar e where e.id =:id ", Exemplar.class);
         query.setParameter("id", id);

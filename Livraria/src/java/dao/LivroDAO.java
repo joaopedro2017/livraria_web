@@ -43,7 +43,7 @@ public class LivroDAO implements Serializable, CrudDAO<Livro> {
                 + "(Select COUNT(e) from Exemplar e WHERE e.circular =:valor AND e.livroid.id = l.id),"
                 + "(Select COUNT(e) from Exemplar e WHERE e.circular =:falso AND e.livroid.id = l.id)"
                 + "from Livro l", Object[].class);
-        
+
         query.setParameter("valor", Boolean.TRUE);
         query.setParameter("falso", Boolean.FALSE);
 

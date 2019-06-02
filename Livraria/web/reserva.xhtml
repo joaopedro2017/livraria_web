@@ -27,7 +27,7 @@
                 <p:column headerText="Emprestimo Nro" sortBy="#{lista.emprestimoid.id}" filterBy="#{lista.emprestimoid.id}">
                     <h:outputText value="#{lista.emprestimoid == null ? '-' : lista.emprestimoid.id}" />
                     <p:commandButton id="emprestimo"
-                                     rendered="#{lista.emprestimoid == null}" 
+                                     rendered="#{reservaBean.renderizar(lista)}" 
                                      image="emprestimo"
                                      actionListener="#{reservaBean.editar(lista)}"
                                      onclick="PF('Emprestar').show();"                                     
@@ -38,7 +38,7 @@
                 <p:column headerText="Cancelada" sortBy="#{lista.cancelar}" filterBy="#{lista.cancelar}">
                     <h:outputText value="#{lista.cancelar == null ? 'Não' : lista.cancelar}" />
                     <p:commandButton id="cancelar"
-                                     rendered="#{lista.cancelar == null}" 
+                                     rendered="#{reservaBean.renderizar(lista)}" 
                                      image="cancel"
                                      actionListener="#{reservaBean.editar(lista)}"
                                      onclick="PF('Cancelar').show();"
@@ -79,23 +79,27 @@
                         <p:selectOneMenu id="usuario"
                                          value="#{reservaBean.usuarioId}"
                                          style="width: 202px"                                                     
-                                         required="true"
+                                         required="true"                                         
                                          requiredMessage="Selecione um usuário">
+                            <p:ajax listener="#{reservaBean.verificarDebito()}" update="@form" />
                             <f:selectItem itemLabel="Selecione" 
                                           itemValue=""/>
                             <f:selectItems value="#{reservaBean.usuario.entidades}"
                                            var="usuario"
+                                           actionListener="#{reservaBean.verificarDebito()}"
                                            itemLabel="#{usuario.nomeUsuario}"
                                            itemValue="#{usuario.id}"/>
                         </p:selectOneMenu>
                         <p:outputLabel value="Exemplar: " style="float: right;" for="exemplar"/>
                         <p:selectOneMenu id="exemplar"
                                          value="#{reservaBean.exemplarId}"
-                                         style="width: 202px"                                                     
+                                         style="width: 202px"
+                                         disabled="#{reservaBean.debito}"
                                          required="true"
-                                         requiredMessage="Selecione um usuário">
+                                         requiredMessage="Selecione um livro">
+                            <p:ajax listener="#{reservaBean.dataReserva()}" update="@form" />
                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                            <f:selectItems value="#{reservaBean.exemplar.entidades}"
+                            <f:selectItems value="#{reservaBean.exemplar.exemplaresCirculantes}"                                           
                                            var="exemplar"
                                            itemLabel="#{exemplar.livroid.titulo}"
                                            itemValue="#{exemplar.id}"/>
@@ -105,22 +109,22 @@
                                        style="float: right;"/>
                         <p:calendar id="data"
                                     pattern="dd/MM/yyyy"
-                                    navigator="true"
-                                    showOn="button"
                                     readonlyInput="true"
-                                    required="true"
-                                    mindate="today"
-                                    requiredMessage="Forneça uma data"
+                                    showOn="false"
+                                    size="8"
                                     value="#{reservaBean.entidade.dataReserva}">
 
                         </p:calendar>
 
 
-                    </p:panelGrid>  
+                    </p:panelGrid>
+                    <br/>
+                    <p:outputLabel id="msg" value="#{reservaBean.msg}" />
                     <br/>
                     <p:commandButton value="Salvar" 
                                      update="@form" 
                                      icon="ui-icon-disk"
+                                     disabled="#{reservaBean.debito}"
                                      ajax="false"
                                      action="#{reservaBean.setTabela(true)}" 
                                      actionListener="#{reservaBean.gravar}" 

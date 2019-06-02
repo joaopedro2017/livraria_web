@@ -5,6 +5,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
     <ui:define name="content">
+        <f:metadata>
+            <f:event type="preRenderView" listener="#{reservaBean.cancelarReservaSistema()}" />
+        </f:metadata>
         <center>
             <h2 class="page-header">LPWSD</h2>
             <p:graphicImage library="images" name="cesjf.png"/>
@@ -12,7 +15,7 @@
             <br/>
             <h2>Seja bem vindo 
                 <h:outputText value="#{loginBean.perfil}" />
-            </h2>
+            </h2>           
         </center>
 
     </ui:define>

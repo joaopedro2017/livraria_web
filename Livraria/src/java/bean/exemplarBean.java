@@ -10,10 +10,6 @@ import javax.faces.model.SelectItem;
 import model.Exemplar;
 import model.Livro;
 
-/**
- *
- * @author John Peter
- */
 @ManagedBean
 @ViewScoped
 public class exemplarBean extends crudBean<Exemplar, ExemplarDAO> {
@@ -28,6 +24,10 @@ public class exemplarBean extends crudBean<Exemplar, ExemplarDAO> {
 
     public Exemplar buscarId(int id) {
         return new ExemplarDAO().buscarId(id);
+    }
+
+    public List<Exemplar> getExemplaresCirculantes() {
+        return getDao().exemplarCirculante();
     }
 
     //get e set aux

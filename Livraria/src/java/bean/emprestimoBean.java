@@ -73,6 +73,10 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
         setMsg("Clique em próximo!");
     }
 
+    public Date dataEntregaExemplar(int id) {
+        return getDao().dataEntrega(id);
+    }
+
     public void verificarExemplar() {
         Long disponivel = getDao().exemplarDisponivel(exemplarId);
         if (disponivel != 0) {

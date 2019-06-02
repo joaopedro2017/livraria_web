@@ -2,6 +2,11 @@ package bean;
 
 import dao.EmprestimoDAO;
 import dao.ReservaDAO;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
+import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -17,6 +22,9 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
     private Integer exemplarId = null;
     private ReservaDAO reservaDAO;
 
+    private String msg = " ";
+    private boolean debito = true;
+
     @ManagedProperty(value = "#{emprestimoBean}")
     private emprestimoBean bean;
     @ManagedProperty(value = "#{exemplarBean}")
@@ -29,6 +37,50 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
             getEntidade().setCancelar("Usuário");
             record(actionEvent);
         }
+    }
+
+    public void verificarDebito() {
+        Long valor = bean.getDao().verificarDebito(usuarioId);
+        if (valor > 0) {
+            setMsg("Usuário está em débito!");
+            setDebito(true);
+
+        } else {
+            setMsg("Usuário OK");
+            setDebito(false);
+        }
+    }
+
+    public void dataReserva() {
+        Date data = bean.dataEntregaExemplar(exemplarId);
+        Date hoje = new Date();
+        if (data == null || data.before(hoje)) {
+            getEntidade().setDataReserva(hoje);
+        } else {
+            getEntidade().setDataReserva(data);
+        }
+    }
+
+    public void cancelarReservaSistema() {
+        List<Reserva> reservas = getDao().cancelamentoAutomatico();
+        LocalDate data2 = LocalDate.now();
+
+        if (reservas.size() > 0) {
+            for (Reserva reserva : reservas) {
+                LocalDate data1 = reserva.getDataReserva().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                long intervalo = ChronoUnit.DAYS.between(data1, data2);
+
+                if (intervalo > 3) {
+                    Reserva aux = reserva;
+                    aux.setCancelar("Sistema");
+                    getDao().persistir(aux);
+                }
+            }
+        }
+    }
+
+    public boolean renderizar(Reserva reserva) {
+        return reserva.getCancelar() == null && reserva.getEmprestimoid() == null;
     }
 
     public void realizarEmprestimo(ActionEvent actionEvent) {
@@ -86,12 +138,30 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
         this.exemplarId = exemplarId;
     }
 
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public boolean isDebito() {
+        return debito;
+    }
+
+    public void setDebito(boolean debito) {
+        this.debito = debito;
+    }
+
     public void gravar(ActionEvent actionEvent) {
         getEntidade().setUsuarioid(usuario.buscarId(usuarioId));
         getEntidade().setExemplarid(exemplar.buscarId(exemplarId));
         record(actionEvent);
         usuarioId = null;
         exemplarId = null;
+        setDebito(true);
+        setMsg(" ");
     }
 
     @Override

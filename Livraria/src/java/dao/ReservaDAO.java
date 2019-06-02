@@ -17,6 +17,13 @@ public class ReservaDAO implements CrudDAO<Reserva> {
         return query.getResultList();
     }
 
+    public List<Reserva> cancelamentoAutomatico() {
+        EntityManager em = PersistenceUtil.getEntityManager();
+        TypedQuery<Reserva> query = em.createQuery("Select r from Reserva r Where r.emprestimoid is null "
+                + "AND r.cancelar is null AND r.dataReserva < current_date", Reserva.class);
+        return query.getResultList();
+    }
+
     @Override
     public Reserva buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();

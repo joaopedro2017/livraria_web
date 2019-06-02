@@ -9,8 +9,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
-public class AutorDAO implements Serializable, CrudDAO<Autor>{
-    
+public class AutorDAO implements Serializable, CrudDAO<Autor> {
+
     public static AutorDAO autorDAO;
 
     public static AutorDAO getInstance() {
@@ -19,7 +19,7 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
         }
         return autorDAO;
     }
-    
+
     public Autor buscar(String nome) {
         EntityManager em = PersistenceUtil.getEntityManager();
         TypedQuery<Autor> query = em.createQuery("select a from Autor a where a.nomeAutor =:nome ", Autor.class);
@@ -31,7 +31,7 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
             return null;
         }
     }
-    
+
     @Override
     public Autor buscarId(int id) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -58,7 +58,7 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
         TypedQuery<Autor> query = em.createQuery("select distinct a from Autor a group by a.nomeAutor", Autor.class);
         return query.getResultList();
     }
-    
+
     @Override
     public void remover(Autor autores) {
         EntityManager em = PersistenceUtil.getEntityManager();
@@ -86,10 +86,10 @@ public class AutorDAO implements Serializable, CrudDAO<Autor>{
 
     @Override
     public void removeAll() {
-       EntityManager em = PersistenceUtil.getEntityManager();
-       em.getTransaction().begin();
-       Query query = em.createQuery(" delete from Autor ");
-       query.executeUpdate();
-       em.getTransaction().commit();
-    }    
+        EntityManager em = PersistenceUtil.getEntityManager();
+        em.getTransaction().begin();
+        Query query = em.createQuery(" delete from Autor ");
+        query.executeUpdate();
+        em.getTransaction().commit();
+    }
 }
