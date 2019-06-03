@@ -12,6 +12,7 @@ import model.Assunto;
 import model.Autor;
 import model.Editora;
 import model.Livro;
+import org.primefaces.model.UploadedFile;
 
 @ManagedBean
 @ViewScoped
@@ -29,6 +30,11 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     private assuntoBean assunto = new assuntoBean();
     @ManagedProperty(value = "#{editoraBean}")
     private editoraBean editora = new editoraBean();
+
+    //Arquivo digital
+    private UploadedFile uploadedFile;
+    @ManagedProperty(value = "#{arquivoBean}")
+    private arquivoBean arquivo = new arquivoBean();
 
     //get e set dos bean's
     public autorBean getAutor() {
@@ -113,7 +119,11 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public void gravar(ActionEvent actionEvent) {
         if (assuntoId != null && editoraId != null) {
-            System.out.println("Assunto: " + assuntoId + "Editora: " + editoraId);
+            if (getUploadedFile() != null) {
+                arquivo.setUploadedFile(uploadedFile);
+                arquivo.upload();
+            }
+
             Assunto ass = assunto.buscarId(assuntoId);
             getEntidade().setAssuntoid(ass);
             Editora edit = editora.buscarId(editoraId);
@@ -122,6 +132,22 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
             assuntoId = null;
             editoraId = null;
         }
+    }
+
+    public arquivoBean getArquivo() {
+        return arquivo;
+    }
+
+    public void setArquivo(arquivoBean arquivo) {
+        this.arquivo = arquivo;
+    }
+
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
+    }
+
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
     }
 
     @Override

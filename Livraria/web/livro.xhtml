@@ -9,7 +9,7 @@
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Livro</h2>
         <ms:mensagem/>
-        <h:form id="formPrincipal">
+        <h:form id="formPrincipal" enctype="multipart/form-data">
             <pn:dataTableCrud crudBean="#{livroBean}" arquivo="livros">
                 <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
                     <h:outputText value="#{lista.titulo}" />
@@ -105,7 +105,7 @@
                                            itemLabel="#{editora.nomeEditora}"
                                            itemValue="#{editora.id}"/>
                         </p:selectOneMenu>
-                        <p:outputLabel value="Assunto: " for="assunto" style="float: right;" />                        
+                        <p:outputLabel value="Assunto: " for="assunto" style="float: right;" />
                         <p:selectOneMenu id="assunto"
                                          value="#{livroBean.assuntoId}"
                                          style="width: 205px"                                         
@@ -140,6 +140,15 @@
                                          update=":formPrincipal:panelTabela"
                                          action="#{livroBean.adicionarAutor()}"/>
                         <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
+
+                        <p:outputLabel value="Enviar PDF: " for="fileUpload" style="float: right;" />
+                        <p:fileUpload value="#{livroBean.uploadedFile}" 
+                                      allowTypes="/(\.|\/)(pdf)$/"
+                                      id="fileUpload" 
+                                      mode="simple" 
+                                      skinSimple="true" />                     
+
+
                     </p:panelGrid> 
                     <br/>
                     <p:panel id="panelTabela" style="width:80%; border: none">
