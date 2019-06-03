@@ -142,9 +142,9 @@
                         <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
 
                         <p:outputLabel value="Enviar PDF: " for="fileUpload" style="float: right;" />
-                        <p:fileUpload value="#{livroBean.uploadedFile}" 
-                                      allowTypes="/(\.|\/)(pdf)$/"
-                                      id="fileUpload" 
+                        <p:fileUpload value="#{livroBean.uploadedFile}"
+                                      accept="application/pdf"                                      
+                                      id="fileUpload"
                                       mode="simple" 
                                       skinSimple="true" />                     
 

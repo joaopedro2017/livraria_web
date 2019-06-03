@@ -119,7 +119,7 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public void gravar(ActionEvent actionEvent) {
         if (assuntoId != null && editoraId != null) {
-            if (getUploadedFile() != null) {
+            if (getUploadedFile().getSize() > 0) {
                 arquivo.setUploadedFile(uploadedFile);
                 arquivo.upload();
             }

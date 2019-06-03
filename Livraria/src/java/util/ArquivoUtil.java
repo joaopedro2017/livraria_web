@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
 
 public class ArquivoUtil {
 
@@ -17,12 +15,6 @@ public class ArquivoUtil {
         out.close();
 
         return file;
-    }
-
-    public static List<File> listar() {
-        File dir = diretorioRaizParaArquivos();
-
-        return Arrays.asList(dir.listFiles());
     }
 
     public static java.io.File diretorioRaizParaArquivos() {
