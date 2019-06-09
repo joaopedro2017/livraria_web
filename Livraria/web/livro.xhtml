@@ -141,13 +141,22 @@
                                          action="#{livroBean.adicionarAutor()}"/>
                         <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
 
-                        <p:outputLabel value="Enviar PDF: " for="fileUpload" style="float: right;" />
                         <p:fileUpload value="#{livroBean.uploadedFile}"
                                       accept="application/pdf"                                      
                                       id="fileUpload"
+                                      uploadLabel="Enviar"
+                                      label="PDF"
                                       mode="simple" 
-                                      skinSimple="true" />                     
+                                      skinSimple="true" />
 
+                        <p:fileUpload value="#{livroBean.uploadedImage}"
+                                      accept="application/png"
+                                      label="Capa"
+                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                      uploadLabel="Enviar"
+                                      id="fileImage"
+                                      mode="simple" 
+                                      skinSimple="true" />
 
                     </p:panelGrid> 
                     <br/>

@@ -37,38 +37,38 @@ public class graficoEmprestimoMesBean {
             Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        livrosModel = new BarChartModel();
+        this.livrosModel = new BarChartModel();
 
         for (Object[] obj : lista) {
             ChartSeries serie = new ChartSeries();
             serie.setLabel((String) obj[0]);
             serie.set((String) obj[0], (Number) obj[1]);
 
-            livrosModel.addSeries(serie);
+            this.livrosModel.addSeries(serie);
         }
 
-        for (ChartSeries serie : livrosModel.getSeries()) {
+        for (ChartSeries serie : this.livrosModel.getSeries()) {
             System.out.println("Valor: " + serie.getData());
         }
 
-        return livrosModel;
+        return this.livrosModel;
     }
 
     public BarChartModel getLivrosModel() {
-        return livrosModel;
+        return this.livrosModel;
     }
 
     private void createBarModel() throws SQLException {
-        livrosModel = initBarModel();
+        this.livrosModel = initBarModel();
 
-        livrosModel.setTitle("Empréstimo por Mês");
-        livrosModel.setLegendPosition("ne");
-        livrosModel.setAnimate(true);
+        this.livrosModel.setTitle("Empréstimo por Mês");
+        this.livrosModel.setLegendPosition("ne");
+        this.livrosModel.setAnimate(true);
 
-        Axis xAxis = livrosModel.getAxis(AxisType.X);
+        Axis xAxis = this.livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Meses");
 
-        Axis yAxis = livrosModel.getAxis(AxisType.Y);
+        Axis yAxis = this.livrosModel.getAxis(AxisType.Y);
         yAxis.setLabel("Livros");
         yAxis.setMin(0);
         yAxis.setMax(10);

@@ -9,15 +9,12 @@
         <h:form>  
             <p:menubar rendered="#{loginBean.user != null}">
                 <p:menuitem value="Início" icon="home" url="/faces/index.xhtml" />
-                <p:submenu label="Acervo" icon="book">
-                    <p:menuitem value="Pesquisar Livro" ajax="false" icon="search" url="/faces/acervo.xhtml"/>
-                </p:submenu>
+                <p:menuitem value="Pesquisar acervo" ajax="false" icon="search" url="/faces/acervo.xhtml"/>
                 <p:submenu label="Cadastro" icon="cadastro" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Bibliotecário'}">
                     <p:menuitem value="Assunto" ajax="false" icon="assunto" url="/faces/assunto.xhtml"/>                    
                     <p:menuitem value="Autor" ajax="false" icon="user" url="/faces/autor.xhtml"/>
                     <p:menuitem value="Editora" ajax="false" icon="tag" url="/faces/editora.xhtml"/>                    
                     <p:menuitem value="Exemplar" ajax="false" icon="exemplar" url="/faces/exemplar.xhtml"/>
-                    <p:menuitem value="Gráfico" ajax="false" icon="grafico" url="/faces/grafico/grafico_index.xhtml"/>                    
                     <p:menuitem value="Livro" ajax="false" icon="book" url="/faces/livro.xhtml"/>
                 </p:submenu>
                 <p:submenu label="Gerenciar" icon="gear" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Funcionário'}">  
@@ -25,6 +22,7 @@
                     <p:menuitem value="Reserva" ajax="false" icon="calendar" url="/faces/reserva.xhtml"/>
                     <p:menuitem value="Usuário" ajax="false" icon="user" url="/faces/usuario.xhtml"/>
                 </p:submenu>                
+                <p:menuitem value="Gráficos" ajax="false" icon="grafico" rendered="#{loginBean.tipo == 'Administrador' || loginBean.tipo == 'Bibliotecário'}" url="/faces/grafico/grafico_index.xhtml"/>
                 <p:menuitem value="Relatórios" ajax="false" rendered="#{loginBean.tipo == 'Administrador'}" icon="relatorio" url="/faces/relatorio/relatorio_index.xhtml"/>                                
                 <p:menuitem value="Sair" ajax="false" icon="sair" action="#{loginBean.logoff}" />
             </p:menubar>

@@ -7,8 +7,8 @@ import java.io.OutputStream;
 
 public class ArquivoUtil {
 
-    public static File escrever(String name, byte[] contents) throws IOException {
-        File file = new File(diretorioRaizParaArquivos(), name);
+    public static File escrever(String name, byte[] contents, String pasta) throws IOException {
+        File file = new File(diretorioRaizParaArquivos(pasta), name);
 
         OutputStream out = new FileOutputStream(file);
         out.write(contents);
@@ -17,8 +17,13 @@ public class ArquivoUtil {
         return file;
     }
 
-    public static java.io.File diretorioRaizParaArquivos() {
-        File dir = new File(diretorioRaiz(), "arquivos");
+    public static java.io.File diretorioRaizParaArquivos(String pasta) {
+        File dir;
+        if ("arquivos".equals(pasta)) {
+            dir = new File(diretorioRaiz(), "arquivos");
+        } else {
+            dir = new File(diretorioRaiz(), "capas");
+        }
 
         if (!dir.exists()) {
             dir.mkdirs();
@@ -28,8 +33,8 @@ public class ArquivoUtil {
     }
 
     public static File diretorioRaiz() {
-        File dir = new File("C:\\");
 
+        File dir = new File("caminho absoluto"); //Caminho absoluto de arquivos
         if (!dir.exists()) {
             dir.mkdirs();
         }

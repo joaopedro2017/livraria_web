@@ -13,6 +13,10 @@
     background-image: url("./images/icon_png/delete.png") !important;
 }
 
+.baixar {
+    background-image: url("./images/icon_png/baixar.png") !important;
+}
+
 .pdf {
     background-image: url("./images/icon_png/pdf.png") !important;
 }

@@ -35,7 +35,7 @@ public class graficoEmprestimoReservaUltimoMesBean {
             Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        livrosModel = new BarChartModel();
+        this.livrosModel = new BarChartModel();
 
         ChartSeries serie = new ChartSeries();
         serie.setLabel("Empréstimo");
@@ -45,27 +45,27 @@ public class graficoEmprestimoReservaUltimoMesBean {
         serie2.setLabel("Reserva");
         serie2.set("Livros", (Number) lista[0]);
 
-        livrosModel.addSeries(serie);
-        livrosModel.addSeries(serie2);
+        this.livrosModel.addSeries(serie);
+        this.livrosModel.addSeries(serie2);
 
-        return livrosModel;
+        return this.livrosModel;
     }
 
     public BarChartModel getLivrosModel() {
-        return livrosModel;
+        return this.livrosModel;
     }
 
     private void createBarModel() throws SQLException {
-        livrosModel = initBarModel();
+        this.livrosModel = initBarModel();
 
-        livrosModel.setTitle("Empréstimo e Reserva último mês");
-        livrosModel.setLegendPosition("ne");
-        livrosModel.setAnimate(true);
+        this.livrosModel.setTitle("Empréstimo e Reserva último mês");
+        this.livrosModel.setLegendPosition("ne");
+        this.livrosModel.setAnimate(true);
 
-        Axis xAxis = livrosModel.getAxis(AxisType.X);
+        Axis xAxis = this.livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Mês");
 
-        Axis yAxis = livrosModel.getAxis(AxisType.Y);
+        Axis yAxis = this.livrosModel.getAxis(AxisType.Y);
         yAxis.setLabel("Livros");
         yAxis.setMin(0);
         yAxis.setMax(10);

@@ -33,6 +33,7 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     //Arquivo digital
     private UploadedFile uploadedFile;
+    private UploadedFile uploadedImage;
     @ManagedProperty(value = "#{arquivoBean}")
     private arquivoBean arquivo = new arquivoBean();
 
@@ -119,16 +120,23 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public void gravar(ActionEvent actionEvent) {
         if (assuntoId != null && editoraId != null) {
-            if (getUploadedFile().getSize() > 0) {
-                arquivo.setUploadedFile(uploadedFile);
-                arquivo.upload();
-            }
-
             Assunto ass = assunto.buscarId(assuntoId);
             getEntidade().setAssuntoid(ass);
             Editora edit = editora.buscarId(editoraId);
             getEntidade().setEditoraid(edit);
-            record(actionEvent);
+            Livro aux = getDao().persistir(getEntidade());
+            adicionarMensagem("Livro salvo(a) com Sucesso!", FacesMessage.SEVERITY_INFO);
+            
+            if (getUploadedFile().getSize() > 0) {
+                arquivo.setUploadedFile(uploadedFile);
+                arquivo.upload(aux.getId() + ".pdf", "arquivos");
+            }
+            
+            if(getUploadedImage().getSize() > 0){
+                arquivo.setUploadedFile(uploadedImage);
+                arquivo.upload(aux.getId() + ".png", "capas");
+            }
+            
             assuntoId = null;
             editoraId = null;
         }
@@ -148,6 +156,14 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
 
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
+    }
+
+    public UploadedFile getUploadedImage() {
+        return uploadedImage;
+    }
+
+    public void setUploadedImage(UploadedFile uploadedImage) {
+        this.uploadedImage = uploadedImage;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class graficoEmprestimoAssuntoBean {
             Logger.getLogger(graficoEmprestimoMesBean.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        livrosModel = new BarChartModel();
+        this.livrosModel = new BarChartModel();
 
         for (Object[] obj : lista) {
             System.out.println("Mês: " + obj[0] + " Quantidade: " + obj[1] + " Assunto: " + obj[2]);
@@ -45,20 +45,20 @@ public class graficoEmprestimoAssuntoBean {
 
         String aux = "serie";
         for (Object[] obj : lista) {
-            if (livrosModel.getSeries().isEmpty()) {
+            if (this.livrosModel.getSeries().isEmpty()) {
                 aux = (String) obj[2];
                 ChartSeries serie = new ChartSeries();
                 serie.setLabel(aux);
-                livrosModel.addSeries(serie);
+                this.livrosModel.addSeries(serie);
             } else if (!aux.equals(obj[2])) {
                 ChartSeries serie2 = new ChartSeries();
                 serie2.setLabel((String) obj[2]);
-                livrosModel.addSeries(serie2);
+                this.livrosModel.addSeries(serie2);
                 aux = (String) obj[2];
             }
         }
 
-        for (ChartSeries serie : livrosModel.getSeries()) {
+        for (ChartSeries serie : this.livrosModel.getSeries()) {
             for (Object[] obj : lista) {
                 if (obj[2].equals(serie.getLabel())) {
                     serie.set((String) obj[0], (Number) obj[1]);
@@ -66,30 +66,30 @@ public class graficoEmprestimoAssuntoBean {
             }
         }
 
-        for (ChartSeries serie : livrosModel.getSeries()) {
+        for (ChartSeries serie : this.livrosModel.getSeries()) {
             System.out.println("Serie: " + serie.getLabel() + " Valor: " + serie.getData());
 
         }
 
-        return livrosModel;
+        return this.livrosModel;
     }
 
     public BarChartModel getLivrosModel() {
-        return livrosModel;
+        return this.livrosModel;
     }
 
     private void createBarModel() throws SQLException {
-        livrosModel = initBarModel();
+        this.livrosModel = initBarModel();
 
-        livrosModel.setTitle("Empréstimo por Assunto");
-        livrosModel.setLegendPosition("ne");
-        livrosModel.setBarWidth(120); //Largura da barra
-        livrosModel.setAnimate(true);
+        this.livrosModel.setTitle("Empréstimo por Assunto");
+        this.livrosModel.setLegendPosition("ne");
+        this.livrosModel.setBarWidth(120); //Largura da barra
+        this.livrosModel.setAnimate(true);
 
-        Axis xAxis = livrosModel.getAxis(AxisType.X);
+        Axis xAxis = this.livrosModel.getAxis(AxisType.X);
         xAxis.setLabel("Meses");
 
-        Axis yAxis = livrosModel.getAxis(AxisType.Y);
+        Axis yAxis = this.livrosModel.getAxis(AxisType.Y);
         yAxis.setLabel("Livros");
         yAxis.setMin(0);
         yAxis.setMax(10);

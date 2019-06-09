@@ -52,7 +52,20 @@
                 </p:column>
 
                 <p:rowExpansion>
-                    <p:graphicImage library="capas" name="#{lista.id % 10}.jpg" style="height: 200px; float: left"/>
+                    <p:graphicImage value="/upload/capas/#{lista.id}.png" style="height: 200px; float: left"/>
+
+                    <center>
+                        <br/>
+                        <br/>
+                        <p:commandButton value="Baixar" 
+                                         ajax="false"
+                                         actionListener="#{arquivoBean.download(lista)}"
+                                         rendered="#{arquivoBean.verificar(lista)}"
+                                         image="baixar">
+                            <p:fileDownload value="#{arquivoBean.streamedContent}" />
+                        </p:commandButton>
+                    </center>
+
                     <p:dataTable  
                         var="autor" 
                         value="#{lista.autorList}"                        
