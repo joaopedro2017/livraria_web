@@ -11,7 +11,7 @@
         <ms:mensagem/>        
         <h:form id="formPrincipal">
 
-            <pn:dataTableCrud crudBean="#{reservaBean}" arquivo="autores">
+            <pn:dataTableCrud crudBean="#{reservaBean}" arquivo="reserva">
 
                 <p:column headerText="Usuário" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
                     <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
@@ -123,14 +123,14 @@
                     <br/>
                     <p:commandButton value="Salvar" 
                                      update="@form" 
-                                     icon="ui-icon-disk"
+                                     image="save"
                                      disabled="#{reservaBean.debito}"
                                      ajax="false"
                                      action="#{reservaBean.setTabela(true)}" 
                                      actionListener="#{reservaBean.gravar}" 
                                      onclick="record.hide()"
                                      alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
+                    <p:commandButton image="cancel"
                                      value="Voltar" 
                                      immediate="true"
                                      update="@form" 

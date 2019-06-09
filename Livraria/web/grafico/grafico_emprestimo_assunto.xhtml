@@ -8,12 +8,11 @@
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
 
     <ui:define name="grafico">
-
         <br/>
         <center>
             <p:chart type="bar" model="#{graficoEmprestimoAssuntoBean.livrosModel}" style="height:300px;"/>
-            <p:commandButton id="emprestadoMes" value="" style="width: 64px; height: 64px;"  image="grafico" action="#{graficoBean.gerarRelatorioEmprestadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
-            <p:tooltip id="toolTipEmprestimoMes" for="emprestadoMes" value="Gerar gráfico de empréstimos por mês" position="right"/>
+            <p:commandButton id="emprestadoMes" value="Gráfico" image="grafico" action="#{graficoBean.gerarRelatorioEmprestadoAssuntoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>
+            <p:tooltip id="toolTipEmprestimoMes" for="emprestadoMes" value="Gerar gráfico de empréstimo por assunto" position="right"/>
         </center>        
     </ui:define>
 </ui:composition>

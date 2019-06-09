@@ -11,7 +11,7 @@
         <ms:mensagem/>
         <h:form id="formPrincipal">
 
-            <pn:dataTableCrud crudBean="#{assuntoBean}" arquivo="assuntos">                
+            <pn:dataTableCrud crudBean="#{assuntoBean}" arquivo="assunto">                
                 <p:column headerText="Nome" sortBy="#{lista.nomeAssunto}" filterBy="#{lista.nomeAssunto}">
                     <h:outputText value="#{lista.nomeAssunto}" />
                 </p:column>
@@ -54,12 +54,12 @@
                     <br/>
                     <p:commandButton value="Salvar" 
                                      update="@form"
-                                     icon="ui-icon-disk"
+                                     image="save"
                                      ajax="false"
                                      action="#{assuntoBean.setTabela(true)}" 
                                      actionListener="#{assuntoBean.record}" 
                                      onclick="record.hide()" alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
+                    <p:commandButton image="back"
                                      value="Voltar"
                                      immediate="true"
                                      ajax="false"

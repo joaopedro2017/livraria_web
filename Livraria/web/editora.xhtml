@@ -11,7 +11,7 @@
         <ms:mensagem/>        
         <h:form id="formPrincipal">
 
-            <pn:dataTableCrud crudBean="#{editoraBean}" arquivo="editoras">
+            <pn:dataTableCrud crudBean="#{editoraBean}" arquivo="editora">
                 <p:column headerText="Nome" sortBy="#{lista.nomeEditora}" filterBy="#{lista.nomeEditora}">
                     <h:outputText value="#{lista.nomeEditora}" />
                 </p:column>
@@ -31,14 +31,14 @@
 
                     </p:panelGrid>  
                     <br/>
-                    <p:commandButton icon="ui-icon-disk"
+                    <p:commandButton image="save"
                                      value="Salvar" 
                                      update="@form"
                                      ajax="false"
                                      action="#{editoraBean.setTabela(true)}" 
                                      actionListener="#{editoraBean.record}" 
                                      onclick="record.hide()" alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
+                    <p:commandButton image="back"
                                      value="Voltar"
                                      immediate="true"
                                      update="@form" 

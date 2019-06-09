@@ -81,7 +81,7 @@ public class graficoReservaAssuntoBean {
     private void createBarModel() throws SQLException {
         livrosModel = initBarModel();
 
-        livrosModel.setTitle("Empréstimo por Assunto");
+        livrosModel.setTitle("Reserva por Assunto");
         livrosModel.setLegendPosition("ne");
         livrosModel.setBarWidth(120); //Largura da barra
         livrosModel.setAnimate(true);

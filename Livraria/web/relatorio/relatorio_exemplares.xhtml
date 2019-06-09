@@ -21,7 +21,7 @@
                      style="width:100%">
 
             <f:facet name="paginatorBottomRight">
-                <p:commandButton id="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioExemplaresAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:commandButton id="pdf" rendered="#{relatorioBean.exemplares.size() > 0}" image="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioExemplaresAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>                                   
             </f:facet>
 

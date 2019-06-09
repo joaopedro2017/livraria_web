@@ -7,12 +7,14 @@ import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import model.Emprestimo;
 import model.Reserva;
+import util.SessionUtil;
 
 @ManagedBean
 @ViewScoped
@@ -35,7 +37,8 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
     public void cancelar(ActionEvent actionEvent) {
         if (getEntidade().getId() != null) {
             getEntidade().setCancelar("Usuário");
-            record(actionEvent);
+            getDao().persistir(getEntidade());
+            adicionarMensagem("Cancelada com sucesso!", FacesMessage.SEVERITY_INFO);
         }
     }
 
@@ -62,18 +65,21 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
     }
 
     public void cancelarReservaSistema() {
-        List<Reserva> reservas = getDao().cancelamentoAutomatico();
-        LocalDate data2 = LocalDate.now();
+        if ("Administrador".equals(SessionUtil.getUserTipo()) || "Funcionário".equals(SessionUtil.getUserTipo())) {
+            List<Reserva> reservas = getDao().cancelamentoAutomatico();
+            LocalDate data2 = LocalDate.now();
 
-        if (reservas.size() > 0) {
-            for (Reserva reserva : reservas) {
-                LocalDate data1 = reserva.getDataReserva().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                long intervalo = ChronoUnit.DAYS.between(data1, data2);
+            if (reservas.size() > 0) {
+                for (Reserva reserva : reservas) {
+                    LocalDate data1 = reserva.getDataReserva().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    long intervalo = ChronoUnit.DAYS.between(data1, data2);
 
-                if (intervalo > 3) {
-                    Reserva aux = reserva;
-                    aux.setCancelar("Sistema");
-                    getDao().persistir(aux);
+                    if (intervalo > 3) {
+                        Reserva aux = reserva;
+                        aux.setCancelar("Sistema");
+                        getDao().persistir(aux);
+                        adicionarMensagem("Reserva " + aux.getId() + " cancelada!", FacesMessage.SEVERITY_INFO);
+                    }
                 }
             }
         }
@@ -92,7 +98,8 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
             Emprestimo e = new EmprestimoDAO().persistir(bean.getEntidade());
 
             getEntidade().setEmprestimoid(e);
-            record(actionEvent);
+            getDao().persistir(getEntidade());
+            adicionarMensagem("Empréstimo feito com Sucesso!", FacesMessage.SEVERITY_INFO);
         }
     }
 

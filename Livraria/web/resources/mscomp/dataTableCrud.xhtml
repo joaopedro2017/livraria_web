@@ -63,12 +63,14 @@
         <br/>
 
         <p:column rendered="#{cc.attrs.crudBean.tabela}">
-            <p:commandButton icon="ui-icon-plus" 
+            <p:commandButton image="new"
+                             id="novo"
                              update="@form" 
                              value="Novo" 
                              action="#{cc.attrs.crudBean.setTabela(false)}"
                              actionListener="#{cc.attrs.crudBean.init}" 
                              ajax="false"/> 
+            <p:tooltip id="toolTipNovo" for="novo" value="Criar novo(a) #{cc.attrs.arquivo}" position="right"/>
         </p:column>
 
         <p:panel rendered="#{cc.attrs.crudBean.tabela}" style="border: none; background-color: white">
@@ -77,24 +79,28 @@
 
                 <h:commandLink id="excel">
                     <p:graphicImage name="./images/exports/excel.png" />
-                    <p:dataExporter type="xls" target="tabela" fileName="#{cc.attrs.arquivo}" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
+                    <p:dataExporter type="xls" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
                 </h:commandLink>
+                <p:tooltip id="toolTipExcel" for="excel" value="Exportar para Excel" position="top"/>                    
 
                 <h:commandLink id="pdf">
                     <p:graphicImage name="./images/exports/pdf.png" />
-                    <p:dataExporter type="pdf" target="tabela" fileName="#{cc.attrs.arquivo}" preProcessor="#{cc.attrs.crudBean.preProcessPDF}" />
+                    <p:dataExporter type="pdf" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" preProcessor="#{cc.attrs.crudBean.preProcessPDF}" />
                 </h:commandLink>
+                <p:tooltip id="toolTipPdf" for="pdf" value="Exportar para PDF" position="top"/>                    
 
 
-                <h:commandLink>
+                <h:commandLink id="csv">
                     <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                    <p:dataExporter type="csv" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                    <p:dataExporter type="csv" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" />
                 </h:commandLink>
+                <p:tooltip id="toolTipCsv" for="csv" value="Exportar para CSV" position="top"/>                    
 
-                <h:commandLink>
+                <h:commandLink id="xml">
                     <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                    <p:dataExporter type="xml" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                    <p:dataExporter type="xml" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" />
                 </h:commandLink>
+                <p:tooltip id="toolTipXml" for="xml" value="Exportar para XML" position="top"/>                    
             </div>
         </p:panel>
 

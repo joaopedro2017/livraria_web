@@ -10,7 +10,7 @@
         <h2 class="page-header">Gerenciar Empréstimo</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal">
-            <pn:dataTableCrud crudBean="#{emprestimoBean}" arquivo="emprestimos">
+            <pn:dataTableCrud crudBean="#{emprestimoBean}" arquivo="emprestimo">
                 <p:column headerText="Usuário" sortBy="#{lista.usuarioid.nomeUsuario}" filterBy="#{lista.usuarioid.nomeUsuario}">
                     <h:outputText value="#{lista.usuarioid.nomeUsuario}" />
                 </p:column>
@@ -83,7 +83,7 @@
                                     <p:commandButton value="Verificar"
                                                      ajax="false"
                                                      update="@form"
-                                                     icon="ui-icon-search"
+                                                     image="search"
                                                      action="#{emprestimoBean.emprestimoAtraso}"/>
                                     <h:outputText value="Nome:" style="float: right;"/>
                                     <p:inputText readonly="true"
@@ -101,7 +101,7 @@
                                 <p:outputLabel value="#{emprestimoBean.msg}"
                                                style="color: #191970; font-style: oblique" />
                                 <br/>
-                                <p:commandButton icon="ui-icon-refresh" 
+                                <p:commandButton image="cancel" 
                                                  value="Cancelar" 
                                                  immediate="true"
                                                  ajax="false"
@@ -129,7 +129,7 @@
                                     <p:commandButton value="Consultar"
                                                      ajax="false"
                                                      update="@form"
-                                                     icon="ui-icon-search"
+                                                     image="search"
                                                      action="#{emprestimoBean.verificarExemplar}"/>
 
                                     <h:outputText value="Título:" style="float: right;"/>
@@ -156,7 +156,7 @@
                                                rendered="#{emprestimoBean.debito}" 
                                                style="color: #ff0100; font-style: oblique" />
                                 <br/>
-                                <p:commandButton icon="ui-icon-cancel" 
+                                <p:commandButton image="cancel"
                                                  value="Cancelar" 
                                                  immediate="true"
                                                  ajax="false"
@@ -184,12 +184,12 @@
                                 </h:panelGrid>
                                 <br/>
                                 <p:commandButton value="Salvar"                                                 
-                                                 icon="ui-icon-disk"
+                                                 image="save"
                                                  ajax="false"
                                                  action="#{emprestimoBean.setTabela(true)}" 
                                                  actionListener="#{emprestimoBean.gravar}" 
                                                  onclick="record.hide()" alt="Record"/>
-                                <p:commandButton icon="ui-icon-cancel" 
+                                <p:commandButton image="cancel"
                                                  ajax="false"
                                                  value="Cancelar" 
                                                  immediate="true"

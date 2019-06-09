@@ -14,14 +14,17 @@
             <p:layout style="height: 425px; background-color: white; color: greenyellow">
                 <p:layoutUnit position="west" size="205" header="Relatórios">
                     <p:menu style="border: none; float: right">
-                        <p:submenu label="Livros" icon="ui-icon-bookmark">
-                            <p:menuitem value="Nro de exemplares" icon="ui-icon-tag" url="/faces/relatorio/relatorio_exemplares.xhtml" />
-                            <p:menuitem value="Emprestados" icon="ui-icon-tag" url="/faces/relatorio/relatorio_emprestimo.xhtml" />
-                            <p:menuitem value="Em atraso" icon="ui-icon-tag" url="/faces/relatorio/relatorio_atraso.xhtml" />
-                            <p:menuitem value="Reservados" icon="ui-icon-tag" url="/faces/relatorio/relatorio_reserva.xhtml" />                            
+                        <p:submenu label="Gerência" icon="gear">
+                            <p:menuitem value="Relatório Gerencial" icon="relatorio" url="/faces/relatorio/relatorio_gerencial.xhtml" />                                                     
                         </p:submenu>
-                        <p:submenu label="Usuário" icon="ui-icon-person">
-                            <p:menuitem value="Dados cadastrais" icon="ui-icon-contact" url="/faces/relatorio/relatorio_usuario.xhtml" />                                                     
+                        <p:submenu label="Livros" icon="book">
+                            <p:menuitem value="Nro de exemplares" icon="relatorio" url="/faces/relatorio/relatorio_exemplares.xhtml" />
+                            <p:menuitem value="Emprestados" icon="relatorio" url="/faces/relatorio/relatorio_emprestimo.xhtml" />
+                            <p:menuitem value="Em atraso" icon="relatorio" url="/faces/relatorio/relatorio_atraso.xhtml" />
+                            <p:menuitem value="Reservados" icon="relatorio" url="/faces/relatorio/relatorio_reserva.xhtml" />                            
+                        </p:submenu>
+                        <p:submenu label="Usuário" icon="user">
+                            <p:menuitem value="Dados cadastrais" icon="user" url="/faces/relatorio/relatorio_usuario.xhtml" />                                                     
                         </p:submenu>
                     </p:menu>
                 </p:layoutUnit>

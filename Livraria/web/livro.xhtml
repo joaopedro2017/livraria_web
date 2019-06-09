@@ -10,7 +10,7 @@
         <h2 class="page-header">Gerenciar Livro</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal" enctype="multipart/form-data">
-            <pn:dataTableCrud crudBean="#{livroBean}" arquivo="livros">
+            <pn:dataTableCrud crudBean="#{livroBean}" arquivo="livro">
                 <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
                     <h:outputText value="#{lista.titulo}" />
                 </p:column>
@@ -172,7 +172,7 @@
                             </h:column>
                         </h:dataTable>
                         <br/>
-                        <p:commandButton icon="ui-icon-disk"
+                        <p:commandButton image="save"
                                          value="Salvar"
                                          rendered="#{livroBean.entidade.autorList.size() > 0}"
                                          ajax="false"
@@ -181,7 +181,7 @@
                                          actionListener="#{livroBean.gravar}" 
                                          onclick="record.hide()" 
                                          alt="Record"/> 
-                        <p:commandButton icon="ui-icon-refresh" 
+                        <p:commandButton image="back"
                                          value="Voltar"
                                          ajax="false"
                                          immediate="true"

@@ -13,8 +13,84 @@
     background-image: url("./images/icon_png/delete.png") !important;
 }
 
+.pdf {
+    background-image: url("./images/icon_png/pdf.png") !important;
+}
+
+.key {
+    background-image: url("./images/icon_png/key.png") !important;
+}
+
+.new {
+    background-image: url("./images/icon_png/new.png") !important;
+}
+
+.save {
+    background-image: url("./images/icon_png/save.png") !important;
+}
+
+.back {
+    background-image: url("./images/icon_png/back.png") !important;
+}
+
 .edit {    
     background-image: url("./images/icon_png/pencil.png") !important;
+}
+
+.cadastro {    
+    background-image: url("./images/icon_png/cadastro.png") !important;
+}
+
+.date {    
+    background-image: url("./images/icon_png/date.png") !important;
+}
+
+.gear {    
+    background-image: url("./images/icon_png/gear.png") !important;
+}
+
+.calendar {    
+    background-image: url("./images/icon_png/calendar.png") !important;
+}
+
+.sair {    
+    background-image: url("./images/icon_png/sair.png") !important;
+}
+
+.relatorio {    
+    background-image: url("./images/icon_png/relatorio.png") !important;
+}
+
+.grafico {    
+    background-image: url("./images/icon_png/grafico.png") !important;
+}
+
+.exemplar {    
+    background-image: url("./images/icon_png/exemplar.png") !important;
+}
+
+.tag {    
+    background-image: url("./images/icon_png/tag.png") !important;
+}
+
+.assunto {    
+    background-image: url("./images/icon_png/assunto.png") !important;
+}
+
+.user {    
+    background-image: url("./images/icon_png/user.png") !important;
+}
+
+.book {    
+    background-image: url("./images/icon_png/book.png") !important;
+}
+
+.home {    
+    background-image: url("./images/icon_png/home.png") !important;
+}
+
+.search {    
+    background-image: url("./images/icon_png/search.png") !important;
 }
 
 .okay {    
@@ -31,16 +107,6 @@
 
 .adicionar {    
     background-image: url("./images/icon_png/adicionar.png") !important;
-}
-
-.grafico {
-    position: absolute !important;
-    top: 50% !important;
-    margin-top: -32px !important;
-    margin-left: -8px !important;
-    width: 64px !important;
-    height: 64px !important;
-    background-image: url("./images/icon_png/grafico.png") !important;
 }
 
 .outputLabel {

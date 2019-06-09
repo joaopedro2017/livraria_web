@@ -8,6 +8,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -48,8 +49,12 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
             long intervalo = ChronoUnit.DAYS.between(data1, data2);
 
             if (intervalo < 30) {
+                if (intervalo == 0) {
+                    setMsg("Usuário bloqueado(a) à partir de hoje, máximo de 30 dias");
+                } else {
+                    setMsg("Usuário bloqueado(a) há " + intervalo + " dias, máximo de 30 dias!");
+                }
                 setDebito(true);
-                setMsg("Usuário bloqueado(a) há " + intervalo + " dias, máximo 30 dias!");
                 return;
             }
         }
@@ -160,7 +165,8 @@ public class emprestimoBean extends crudBean<Emprestimo, EmprestimoDAO> {
     public void devolver(ActionEvent actionEvent) {
         if (getEntidade().getId() != null) {
             getEntidade().setDataDevolucao(new Date());
-            record(actionEvent);
+            getDao().persistir(getEntidade());
+            adicionarMensagem("Devolvido com sucesso!", FacesMessage.SEVERITY_INFO);
         }
     }
 

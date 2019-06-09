@@ -11,7 +11,7 @@
         <ms:mensagem/>
 
         <h:form id="formPrincipal">
-            <pn:dataTableCrud crudBean="#{exemplarBean}" arquivo="exemplares">
+            <pn:dataTableCrud crudBean="#{exemplarBean}" arquivo="exemplar">
                 
                 <p:column headerText="Titulo" sortBy="#{lista.livroid.titulo}" filterBy="#{lista.livroid.titulo}">
                     <h:outputText value="#{lista.livroid.titulo}" />
@@ -44,14 +44,14 @@
                         </p:selectOneMenu>
                     </p:panelGrid>  
                     <br/>
-                    <p:commandButton icon="ui-icon-disk"
+                    <p:commandButton image="save"
                                      value="Salvar" 
                                      update="@form" 
                                      ajax="false"
                                      action="#{exemplarBean.setTabela(true)}" 
                                      actionListener="#{exemplarBean.gravar}" 
                                      onclick="record.hide()" alt="Record"/>
-                    <p:commandButton icon="ui-icon-refresh" 
+                    <p:commandButton image="back"
                                      value="Voltar" 
                                      ajax="false"
                                      immediate="true"
