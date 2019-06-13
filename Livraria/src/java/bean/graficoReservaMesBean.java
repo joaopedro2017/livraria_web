@@ -66,7 +66,7 @@ public class graficoReservaMesBean {
         Axis yAxis = this.livrosModel.getAxis(AxisType.Y);
         yAxis.setLabel("Livros");
         yAxis.setMin(0);
-        yAxis.setMax(10);
+        yAxis.setMax(20);
     }
 
 }

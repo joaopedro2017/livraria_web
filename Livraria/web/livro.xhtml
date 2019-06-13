@@ -10,57 +10,149 @@
         <h2 class="page-header">Gerenciar Livro</h2>
         <ms:mensagem/>
         <h:form id="formPrincipal" enctype="multipart/form-data">
-            <pn:dataTableCrud crudBean="#{livroBean}" arquivo="livro">
-                <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
-                    <h:outputText value="#{lista.titulo}" />
-                </p:column>
+            <div align="center">
 
-                <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}" style="width: 155px">
-                    <h:outputText value="#{lista.isbn}" />
-                </p:column>
+                <p:dataTable rendered="#{livroBean.tabela}" 
+                             var="lista" 
+                             value="#{livroBean.entidades}"
+                             id="tabela" emptyMessage="Nenhum registro encontrado"
+                             paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+                             paginator="true"
+                             rowsPerPageTemplate="5,10,25,50,100,9999"
+                             rows="5"                         
+                             reflow="true"                         
+                             style="width:90%">
+                    <p:column headerText="Código" sortBy="#{lista.id}" filterBy="#{lista.id}" style="width: 95px">                    
+                        <h:outputText value="#{lista.id}" style="; float: right"/>                   
+                    </p:column>
+                    <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
+                        <h:outputText value="#{lista.titulo}" />
+                    </p:column>
 
-                <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}" style="width: 90px">
-                    <h:outputText value="#{lista.edicao}" />
-                </p:column>
+                    <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}" style="width: 155px">
+                        <h:outputText value="#{lista.isbn}" />
+                    </p:column>
 
-                <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}" style="width: 70px">
-                    <h:outputText value="#{lista.ano}">
-                        <f:convertDateTime pattern="yyyy"/>
-                    </h:outputText>
-                </p:column>                 
+                    <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}" style="width: 90px">
+                        <h:outputText value="#{lista.edicao}" />
+                    </p:column>
 
-                <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}" style="width: 100px">
-                    <h:outputText value="#{lista.editoraid.nomeEditora}" />
-                </p:column>
+                    <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}" style="width: 70px">
+                        <h:outputText value="#{lista.ano}">
+                            <f:convertDateTime pattern="yyyy"/>
+                        </h:outputText>
+                    </p:column>                 
 
-                <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                    <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
-                </p:column>
+                    <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}" style="width: 100px">
+                        <h:outputText value="#{lista.editoraid.nomeEditora}" />
+                    </p:column>
 
-                <p:column headerText="Autores" style="width:75px" exportable="false">
-                    <p:rowToggler/>                    
-                </p:column>
+                    <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
+                        <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+                    </p:column>
 
-                <p:rowExpansion>
-                    <p:dataTable  
-                        var="autor" 
-                        value="#{lista.autorList}"
-                        id="tabela2" 
-                        emptyMessage="Nenhum registro encontrado"
-                        style="width:30%; float: right">
-                        <f:facet name="header">
-                            Autores do Livro #{lista.titulo}
-                        </f:facet>
-                        <p:column headerText="Nome">
-                            <center>
-                                <h:outputText value="#{autor.nomeAutor}" />
-                            </center>
-                        </p:column>
-                    </p:dataTable>
-                </p:rowExpansion>
+                    <p:column headerText="Autores" style="width:75px" exportable="false">
+                        <p:rowToggler/>                    
+                    </p:column>
 
-            </pn:dataTableCrud>
+                    <p:column headerText="Opções" exportable="false" style="width:95px">
+                        <center>
 
+                            <p:commandButton id="editar"
+                                             image="edit"
+                                             style="width: 34px; height: 20px"
+                                             value=""
+                                             ajax="false"
+                                             action="#{livroBean.setTabela(false)}" 
+                                             actionListener="#{livroBean.editar(lista)}" 
+                                             update="@form" />
+                            <p:tooltip id="toolTipEditar" for="editar" value="Editar" position="left"/>
+
+                            <p:commandButton id="deletar" 
+                                             image="delete"
+                                             style="width: 34px; height: 20px"
+                                             value=""                                         
+                                             onclick="PF('remove').show();"> 
+                                <f:setPropertyActionListener target="#{livroBean.entidade}" value="#{lista}" />
+                            </p:commandButton>
+                            <p:tooltip id="toolTipDeletar" for="deletar" value="Deletar" position="right"/>
+
+                        </center>
+                    </p:column>
+
+                    <p:rowExpansion>
+                        <p:dataTable  
+                            var="autor" 
+                            value="#{lista.autorList}"
+                            id="tabela2" 
+                            emptyMessage="Nenhum registro encontrado"
+                            style="width:30%; float: right">
+                            <f:facet name="header">
+                                Autores do Livro #{lista.titulo}
+                            </f:facet>
+                            <p:column headerText="Nome">
+                                <center>
+                                    <h:outputText value="#{autor.nomeAutor}" />
+                                </center>
+                            </p:column>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                </p:dataTable>
+            </div>
+
+            <p:column rendered="#{livroBean.tabela}">
+                <p:commandButton image="new"
+                                 id="novo"
+                                 update="@form" 
+                                 value="Novo" 
+                                 action="#{livroBean.setTabela(false)}"
+                                 actionListener="#{livroBean.init}" 
+                                 ajax="false"/> 
+                <p:tooltip id="toolTipNovo" for="novo" value="Criar novo(a) livrp" position="right"/>
+            </p:column>
+
+            <p:panel rendered="#{livroBean.tabela}" style="border: none; background-color: white">
+                <div align="center">
+                    <h3>Exportar dados da página</h3>
+
+                    <h:commandLink id="excel">
+                        <p:graphicImage name="./images/exports/excel.png" />
+                        <p:dataExporter type="xlsx" target="tabela" fileName="livro" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
+                    </h:commandLink>
+                    <p:tooltip id="toolTipExcel" for="excel" value="Exportar para Excel" position="top"/>                    
+
+                    <h:commandLink id="pdf">
+                        <p:graphicImage name="./images/exports/pdf.png" />
+                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" preProcessor="#{cc.attrs.crudBean.preProcessPDF}" />
+                    </h:commandLink>
+                    <p:tooltip id="toolTipPdf" for="pdf" value="Exportar para PDF" position="top"/>                    
+
+
+                    <h:commandLink id="csv">
+                        <p:graphicImage name="./images/exports/csv.png" width="24"/>
+                        <p:dataExporter type="csv" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                    </h:commandLink>
+                    <p:tooltip id="toolTipCsv" for="csv" value="Exportar para CSV" position="top"/>                    
+
+                    <h:commandLink id="xml">
+                        <p:graphicImage  name="./images/exports/xml.png" width="24"/>
+                        <p:dataExporter type="xml" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                    </h:commandLink>
+                    <p:tooltip id="toolTipXml" for="xml" value="Exportar para XML" position="top"/>                    
+                </div>
+            </p:panel>
+
+            <p:confirmDialog global="true">  
+                <p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />  
+                <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />  
+            </p:confirmDialog>
+
+            <p:dialog header="Deletar" widgetVar="remove" modal="true" resizable="false"> 
+                Deseja realmente excluir?
+                <br/>
+                <br/>
+                <p:commandButton value="Deletar" style="float: right" actionListener="#{livroBean.excluir}" onclick="remove.hide()"/> 
+            </p:dialog>
             <center>                    
                 <p:panel rendered="#{!livroBean.tabela}" header="Novo/Editar Livro" style="width:85%">
                     <p:panelGrid id="panelRecord" columns="6" columnClasses="grade, grade, grade, grade, grade, grade"> 

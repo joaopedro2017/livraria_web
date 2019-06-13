@@ -7,17 +7,17 @@
                 xmlns:ms="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
         <center>
-            <h2 class="page-header">Livraria - Login</h2>
+            <h2 class="page-header">Biblioteca Novo Saber</h2>
             <ms:mensagem/>
         </center>
         <center>
-            <p:graphicImage library="images" name="livro_aberto.png"/>
+            <p:graphicImage library="images" name="logo.png" height="250" width="305"/>
             <h:form id="formPrincipal">
                 <div style="position: relative">
                     <p:inputText id="name" 
                                  value="#{loginBean.nomeUsuario}"
                                  maxlength="200"
-                                 size="44"
+                                 size="38"
                                  style="text-align: center; height: 40px"
                                  required="true"
                                  placeholder="Usuário"
@@ -32,7 +32,7 @@
                     <p:password  id="senha" 
                                  value="#{loginBean.senha}"
                                  maxlength="200"
-                                 size="44"
+                                 size="38"
                                  style="text-align: center; height: 40px"
                                  required="true"
                                  placeholder="Senha"
@@ -42,7 +42,7 @@
                 <br/>
                 <div>
                     <p:commandButton tabindex="3" 
-                                     style="width: 350px; height: 40px; font-size: larger;" 
+                                     style="width: 310px; height: 40px; font-size: larger;" 
                                      image="key"
                                      value="Entrar" 
                                      actionListener="#{loginBean.login}" 

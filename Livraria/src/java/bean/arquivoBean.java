@@ -26,19 +26,18 @@ public class arquivoBean implements Serializable {
     private StreamedContent streamedContent;
 
     public void download(Livro livro) throws FileNotFoundException, IOException {
-        File file = new File("Caminho absoluto" + livro.getId() + ".pdf"); //Caminho absoluto de arquivos
+//        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+//        String diretorio = ec.getRealPath("\\Livraria");
+        File file = new File("C:\\Users\\John Peter\\Documents\\GitHub\\livraria_web\\Livraria\\web\\upload\\arquivos\\" + livro.getId() + ".pdf"); //Caminho absoluto de arquivos
         InputStream inputStream = new FileInputStream(file);
 
         streamedContent = new DefaultStreamedContent(inputStream, Files.probeContentType(file.toPath()), livro.getTitulo() + ".pdf");
-
     }
 
     public void upload(String nomeFile, String pasta) {
         try {
             File arquivo = ArquivoUtil.escrever(nomeFile, uploadedFile.getContents(), pasta);
-            System.out.println("Caminho arquivo: " + arquivo.getAbsolutePath());
-            System.out.println("Salvo com Sucesso!");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload completo", "O arquivo " + nomeFile + " foi salvo!"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload completo", "O arquivo " + uploadedFile.getFileName() + " foi salvo!"));
         } catch (IOException e) {
             FacesContext.getCurrentInstance().addMessage(null,
                     new FacesMessage(FacesMessage.SEVERITY_WARN, "Erro", e.getMessage()));
@@ -62,7 +61,9 @@ public class arquivoBean implements Serializable {
     }
 
     public boolean verificar(Livro livro) {
-        File file = new File("caminho absoluto" + livro.getId() + ".pdf"); //caminho absoluto arquivos
+//        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+//        String diretorio = ec.getRealPath("\\Livraria");
+        File file = new File("C:\\Users\\John Peter\\Documents\\GitHub\\livraria_web\\Livraria\\web\\upload\\arquivos\\" + livro.getId() + ".pdf");
         return file.exists();
     }
 

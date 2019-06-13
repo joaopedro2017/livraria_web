@@ -1,6 +1,9 @@
 package bean;
 
 import dao.LivroDAO;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
 import javax.faces.application.FacesMessage;
@@ -8,6 +11,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+import javax.persistence.RollbackException;
 import model.Assunto;
 import model.Autor;
 import model.Editora;
@@ -126,19 +130,43 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
             getEntidade().setEditoraid(edit);
             Livro aux = getDao().persistir(getEntidade());
             adicionarMensagem("Livro salvo(a) com Sucesso!", FacesMessage.SEVERITY_INFO);
-            
+
             if (getUploadedFile().getSize() > 0) {
                 arquivo.setUploadedFile(uploadedFile);
                 arquivo.upload(aux.getId() + ".pdf", "arquivos");
             }
-            
-            if(getUploadedImage().getSize() > 0){
+
+            if (getUploadedImage().getSize() > 0) {
                 arquivo.setUploadedFile(uploadedImage);
                 arquivo.upload(aux.getId() + ".png", "capas");
             }
-            
+
             assuntoId = null;
             editoraId = null;
+        }
+    }
+
+    public void excluir() {
+        try {
+            Livro aux = getEntidade();
+            getDao().remover(getEntidade());
+            setEntidades(getDao().buscarTodas());
+
+            File filePdf = new File("C:\\Users\\John Peter\\Documents\\GitHub\\livraria_web\\Livraria\\web\\upload\\arquivos\\" + aux.getId() + ".pdf");
+            File filePng = new File("C:\\Users\\John Peter\\Documents\\GitHub\\livraria_web\\Livraria\\web\\upload\\capas\\" + aux.getId() + ".png");
+
+            if (filePdf.exists()) {
+                filePdf.delete();
+            }
+
+            if (filePng.exists()) {
+                filePng.delete();
+            }
+
+            adicionarMensagem("Excluído(a) com sucesso!", FacesMessage.SEVERITY_INFO);
+            setEntidade(novo());
+        } catch (RollbackException ex) {
+            adicionarMensagem("Não é possível excluir livro, pois se relaciona com outro elemento.", FacesMessage.SEVERITY_WARN);
         }
     }
 

@@ -47,17 +47,10 @@
                     <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
                 </p:column>
 
-                <p:column headerText="Autores" style="width: 75px" exportable="false">
-                    <p:rowToggler/>                    
-                </p:column>
-
-                <p:rowExpansion>
-                    <p:graphicImage value="/upload/capas/#{lista.id}.png" style="height: 200px; float: left"/>
-
+                <p:column headerText="Download" style="width: 90px" exportable="false">
                     <center>
-                        <br/>
-                        <br/>
-                        <p:commandButton value="Baixar" 
+                        <p:commandButton value=""
+                                         style="width: 34px; height: 20px; align-items: center"
                                          ajax="false"
                                          actionListener="#{arquivoBean.download(lista)}"
                                          rendered="#{arquivoBean.verificar(lista)}"
@@ -65,7 +58,14 @@
                             <p:fileDownload value="#{arquivoBean.streamedContent}" />
                         </p:commandButton>
                     </center>
+                </p:column>
 
+                <p:column headerText="Autores" style="width: 75px" exportable="false">
+                    <p:rowToggler/>                    
+                </p:column>
+
+                <p:rowExpansion>
+                    <p:graphicImage value="/upload/capas/#{lista.id}.png" style="height: 200px; float: left"/>
                     <p:dataTable  
                         var="autor" 
                         value="#{lista.autorList}"                        

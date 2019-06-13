@@ -79,7 +79,7 @@
 
                 <h:commandLink id="excel">
                     <p:graphicImage name="./images/exports/excel.png" />
-                    <p:dataExporter type="xls" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
+                    <p:dataExporter type="xlsx" target="tabela" fileName="#{cc.attrs.arquivo}" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
                 </h:commandLink>
                 <p:tooltip id="toolTipExcel" for="excel" value="Exportar para Excel" position="top"/>                    
 
@@ -98,7 +98,7 @@
 
                 <h:commandLink id="xml">
                     <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                    <p:dataExporter type="xml" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                    <p:dataExporter type="xml" target="tabela" fileName="#{cc.attrs.arquivo}" />
                 </h:commandLink>
                 <p:tooltip id="toolTipXml" for="xml" value="Exportar para XML" position="top"/>                    
             </div>

@@ -8,10 +8,31 @@
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
 
     <ui:define name="relatorio">
-        <h2 class="page-header">Relatório Gerencial pra fazer ainda</h2>       
+        <h2 class="page-header">Relatório Gerencial</h2>     
+        <center>
+            <p:calendar id="dataInicial"
+                        placeholder="Data Inicial"
+                        size="7"
+                        style="text-align: center"
+                        showOn="true"
+                        required="true"
+                        maxdate="today"
+                        value="#{relatorioGerencialBean.dataInicial}"/>
+            <p:calendar id="dataFinal"
+                        placeholder="Data Final"
+                        size="7"
+                        style="text-align: center"
+                        maxdate="today"
+                        required="true"
+                        value="#{relatorioGerencialBean.dataFinal}"/>
+            <p:commandButton value="Pesquisar"
+                             update=":formPrincipal:tabela"
+                             actionListener="#{relatorioGerencialBean.pesquisar}"
+                             image="search"/>
+        </center>
 
         <p:dataTable var="lista" 
-                     value="#{relatorioBean.atrasados}"
+                     value="#{relatorioGerencialBean.relatorio}"
                      id="tabela" emptyMessage="Nenhum registro encontrado"
                      paginatorTemplate="{RowsPerPageDropdown} {CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
                      paginator="true"
@@ -21,44 +42,48 @@
                      style="width:100%">
 
             <f:facet name="paginatorBottomRight">
-                <p:commandButton id="pdf" rendered="#{lista != null}" image="pdf" value="Relatório" action="#{relatorioBean.gerarRelatorioAtrasadoAction()}" ajax="false" onclick="this.form.target = '_blank'"/>                
+                <p:commandButton id="pdf" rendered="#{relatorioGerencialBean.relatorio.size() > 0}" image="pdf" value="Relatório" action="#{relatorioGerencialBean.gerarRelatorioGerencial()}" ajax="false" onclick="this.form.target = '_blank'"/>                
                 <p:tooltip id="toolTipPDF" for="pdf" value="Exportar relatório para PDF" position="left"/>
             </f:facet>
 
-            <p:column headerText="Título" sortBy="#{lista.titulo}" filterBy="#{lista.titulo}">
-                <h:outputText value="#{lista.titulo}" />
+            <p:column headerText="Id" style="width: 40px">
+                <h:outputText value="#{lista[0]}" />
             </p:column>
 
-            <p:column headerText="ISBN" sortBy="#{lista.isbn}" filterBy="#{lista.isbn}">
-                <h:outputText value="#{lista.isbn}" />
+            <p:column headerText="Título" sortBy="#{lista[1]}" filterBy="#{lista[1]}">
+                <h:outputText value="#{lista[1]}" />
             </p:column>
 
-            <p:column headerText="Edição" sortBy="#{lista.edicao}" filterBy="#{lista.edicao}">
-                <h:outputText value="#{lista.edicao}" />
+            <p:column headerText="ISBN" sortBy="#{lista[2]}" filterBy="#{lista[2]}" width="155">
+                <h:outputText value="#{lista[2]}" />
             </p:column>
 
-            <p:column headerText="Ano" sortBy="#{lista.ano}" filterBy="#{lista.ano}">
-                <h:outputText value="#{lista.ano}">
+            <p:column headerText="Edição" sortBy="#{lista[3]}" filterBy="#{lista[3]}">
+                <h:outputText value="#{lista[3]}" />
+            </p:column>
+
+            <p:column headerText="Ano" sortBy="#{lista[4]}" filterBy="#{lista[4]}">
+                <h:outputText value="#{lista[4]}">
                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                 </h:outputText>
             </p:column>                 
 
-            <p:column headerText="Editora" sortBy="#{lista.editoraid.nomeEditora}" filterBy="#{lista.editoraid.nomeEditora}">
-                <h:outputText value="#{lista.editoraid.nomeEditora}" />
+            <p:column headerText="Assunto" sortBy="#{lista[5]}" filterBy="#{lista[5]}">
+                <h:outputText value="#{lista[5]}" />
             </p:column>
 
-            <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+            <p:column headerText="Editora" sortBy="#{lista[6]}" filterBy="#{lista[6]}">
+                <h:outputText value="#{lista[6]}" />
             </p:column>
-            
-            <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+
+            <p:column headerText="Empréstimo">
+                <h:outputText value="#{lista[7]}" />
             </p:column>
-            
-            <p:column headerText="Assunto" sortBy="#{lista.assuntoid.nomeAssunto}" filterBy="#{lista.assuntoid.nomeAssunto}">
-                <h:outputText value="#{lista.assuntoid.nomeAssunto}" />
+
+            <p:column headerText="Reserva">
+                <h:outputText value="#{lista[8]}" />
             </p:column>
-            
+
         </p:dataTable>
     </ui:define>
 </ui:composition>

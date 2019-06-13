@@ -1,0 +1,85 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package relatorio;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import util.ConexaoRelatorio;
+
+public class RelatorioGerencial {
+
+    private HttpServletResponse response;
+    private FacesContext context;
+    private ByteArrayOutputStream baos;
+    private InputStream stream;
+    private String dataInicio = null;
+    private String dataFim = null;
+
+    public RelatorioGerencial() {
+        this.context = FacesContext.getCurrentInstance();
+        this.response = (HttpServletResponse) context.getExternalContext().getResponse();
+    }
+
+    public String getDataInicio() {
+        return dataInicio;
+    }
+
+    public void setDataInicio(String dataInicio) {
+        this.dataInicio = dataInicio;
+    }
+
+    public String getDataFim() {
+        return dataFim;
+    }
+
+    public void setDataFim(String dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public void getRelatorio() throws SQLException {
+        stream = this.getClass().getResourceAsStream("relatorioGerencial.jasper"); //nome do arquivo jasper
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("inicio", getDataInicio());
+        params.put("fim", getDataFim());
+        baos = new ByteArrayOutputStream();
+
+        try {
+            JasperReport report = (JasperReport) JRLoader.loadObject(stream);
+
+            JasperPrint print = JasperFillManager.fillReport(report, params, ConexaoRelatorio.getConexao());
+            JasperExportManager.exportReportToPdfStream(print, baos);
+
+            response.reset();
+            response.setContentType("application/pdf");
+            response.setContentLength(baos.size());
+            response.setHeader("Content-disposition", "inline; filename=relatorioGerencial.pdf"); //nome de saida do arquivo
+            response.getOutputStream().write(baos.toByteArray());
+            response.getOutputStream().flush();
+            response.getOutputStream().close();
+
+            context.responseComplete();
+            ConexaoRelatorio.fecharConexao();
+
+        } catch (JRException | IOException ex) {
+            Logger.getLogger(Relatorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+}

@@ -194,6 +194,39 @@ FROM emprestimo e
         ON l.Assunto_id = a.id
 WHERE e.dataDevolucao is null AND e.dataPrevista < current_date
 
+6 - Relatório Gerencial 
+
+SELECT l.id,
+	l.titulo as Título,
+	l.isbn as ISBN,
+	l.edicao as Edição,
+	l.ano as Ano,
+	a.nomeAssunto as Assunto,
+	ed.nomeEditora as Editora,
+	coalesce(emp.qtd, 0) as Empréstimo,
+	coalesce(res.qtd, 0) as Reserva        
+        	FROM Livro l 
+      	LEFT JOIN (SELECT ex.Livro_id,
+                 	COUNT(*) qtd 
+                   		FROM Emprestimo e ,Exemplar ex 
+                	WHERE e.Exemplar_id = ex.id 
+                   AND e.dataEmprestimo BETWEEN $P{inicio}  AND $P{fim}                   
+                   GROUP BY ex.Livro_id) emp 
+      	ON l.id= emp.Livro_id 
+        LEFT JOIN (SELECT ex.Livro_id ,
+                   COUNT(*) qtd 
+                   		FROM Reserva r ,Exemplar ex 
+                   WHERE r.Exemplar_id = ex.id 
+                   AND r.dataReserva BETWEEN $P{inicio}  AND $P{fim}                   
+                   GROUP BY ex.Livro_id) res 
+    	ON l.id = res.Livro_id
+	INNER JOIN assunto a
+        ON l.Assunto_id = a.id
+        INNER JOIN editora ed
+        ON l.Editora_id = ed.id
+
+	ORDER BY Empréstimo DESC, Reserva DESC, Titulo
+
 ----------------------------------------------------------------------------------------------------------------
 1 - Um gráfico informando quantos livros foram reservados por mês, considerando os últimos 3 meses.
 
