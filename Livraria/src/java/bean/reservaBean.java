@@ -43,7 +43,25 @@ public class reservaBean extends crudBean<Reserva, ReservaDAO> {
     }
 
     public void verificarDebito() {
+        Date bloqueio = bean.getDao().diasBloqueado(usuarioId);
+        if (bloqueio != null) {
+            LocalDate data1 = bloqueio.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            LocalDate data2 = LocalDate.now();
+            long intervalo = ChronoUnit.DAYS.between(data1, data2);
+
+            if (intervalo < 30) {
+                if (intervalo == 0) {
+                    setMsg("Usuário bloqueado(a) à partir de hoje, máximo de 30 dias");
+                } else {
+                    setMsg("Usuário bloqueado(a) há " + intervalo + " dias, máximo de 30 dias!");
+                }
+                setDebito(true);
+                return;
+            }
+        }
+
         Long valor = bean.getDao().verificarDebito(usuarioId);
+
         if (valor > 0) {
             setMsg("Usuário está em débito!");
             setDebito(true);

@@ -9,6 +9,7 @@
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Assuntos</h2>
         <ms:mensagem/>
+        <p:growl autoUpdate="true" life="1500"/>
         <h:form id="formPrincipal">
 
             <pn:dataTableCrud crudBean="#{assuntoBean}" arquivo="assunto">                
@@ -35,12 +36,15 @@
                                      validatorMessage="Nome inválido"
                                      requiredMessage="Nome em branco">
                             <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                            <f:ajax event="blur"/>
                         </p:inputText>
                         <p:outputLabel value="Descrição: " for="descricaoAssunto" style="float: right;"/>
                         <p:inputText id="descricaoAssunto" 
                                      value="#{assuntoBean.entidade.descricaoAssunto}" 
                                      required="true"
-                                     requiredMessage="Descrição em branco"/>
+                                     requiredMessage="Descrição em branco">
+                            <p:ajax event="blur"/>
+                        </p:inputText>
                         <p:outputLabel value="Assunto: " for="Assunto" style="float: right;"/>
                         <p:inputText id="Assunto" 
                                      value="#{assuntoBean.entidade.assunto}"
@@ -48,6 +52,7 @@
                                      validatorMessage="Assunto inválido"
                                      requiredMessage="Assunto em branco">
                             <f:validateRegex pattern="[A-za-z]+( [a-za-z]+)*" />
+                            <p:ajax event="blur"/>
                         </p:inputText>
 
                     </p:panelGrid>                    

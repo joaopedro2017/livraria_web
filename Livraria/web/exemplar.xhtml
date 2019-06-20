@@ -9,17 +9,17 @@
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Exemplares</h2>
         <ms:mensagem/>
-
+        
         <h:form id="formPrincipal">
             <pn:dataTableCrud crudBean="#{exemplarBean}" arquivo="exemplar">
-                
+
                 <p:column headerText="Titulo" sortBy="#{lista.livroid.titulo}" filterBy="#{lista.livroid.titulo}">
                     <h:outputText value="#{lista.livroid.titulo}" />
                 </p:column>
                 <p:column headerText="Circular" sortBy="#{lista.circular}" filterBy="#{lista.circular}">
                     <h:outputText value="#{lista.circular ? 'Sim' : 'Não'}" />
                 </p:column>
-                
+
             </pn:dataTableCrud>
 
             <center>

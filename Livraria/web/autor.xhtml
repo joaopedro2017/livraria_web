@@ -8,7 +8,8 @@
                 xmlns:pn="http://xmlns.jcp.org/jsf/composite/mscomp">
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Autores</h2>
-        <ms:mensagem/>        
+        <ms:mensagem/>  
+        <p:growl autoUpdate="true" life="1500"/>
         <h:form id="formPrincipal">
 
             <pn:dataTableCrud crudBean="#{autorBean}" arquivo="autor">
@@ -63,6 +64,7 @@
                                      validatorMessage="Nome inválido"
                                      requiredMessage="Nome em branco">
                             <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                            <p:ajax event="blur"/>
                         </p:inputText>
                     </p:panelGrid>
                     <br/>

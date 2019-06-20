@@ -9,6 +9,7 @@
     <ui:define name="content">
         <h2 class="page-header">Gerenciar Livro</h2>
         <ms:mensagem/>
+        <p:growl autoUpdate="true" life="1500"/>
         <h:form id="formPrincipal" enctype="multipart/form-data">
             <div align="center">
 
@@ -108,7 +109,7 @@
                                  action="#{livroBean.setTabela(false)}"
                                  actionListener="#{livroBean.init}" 
                                  ajax="false"/> 
-                <p:tooltip id="toolTipNovo" for="novo" value="Criar novo(a) livrp" position="right"/>
+                <p:tooltip id="toolTipNovo" for="novo" value="Criar novo livro" position="right"/>
             </p:column>
 
             <p:panel rendered="#{livroBean.tabela}" style="border: none; background-color: white">
@@ -117,26 +118,26 @@
 
                     <h:commandLink id="excel">
                         <p:graphicImage name="./images/exports/excel.png" />
-                        <p:dataExporter type="xlsx" target="tabela" fileName="livro" postProcessor="#{cc.attrs.crudBean.postProcessXLS}" />
+                        <p:dataExporter type="xlsx" target="tabela" fileName="livro" postProcessor="#{livroBean.postProcessXLS}" />
                     </h:commandLink>
                     <p:tooltip id="toolTipExcel" for="excel" value="Exportar para Excel" position="top"/>                    
 
                     <h:commandLink id="pdf">
                         <p:graphicImage name="./images/exports/pdf.png" />
-                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" preProcessor="#{cc.attrs.crudBean.preProcessPDF}" />
+                        <p:dataExporter type="pdf" encoding="iso-8859-1" target="tabela" fileName="livro" preProcessor="#{livroBean.preProcessPDF}" />
                     </h:commandLink>
                     <p:tooltip id="toolTipPdf" for="pdf" value="Exportar para PDF" position="top"/>                    
 
 
                     <h:commandLink id="csv">
                         <p:graphicImage name="./images/exports/csv.png" width="24"/>
-                        <p:dataExporter type="csv" encoding="iso-8859-1" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                        <p:dataExporter type="csv" encoding="iso-8859-1" target="tabela" fileName="livro" />
                     </h:commandLink>
                     <p:tooltip id="toolTipCsv" for="csv" value="Exportar para CSV" position="top"/>                    
 
                     <h:commandLink id="xml">
                         <p:graphicImage  name="./images/exports/xml.png" width="24"/>
-                        <p:dataExporter type="xml" target="tabela" fileName="#{cc.attrs.arquivo}" />
+                        <p:dataExporter type="xml" target="tabela" fileName="livro" />
                     </h:commandLink>
                     <p:tooltip id="toolTipXml" for="xml" value="Exportar para XML" position="top"/>                    
                 </div>
@@ -163,6 +164,7 @@
                                      validatorMessage="Título inválido"
                                      requiredMessage="Título em branco">
                             <f:validateRegex pattern="[A-za-z]+( [A-za-z]+)*" />
+                            <f:ajax event="blur"/>
                         </p:inputText>   
                         <p:outputLabel value="ISBN: " for="isbn" style="float: right;" />
                         <p:inputMask mask="999-99-999-9999-9" 
@@ -174,7 +176,9 @@
                         <p:inputText id="edicao" 
                                      value="#{livroBean.entidade.edicao}"
                                      required="true"
-                                     requiredMessage="Edição em branco"/>
+                                     requiredMessage="Edição em branco">
+                            <f:ajax event="blur"/>
+                        </p:inputText>
                         <p:outputLabel value="Ano: " for="ano" style="float: right;" />
                         <p:calendar locale="pt" 
                                     navigator="true" 
@@ -233,24 +237,26 @@
                                          action="#{livroBean.adicionarAutor()}"/>
                         <p:tooltip id="toolTipAdicionar" for="adiciona" value="Adicionar autor" position="top"/>
 
-                        <p:fileUpload value="#{livroBean.uploadedFile}"
-                                      accept="application/pdf"                                      
-                                      id="fileUpload"
-                                      uploadLabel="Enviar"
-                                      label="PDF"
-                                      mode="simple" 
-                                      skinSimple="true" />
-
-                        <p:fileUpload value="#{livroBean.uploadedImage}"
-                                      accept="application/png"
-                                      label="Capa"
-                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
-                                      uploadLabel="Enviar"
-                                      id="fileImage"
-                                      mode="simple" 
-                                      skinSimple="true" />
-
                     </p:panelGrid> 
+                    <p:fileUpload value="#{livroBean.uploadedFile}"
+                                  accept="application/pdf"                                      
+                                  id="fileUpload"
+                                  uploadLabel="Enviar"
+                                  label="PDF"
+                                  mode="simple" 
+                                  skinSimple="true" />
+                    <p:tooltip id="toolTipFilePDF" for="fileUpload" value="Selecione o arquivo" position="top"/>
+                    <br/>
+                    <p:fileUpload value="#{livroBean.uploadedImage}"
+                                  accept="application/png"
+                                  label="Capa"
+                                  allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                  uploadLabel="Enviar"
+                                  id="fileImage"
+                                  mode="simple" 
+                                  skinSimple="true" />
+                    <p:tooltip id="toolTipFilePNG" for="fileImage" value="Selecione a capa" position="top"/>
+
                     <br/>
                     <p:panel id="panelTabela" style="width:80%; border: none">
                         <h4>Autores do Livro:</h4>
@@ -291,7 +297,6 @@
                     </p:panel>
                 </p:panel>
             </center>
-
         </h:form>
     </ui:define>
 </ui:composition>
