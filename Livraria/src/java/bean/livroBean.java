@@ -121,7 +121,10 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
     }
 
     public void gravar(ActionEvent actionEvent) {
+                System.out.println("\n\nTestando ... \n\n" + assuntoId + "Editora : " + editoraId);
+
         if (assuntoId != null && editoraId != null) {
+            
             Assunto ass = assunto.buscarId(assuntoId);
             getEntidade().setAssuntoid(ass);
             Editora edit = editora.buscarId(editoraId);
@@ -137,10 +140,7 @@ public class livroBean extends crudBean<Livro, LivroDAO> {
             if (getUploadedImage().getSize() > 0) {
                 arquivo.setUploadedFile(uploadedImage);
                 arquivo.upload(aux.getId() + ".png", "capas");
-            }
-
-            assuntoId = null;
-            editoraId = null;
+            }            
         }
     }
 
