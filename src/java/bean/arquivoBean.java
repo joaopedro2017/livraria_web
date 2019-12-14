@@ -35,7 +35,7 @@ public class arquivoBean implements Serializable {
     }
 
     public void upload(String nomeFile, String pasta) {
-        try {
+        try { 
             File arquivo = ArquivoUtil.escrever(nomeFile, uploadedFile.getContents(), pasta);
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Upload completo", "O arquivo " + uploadedFile.getFileName() + " foi salvo!"));
         } catch (IOException e) {
