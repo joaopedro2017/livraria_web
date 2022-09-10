@@ -1,0 +1,63 @@
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    
+    - uses: actions/checkout@master
+    
+    - uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Create ACR
+      id: create-acr
+      run: |
+        az acr create -n gitopsazure -g gitopsazure8dc1-rg --location "East US 2" --sku Basic --admin-enabled
+        echo "::set-output name=acr_username::`az acr credential show -n gitopsazure --query username | xargs`"
+        echo "::set-output name=acr_password::`az acr credential show -n gitopsazure --query passwords[0].value | xargs`"
+        echo "::add-mask::`az acr credential show -n gitopsazure --query passwords[0].value | xargs`"
+
+    - uses: azure/docker-login@v1
+      with:
+        login-server: gitopsazure.azurecr.io
+        username: ${{ steps.create-acr.outputs.acr_username }}
+        password: ${{ steps.create-acr.outputs.acr_password }}
+
+    - name: Build and push image to ACR
+      id: build-image
+      run: |
+        docker build "$GITHUB_WORKSPACE/teste" -f  "teste" -t gitopsazure.azurecr.io/gitopsaks:${{ github.sha }} --label dockerfile-path=teste
+        docker push gitopsazure.azurecr.io/gitopsaks:${{ github.sha }}
+    
+    - uses: azure/k8s-set-context@v1
+      id: login
+      with:
+         kubeconfig: ${{ secrets.aks_gitopsaks_kubeConfig }}
+    
+    - name: Create namespace
+      run: |
+        namespacePresent=`kubectl get namespace | grep gitops-aksbf8a | wc -l`
+        if [ $namespacePresent -eq 0 ]
+        then
+            echo `kubectl create namespace gitops-aksbf8a`
+        fi
+
+    - uses: azure/k8s-create-secret@v1
+      with:
+        namespace: gitops-aksbf8a
+        container-registry-url: gitopsazure.azurecr.io
+        container-registry-username: ${{ steps.create-acr.outputs.acr_username }}
+        container-registry-password: ${{ steps.create-acr.outputs.acr_password }}
+        secret-name: gitopsaksdockerauth
+       
+    - uses: azure/k8s-deploy@v1.2
+      with:
+        namespace: gitops-aksbf8a
+        manifests: |
+          manifests/deployment.yml
+          manifests/service.yml
+        images: |
+          gitopsazure.azurecr.io/gitopsaks:${{ github.sha }}
+        imagepullsecrets: |
+          gitopsaksdockerauth   
