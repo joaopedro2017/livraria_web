@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "gitopsaks-abb7"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "gitopsaks-abb7"
+  template:
+    metadata:
+      labels:
+        app: "gitopsaks-abb7"
+    spec:
+      containers:
+        - name: "gitopsaks-abb7"
+          image: "gitopsazure.azurecr.io/gitopsaks"
+          ports:
+          - containerPort: 80
